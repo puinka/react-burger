@@ -1,3 +1,11 @@
+.container {
+  max-width: 600px;
+}
+
+.title {
+  text-align: left;
+}
+
 .tabs {
   display: flex;
 }
