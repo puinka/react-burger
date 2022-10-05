@@ -3,8 +3,11 @@ import styles from "./burgeringredients.module.css";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import IngredientsBlock from "./IngredientsBlock/IngredientsBlock";
 
-const BurgerIngredients = () => {
+const BurgerIngredients = ({ data }) => {
   const [current, setCurrent] = useState("Начинки");
+  const bun = data.filter((item) => item.type === "bun");
+  const sauce = data.filter((item) => item.type === "sauce");
+  const main = data.filter((item) => item.type === "main");
   return (
     <section className={`pt-10 ${styles.container}`}>
       <h2 className={`text text_type_main-large mb-5 ${styles.title}`}>
@@ -25,9 +28,9 @@ const BurgerIngredients = () => {
           Начинки
         </Tab>
       </div>
-      <IngredientsBlock title="Булки" />
-      <IngredientsBlock title="Соусы" />
-      <IngredientsBlock title="Начинки" />
+      <IngredientsBlock title="Булки" data={bun} />
+      <IngredientsBlock title="Соусы" data={sauce} />
+      <IngredientsBlock title="Начинки" data={main} />
     </section>
   );
 };

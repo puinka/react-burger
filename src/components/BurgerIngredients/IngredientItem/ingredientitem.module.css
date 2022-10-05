@@ -3,6 +3,7 @@
   flex-direction: column;
   max-width: 272px;
   box-sizing: border-box;
+  position: relative;
 }
 
 .container:nth-child(even) {
