@@ -5,14 +5,17 @@ import IngredientsBlock from "./IngredientsBlock/IngredientsBlock";
 
 const BurgerIngredients = ({ data }) => {
   const [current, setCurrent] = useState("Начинки");
+
   const bun = data.filter((item) => item.type === "bun");
   const sauce = data.filter((item) => item.type === "sauce");
   const main = data.filter((item) => item.type === "main");
+
   return (
-    <section className={`pt-10 ${styles.container}`}>
+    <section className={`pt-10 ${styles.section}`}>
       <h2 className={`text text_type_main-large mb-5 ${styles.title}`}>
         Соберите бургер
       </h2>
+
       <div className={`mb-10 ${styles.tabs}`}>
         <Tab value="Булки" active={current === "Булки"} onClick={setCurrent}>
           Булки
@@ -28,9 +31,12 @@ const BurgerIngredients = ({ data }) => {
           Начинки
         </Tab>
       </div>
-      <IngredientsBlock title="Булки" data={bun} />
-      <IngredientsBlock title="Соусы" data={sauce} />
-      <IngredientsBlock title="Начинки" data={main} />
+
+      <div className={styles.scrollContainer}>
+        <IngredientsBlock title="Булки" data={bun} />
+        <IngredientsBlock title="Соусы" data={sauce} />
+        <IngredientsBlock title="Начинки" data={main} />
+      </div>
     </section>
   );
 };

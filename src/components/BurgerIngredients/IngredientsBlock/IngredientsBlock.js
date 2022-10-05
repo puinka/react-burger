@@ -7,7 +7,7 @@ const IngredientsBlock = ({ title, data }) => {
       <h3 className={`text text_type_main-medium mb-6 ${styles.title}`}>
         {title}
       </h3>
-      <ul className={`pl-4 pr-4 pb-2 ${styles.ingredientsList}`}>
+      <ul className={`pl-4 pr-2 pb-2 ${styles.ingredientsList}`}>
         {data.map((item) => (
           <IngredientItem item={item} key={item._id} />
         ))}
