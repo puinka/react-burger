@@ -11,7 +11,7 @@ const BurgerIngredients = ({ data }) => {
   const main = data.filter((item) => item.type === "main");
 
   return (
-    <section className={`pt-10 ${styles.section}`}>
+    <section className={`pt-10 mr-10 ${styles.container}`}>
       <h2 className={`text text_type_main-large mb-5 ${styles.title}`}>
         Соберите бургер
       </h2>

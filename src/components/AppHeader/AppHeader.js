@@ -1,4 +1,3 @@
-import React from "react";
 import styles from "./appheader.module.css";
 import {
   Logo,
