@@ -1,4 +1,3 @@
-import "./App.css";
 import styles from "./app.module.css";
 import data from "../../utils/data";
 import AppHeader from "../AppHeader/AppHeader";
