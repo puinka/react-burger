@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { ingredientProps } from "../../../utils/ingredientProps.js";
 import styles from "./ingredientitem.module.css";
 import {
   CurrencyIcon,
@@ -10,7 +11,7 @@ const IngredientItem = ({ item }) => {
   return (
     <li className={`pl-4 pr-4 pb-3 mr-6 mb-8 ${styles.container}`}>
       <img src={item.image} alt={item.name} />
-      <div className={`mt-1 mb-1 ${item.price}`}>
+      <div className={`mt-1 mb-1 ${styles.price}`}>
         <p className="text text_type_digits-default mr-2">{item.price}</p>
         <CurrencyIcon type="primary" />
       </div>
@@ -18,6 +19,10 @@ const IngredientItem = ({ item }) => {
       {count !== 0 && <Counter count={count} size="default" />}
     </li>
   );
+};
+
+IngredientItem.propTypes = {
+  item: ingredientProps.isRequired,
 };
 
 export default IngredientItem;

@@ -1,4 +1,6 @@
 import styles from "./ingredientsblock.module.css";
+import PropTypes from "prop-types";
+import { ingredientProps } from "../../../utils/ingredientProps.js";
 import IngredientItem from "../IngredientItem/IngredientItem";
 
 const IngredientsBlock = ({ title, data }) => {
@@ -14,6 +16,11 @@ const IngredientsBlock = ({ title, data }) => {
       </ul>
     </>
   );
+};
+
+IngredientsBlock.propTypes = {
+  data: PropTypes.arrayOf(ingredientProps.isRequired).isRequired,
+  title: PropTypes.string.isRequired,
 };
 
 export default IngredientsBlock;
