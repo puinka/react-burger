@@ -5,22 +5,32 @@ import {
   CurrencyIcon,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import data from "../../utils/data.js";
 
-const getRandomBurger = () => {
+const getRandomBurger = (arr) => {
   const randomLength = Math.floor(Math.random() * 5 + 2);
   const randomBurger = [];
   for (let i = 0; i <= randomLength; i++) {
-    const ranIndex = Math.floor(Math.random() * data.length);
-    randomBurger.push(data[ranIndex]);
+    const ranIndex = Math.floor(Math.random() * arr.length);
+    randomBurger.push(arr[ranIndex]);
   }
   return randomBurger;
 };
 
-const bun = data.find((item) => item.type === "bun");
-const main = getRandomBurger().filter((item) => item.type !== "bun");
+const calcFinalPrice = (bun, main) => {
+  let mainPrice = 0;
+  const bunPrice = bun.price * 2;
+  main.map((item) => (mainPrice += item.price));
+  return mainPrice + bunPrice;
+};
 
-const BurgerConstructor = () => {
+const BurgerConstructor = (props) => {
+  const bun = props.data.find((item) => item.type === "bun");
+  const main = getRandomBurger(props.data).filter(
+    (item) => item.type !== "bun"
+  );
+
+  const finalPrice = calcFinalPrice(bun, main);
+
   return (
     <section className={`pl-4 pt-25 pr-4 ${styles.container}`}>
       <div className="ml-8">
@@ -54,7 +64,7 @@ const BurgerConstructor = () => {
 
       <div className={`mt-10 mr-8 ${styles.order}`}>
         <div className={`mr-10 ${styles.price}`}>
-          <p className="text text_type_digits-medium mr-2">610</p>
+          <p className="text text_type_digits-medium mr-2">{finalPrice}</p>
           <CurrencyIcon type="primary" />
         </div>
         <Button type="primary" size="large">
