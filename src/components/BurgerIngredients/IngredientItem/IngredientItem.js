@@ -9,7 +9,7 @@ const IngredientItem = ({ item }) => {
   const [count, setCount] = useState(3);
   return (
     <li className={`pl-4 pr-4 pb-3 mr-6 mb-8 ${styles.container}`}>
-      <img src={item.image} />
+      <img src={item.image} alt={item.name} />
       <div className={`mt-1 mb-1 ${item.price}`}>
         <p className="text text_type_digits-default mr-2">{item.price}</p>
         <CurrencyIcon type="primary" />
