@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { INGREDIENT_TYPES } from "../../utils/constants.js";
 import styles from "./burgeringredients.module.css";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import IngredientsBlock from "./IngredientsBlock/IngredientsBlock";
@@ -6,11 +7,11 @@ import PropTypes from "prop-types";
 import { ingredientProps } from "../../utils/ingredientProps";
 
 const BurgerIngredients = ({ data }) => {
-  const [current, setCurrent] = useState("Начинки");
+  const [current, setCurrent] = useState(INGREDIENT_TYPES.BUN);
 
-  const bun = data.filter((item) => item.type === "bun");
-  const sauce = data.filter((item) => item.type === "sauce");
-  const main = data.filter((item) => item.type === "main");
+  const bun = data.filter((item) => item.type === INGREDIENT_TYPES.BUN);
+  const sauce = data.filter((item) => item.type === INGREDIENT_TYPES.SAUCE);
+  const main = data.filter((item) => item.type === INGREDIENT_TYPES.MAIN);
 
   return (
     <section className={`pt-10 mr-10 ${styles.container}`}>
@@ -19,15 +20,23 @@ const BurgerIngredients = ({ data }) => {
       </h2>
 
       <div className={`mb-10 ${styles.tabs}`}>
-        <Tab value="Булки" active={current === "Булки"} onClick={setCurrent}>
+        <Tab
+          value={INGREDIENT_TYPES.BUN}
+          active={current === INGREDIENT_TYPES.BUN}
+          onClick={setCurrent}
+        >
           Булки
         </Tab>
-        <Tab value="Соусы" active={current === "Соусы"} onClick={setCurrent}>
+        <Tab
+          value={INGREDIENT_TYPES.SAUCE}
+          active={current === INGREDIENT_TYPES.SAUCE}
+          onClick={setCurrent}
+        >
           Соусы
         </Tab>
         <Tab
-          value="Начинки"
-          active={current === "Начинки"}
+          value={INGREDIENT_TYPES.MAIN}
+          active={current === INGREDIENT_TYPES.MAIN}
           onClick={setCurrent}
         >
           Начинки

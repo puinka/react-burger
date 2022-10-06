@@ -1,5 +1,6 @@
 import styles from "./burgerconstructor.module.css";
 import PropTypes from "prop-types";
+import { INGREDIENT_TYPES } from "../../utils/constants.js";
 import { ingredientProps } from "../../utils/ingredientProps";
 
 import {
@@ -28,9 +29,9 @@ const calcFinalPrice = (bun, main) => {
 };
 
 const BurgerConstructor = (props) => {
-  const bun = props.data.find((item) => item.type === "bun");
+  const bun = props.data.find((item) => item.type === INGREDIENT_TYPES.BUN);
   const main = getRandomBurger(props.data).filter(
-    (item) => item.type !== "bun"
+    (item) => item.type !== INGREDIENT_TYPES.BUN
   );
 
   const finalPrice = calcFinalPrice(bun, main);
