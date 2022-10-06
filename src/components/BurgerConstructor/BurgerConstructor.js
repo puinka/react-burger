@@ -20,10 +20,11 @@ const getRandomBurger = (arr) => {
 };
 
 const calcFinalPrice = (bun, main) => {
-  let mainPrice = 0;
   const bunPrice = bun.price * 2;
-  main.map((item) => (mainPrice += item.price));
-  return mainPrice + bunPrice;
+
+  return main.reduce(function (accumulator, currentValue) {
+    return accumulator + currentValue.price;
+  }, bunPrice);
 };
 
 const BurgerConstructor = (props) => {
