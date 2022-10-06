@@ -2,6 +2,8 @@ import { useState } from "react";
 import styles from "./burgeringredients.module.css";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import IngredientsBlock from "./IngredientsBlock/IngredientsBlock";
+import PropTypes from "prop-types";
+import { ingredientProps } from "../../utils/ingredientProps";
 
 const BurgerIngredients = ({ data }) => {
   const [current, setCurrent] = useState("Начинки");
@@ -39,6 +41,10 @@ const BurgerIngredients = ({ data }) => {
       </div>
     </section>
   );
+};
+
+BurgerIngredients.propTypes = {
+  data: PropTypes.arrayOf(ingredientProps.isRequired).isRequired,
 };
 
 export default BurgerIngredients;

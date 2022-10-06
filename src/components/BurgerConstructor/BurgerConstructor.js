@@ -1,4 +1,7 @@
 import styles from "./burgerconstructor.module.css";
+import PropTypes from "prop-types";
+import { ingredientProps } from "../../utils/ingredientProps";
+
 import {
   ConstructorElement,
   DragIcon,
@@ -73,6 +76,10 @@ const BurgerConstructor = (props) => {
       </div>
     </section>
   );
+};
+
+BurgerConstructor.propTypes = {
+  data: PropTypes.arrayOf(ingredientProps.isRequired).isRequired,
 };
 
 export default BurgerConstructor;
