@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import AppHeader from "../AppHeader/AppHeader";
 import BurgerIngredients from "../BurgerIngredients/BurgerIngredients";
 import BurgerConstructor from "../BurgerConstructor/BurgerConstructor";
+import Modal from "../Modal/Modal";
+import OrderDetails from "../Modal/OrderDetails/OrderDetails";
 
 function App() {
   useEffect(() => {
@@ -11,6 +13,7 @@ function App() {
   }, []);
 
   const [serverData, setServerData] = useState();
+  const [isOrderDetailsOpen, setOrderDetailsOpen] = useState();
 
   const fetchData = async () => {
     try {
@@ -22,13 +25,32 @@ function App() {
     }
   };
 
+  const handleCreateOrder = () => {
+    setOrderDetailsOpen(true);
+  };
+
+  const closeAllModals = () => {
+    setOrderDetailsOpen(false);
+  };
+
+  const handleEscKeyDown = (evt) => {
+    evt.key === "Escape" && closeAllModals();
+  };
+
   return (
     <div className={styles.app}>
       <AppHeader />
       <main className={styles.main}>
         {serverData && <BurgerIngredients data={serverData} />}
-        {serverData && <BurgerConstructor data={serverData} />}
+        {serverData && (
+          <BurgerConstructor data={serverData} onClick={handleCreateOrder} />
+        )}
       </main>
+      {isOrderDetailsOpen && (
+        <Modal onCloseClick={closeAllModals} onEscKeydown={handleEscKeyDown}>
+          <OrderDetails number="034536" />
+        </Modal>
+      )}
     </div>
   );
 }

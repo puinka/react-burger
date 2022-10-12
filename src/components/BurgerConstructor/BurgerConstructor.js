@@ -28,9 +28,9 @@ const calcFinalPrice = (bun, main) => {
   }, bunPrice);
 };
 
-const BurgerConstructor = (props) => {
-  const bun = props.data.find((item) => item.type === INGREDIENT_TYPES.BUN);
-  const main = getRandomBurger(props.data).filter(
+const BurgerConstructor = ({ data, onClick }) => {
+  const bun = data.find((item) => item.type === INGREDIENT_TYPES.BUN);
+  const main = getRandomBurger(data).filter(
     (item) => item.type !== INGREDIENT_TYPES.BUN
   );
 
@@ -72,7 +72,7 @@ const BurgerConstructor = (props) => {
           <p className="text text_type_digits-medium mr-2">{finalPrice}</p>
           <CurrencyIcon type="primary" />
         </div>
-        <Button type="primary" size="large">
+        <Button type="primary" size="large" onClick={onClick}>
           Оформить заказ
         </Button>
       </div>
