@@ -21,6 +21,7 @@ const IngredientsBlock = ({ title, data, onClick }) => {
 IngredientsBlock.propTypes = {
   data: PropTypes.arrayOf(ingredientProps.isRequired).isRequired,
   title: PropTypes.string.isRequired,
+  onClick: PropTypes.func.isRequired,
 };
 
 export default IngredientsBlock;

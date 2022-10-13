@@ -54,6 +54,7 @@ const BurgerIngredients = ({ data, onClick }) => {
 
 BurgerIngredients.propTypes = {
   data: PropTypes.arrayOf(ingredientProps.isRequired).isRequired,
+  onClick: PropTypes.func.isRequired,
 };
 
 export default BurgerIngredients;

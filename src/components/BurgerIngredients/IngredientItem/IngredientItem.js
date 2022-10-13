@@ -1,4 +1,5 @@
 import { useState } from "react";
+import PropTypes from "prop-types";
 import { ingredientProps } from "../../../utils/ingredientProps.js";
 import styles from "./ingredientitem.module.css";
 import {
@@ -26,6 +27,7 @@ const IngredientItem = ({ item, onClick }) => {
 
 IngredientItem.propTypes = {
   item: ingredientProps.isRequired,
+  onClick: PropTypes.func.isRequired,
 };
 
 export default IngredientItem;
