@@ -6,10 +6,13 @@ import {
   Counter,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 
-const IngredientItem = ({ item }) => {
+const IngredientItem = ({ item, onClick }) => {
   const [count, setCount] = useState(3);
   return (
-    <li className={`pl-4 pr-4 pb-3 mr-6 mb-8 ${styles.container}`}>
+    <li
+      className={`pl-4 pr-4 pb-3 mr-6 mb-8 ${styles.container}`}
+      onClick={() => onClick(item)}
+    >
       <img src={item.image} alt={item.name} />
       <div className={`mt-1 mb-1 ${styles.price}`}>
         <p className="text text_type_digits-default mr-2">{item.price}</p>

@@ -4,6 +4,7 @@
   max-width: 272px;
   box-sizing: border-box;
   position: relative;
+  cursor: pointer;
 }
 
 .container:nth-child(even) {

@@ -1,0 +1,15 @@
+.container {
+  text-align: center;
+}
+
+.list {
+  display: flex;
+  justify-content: space-between;
+  max-width: 516px;
+  margin: 0 auto;
+}
+
+.image {
+  width: 520px;
+  height: auto;
+}

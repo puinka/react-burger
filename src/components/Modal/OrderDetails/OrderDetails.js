@@ -3,8 +3,8 @@ import done from "../../../images/done.png";
 
 const OrderDetails = ({ number }) => {
   return (
-    <div className={`pl-30 pr-30 pb-30 ${styles.container}`}>
-      <h4 className="text text_type_digits-large pt-30 pb-8">{number}</h4>
+    <div className={`pb-15 ${styles.container}`}>
+      <h4 className="text text_type_digits-large pt-15 pb-8">{number}</h4>
       <p className="text text_type_main-medium pb-15">идентификатор заказа</p>
       <img className={styles.image} src={done} alt="done" />
       <p className="text text_type_main-default pt-15 pb-2">

@@ -3,7 +3,7 @@
   box-sizing: border-box;
   left: 50vw;
   top: 50vh;
-  max-width: 720px;
+  width: 720px;
   transform: translate(-50%, -50%);
   background-color: var(--background);
   z-index: 20;
@@ -12,14 +12,14 @@
     0px 16px 24px rgba(0, 0, 0, 0.04), 0px 4px 8px rgba(0, 0, 0, 0.04),
     0px 0px 1px rgba(0, 0, 0, 0.04);
   border-radius: 40px;
-  display: flex;
+  padding: 40px;
 }
 
 .button {
   width: 24px;
   height: 24px;
   position: absolute;
-  top: 60px;
+  top: 53px;
   right: 40px;
   padding: 0;
   background-color: transparent;
