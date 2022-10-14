@@ -1,5 +1,5 @@
 import styles from "./app.module.css";
-import { URL } from "../../utils/constants.js";
+import { INGREDIENTS_URL } from "../../utils/constants.js";
 import { useEffect, useState } from "react";
 import AppHeader from "../AppHeader/AppHeader";
 import BurgerIngredients from "../BurgerIngredients/BurgerIngredients";
@@ -20,7 +20,7 @@ function App() {
 
   const fetchData = async () => {
     try {
-      const res = await fetch(URL);
+      const res = await fetch(INGREDIENTS_URL);
       const data = await res.json();
       setServerData(data.data);
     } catch (err) {
