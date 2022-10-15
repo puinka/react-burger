@@ -4,7 +4,11 @@ import { ingredientProps } from "../../../utils/ingredientProps";
 const IngredientDetails = ({ item }) => {
   return (
     <div className={`pb-12 ${styles.container}`}>
-      <img className={`pb-4 ${styles.image}`} src={item.image_large}></img>
+      <img
+        className={`pb-4 ${styles.image}`}
+        alt={item.name}
+        src={item.image_large}
+      ></img>
       <h3 className="text text_type_main-medium pb-8">{item.name}</h3>
       <ul className={styles.list}>
         <li>
