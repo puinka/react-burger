@@ -72,7 +72,12 @@ const BurgerConstructor = ({ data, makeOrder }) => {
           <p className="text text_type_digits-medium mr-2">{finalPrice}</p>
           <CurrencyIcon type="primary" />
         </div>
-        <Button type="primary" size="large" onClick={makeOrder}>
+        <Button
+          type="primary"
+          size="large"
+          onClick={makeOrder}
+          htmlType="button"
+        >
           Оформить заказ
         </Button>
       </div>
@@ -82,7 +87,7 @@ const BurgerConstructor = ({ data, makeOrder }) => {
 
 BurgerConstructor.propTypes = {
   data: PropTypes.arrayOf(ingredientProps.isRequired).isRequired,
-  onClick: PropTypes.func.isRequired,
+  makeOrder: PropTypes.func.isRequired,
 };
 
 export default BurgerConstructor;
