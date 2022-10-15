@@ -7,14 +7,22 @@ import ModalOverlay from "./ModalOverlay/ModalOverlay";
 
 const modalsContainer = document.querySelector("#modals");
 
-const Modal = ({ title, onCloseClick, onEscKeydown, children }) => {
+const Modal = ({ title, onCloseClick, children }) => {
   useEffect(() => {
-    document.addEventListener("keydown", onEscKeydown);
+    document.addEventListener("keydown", (evt) =>
+      handleEscKeyDown(evt, onCloseClick)
+    );
 
     return () => {
-      document.removeEventListener("keydown", onEscKeydown);
+      document.removeEventListener("keydown", (evt) =>
+        handleEscKeyDown(evt, onCloseClick)
+      );
     };
   }, []);
+
+  const handleEscKeyDown = (evt, closeFunc) => {
+    evt.key === "Escape" && closeFunc();
+  };
 
   return ReactDOM.createPortal(
     <>

@@ -47,10 +47,6 @@ function App() {
     setIngredientDetailsOpen(false);
   };
 
-  const handleEscKeyDown = (evt) => {
-    evt.key === "Escape" && closeAllModals();
-  };
-
   return (
     <div className={styles.app}>
       <AppHeader />
@@ -66,16 +62,12 @@ function App() {
         )}
       </main>
       {isOrderDetailsOpen && (
-        <Modal onCloseClick={closeAllModals} onEscKeydown={handleEscKeyDown}>
+        <Modal onCloseClick={closeAllModals}>
           <OrderDetails number="034536" />
         </Modal>
       )}
       {isIngredientDetailsOpen && (
-        <Modal
-          title="Детали ингредиента"
-          onCloseClick={closeAllModals}
-          onEscKeydown={handleEscKeyDown}
-        >
+        <Modal title="Детали ингредиента" onCloseClick={closeAllModals}>
           <IngredientDetails item={currentIngredient} />
         </Modal>
       )}
