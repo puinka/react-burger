@@ -6,7 +6,7 @@ import IngredientsBlock from "./IngredientsBlock/IngredientsBlock";
 import PropTypes from "prop-types";
 import { ingredientProps } from "../../utils/ingredientProps";
 
-const BurgerIngredients = ({ data, onClick }) => {
+const BurgerIngredients = ({ data, handleIngredientClick }) => {
   const [current, setCurrent] = useState(INGREDIENT_TYPES.BUN);
 
   const bun = data.filter((item) => item.type === INGREDIENT_TYPES.BUN);
@@ -44,9 +44,21 @@ const BurgerIngredients = ({ data, onClick }) => {
       </div>
 
       <div className={styles.scrollContainer}>
-        <IngredientsBlock title="Булки" data={bun} onClick={onClick} />
-        <IngredientsBlock title="Соусы" data={sauce} onClick={onClick} />
-        <IngredientsBlock title="Начинки" data={main} onClick={onClick} />
+        <IngredientsBlock
+          title="Булки"
+          data={bun}
+          handleIngredientClick={handleIngredientClick}
+        />
+        <IngredientsBlock
+          title="Соусы"
+          data={sauce}
+          handleIngredientClick={handleIngredientClick}
+        />
+        <IngredientsBlock
+          title="Начинки"
+          data={main}
+          handleIngredientClick={handleIngredientClick}
+        />
       </div>
     </section>
   );

@@ -54,7 +54,7 @@ function App() {
         {serverData && (
           <BurgerIngredients
             data={serverData}
-            onClick={handleShowIngredientDetails}
+            handleIngredientClick={handleShowIngredientDetails}
           />
         )}
         {serverData && (
