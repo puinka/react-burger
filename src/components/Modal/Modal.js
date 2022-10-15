@@ -32,7 +32,7 @@ const Modal = ({ title, onCloseClick, onEscKeydown, children }) => {
 };
 
 Modal.propTypes = {
-  title: PropTypes.string.isRequired,
+  title: PropTypes.string,
   onCloseClick: PropTypes.func.isRequired,
   onEscKeydown: PropTypes.func.isRequired,
   children: PropTypes.node.isRequired,
