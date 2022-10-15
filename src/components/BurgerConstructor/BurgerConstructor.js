@@ -28,7 +28,7 @@ const calcFinalPrice = (bun, main) => {
   }, bunPrice);
 };
 
-const BurgerConstructor = ({ data, onClick }) => {
+const BurgerConstructor = ({ data, makeOrder }) => {
   const bun = data.find((item) => item.type === INGREDIENT_TYPES.BUN);
   const main = getRandomBurger(data).filter(
     (item) => item.type !== INGREDIENT_TYPES.BUN
@@ -72,7 +72,7 @@ const BurgerConstructor = ({ data, onClick }) => {
           <p className="text text_type_digits-medium mr-2">{finalPrice}</p>
           <CurrencyIcon type="primary" />
         </div>
-        <Button type="primary" size="large" onClick={onClick}>
+        <Button type="primary" size="large" onClick={makeOrder}>
           Оформить заказ
         </Button>
       </div>

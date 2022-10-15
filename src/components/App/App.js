@@ -58,7 +58,7 @@ function App() {
           />
         )}
         {serverData && (
-          <BurgerConstructor data={serverData} onClick={handleCreateOrder} />
+          <BurgerConstructor data={serverData} makeOrder={handleCreateOrder} />
         )}
       </main>
       {isOrderDetailsOpen && (
