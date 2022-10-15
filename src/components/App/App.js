@@ -13,7 +13,7 @@ function App() {
     fetchData();
   }, []);
 
-  const [serverData, setServerData] = useState();
+  const [ingredients, setIngredients] = useState();
   const [isOrderDetailsOpen, setOrderDetailsOpen] = useState(false);
   const [isIngredientDetailsOpen, setIngredientDetailsOpen] = useState(false);
   const [currentIngredient, setCurrentIngredient] = useState(null);
@@ -26,7 +26,7 @@ function App() {
         throw new Error(message);
       }
       const json = await res.json();
-      setServerData(json.data);
+      setIngredients(json.data);
     } catch (err) {
       alert("Ошибка: " + err);
     }
@@ -51,14 +51,14 @@ function App() {
     <div className={styles.app}>
       <AppHeader />
       <main className={styles.main}>
-        {serverData && (
+        {ingredients && (
           <BurgerIngredients
-            data={serverData}
+            data={ingredients}
             handleIngredientClick={handleShowIngredientDetails}
           />
         )}
-        {serverData && (
-          <BurgerConstructor data={serverData} makeOrder={handleCreateOrder} />
+        {ingredients && (
+          <BurgerConstructor data={ingredients} makeOrder={handleCreateOrder} />
         )}
       </main>
       {isOrderDetailsOpen && (
