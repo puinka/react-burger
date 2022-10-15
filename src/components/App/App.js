@@ -21,10 +21,14 @@ function App() {
   const fetchData = async () => {
     try {
       const res = await fetch(INGREDIENTS_URL);
-      const data = await res.json();
-      setServerData(data.data);
+      if (!res.ok) {
+        const message = `Ошибка HTTP: ${res.status}`;
+        throw new Error(message);
+      }
+      const json = await res.json();
+      setServerData(json.data);
     } catch (err) {
-      console.log(err);
+      alert("Ошибка: " + err);
     }
   };
 
