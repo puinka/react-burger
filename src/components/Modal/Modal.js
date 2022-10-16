@@ -9,19 +9,15 @@ const modalsContainer = document.querySelector("#modals");
 
 const Modal = ({ title, onCloseClick, children }) => {
   useEffect(() => {
-    document.addEventListener("keydown", (evt) =>
-      handleEscKeyDown(evt, onCloseClick)
-    );
+    document.addEventListener("keydown", handleEscKeyDown);
 
     return () => {
-      document.removeEventListener("keydown", (evt) =>
-        handleEscKeyDown(evt, onCloseClick)
-      );
+      document.removeEventListener("keydown", handleEscKeyDown);
     };
   }, []);
 
-  const handleEscKeyDown = (evt, closeFunc) => {
-    evt.key === "Escape" && closeFunc();
+  const handleEscKeyDown = (evt) => {
+    evt.key === "Escape" && onCloseClick();
   };
 
   return ReactDOM.createPortal(
