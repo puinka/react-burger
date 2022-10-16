@@ -9,10 +9,14 @@ import {
 
 const IngredientItem = ({ item, handleIngredientClick }) => {
   const [count, setCount] = useState(3);
+
+  const onIngredientClick = () => {
+    handleIngredientClick(item);
+  };
   return (
     <li
       className={`pl-4 pr-4 pb-3 mr-6 mb-8 ${styles.container}`}
-      onClick={() => handleIngredientClick(item)}
+      onClick={onIngredientClick}
     >
       <img src={item.image} alt={item.name} />
       <div className={`mt-1 mb-1 ${styles.price}`}>
