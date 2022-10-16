@@ -39,7 +39,6 @@ function App() {
   const handleShowIngredientDetails = (item) => {
     setIngredientDetailsOpen(true);
     setCurrentIngredient(item);
-    console.log(currentIngredient);
   };
 
   const closeAllModals = () => {
