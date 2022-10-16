@@ -8,7 +8,7 @@ const IngredientDetails = ({ item }) => {
         className={`pb-4 ${styles.image}`}
         alt={item.name}
         src={item.image_large}
-      ></img>
+      />
       <h3 className="text text_type_main-medium pb-8">{item.name}</h3>
       <ul className={styles.list}>
         <li>
