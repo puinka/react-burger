@@ -1,0 +1,30 @@
+.container {
+  max-width: 600px;
+}
+
+.scrollContainer {
+  overflow-y: auto;
+  max-height: 450px;
+  scrollbar-color: var(--background-element) var(--text-inactive-color);
+  scrollbar-width: 8px;
+}
+
+.scrollContainer::-webkit-scrollbar {
+  width: 8px;
+}
+
+.scrollContainer::-webkit-scrollbar-track {
+  background-color: var(--background-element);
+}
+
+.scrollContainer::-webkit-scrollbar-thumb {
+  background-color: var(--text-inactive-color);
+}
+
+.title {
+  text-align: left;
+}
+
+.tabs {
+  display: flex;
+}
