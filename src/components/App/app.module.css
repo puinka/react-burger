@@ -8,3 +8,10 @@
   flex-direction: row;
   justify-content: center;
 }
+
+.loader {
+  position: absolute;
+  left: 50vw;
+  top: 50vh;
+  transform: translate(-50%, -50%);
+}
