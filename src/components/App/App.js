@@ -5,7 +5,7 @@ import AppHeader from "../AppHeader/AppHeader";
 import BurgerIngredients from "../BurgerIngredients/BurgerIngredients";
 import BurgerConstructor from "../BurgerConstructor/BurgerConstructor";
 
-import { handleServerRequest } from "../../utils/api.js";
+import { getIngredients } from "../../utils/api.js";
 
 import { BurgerConstructorContext } from "../../services/burgerConstructorContext";
 
@@ -21,8 +21,8 @@ function App() {
 
   const fetchData = async () => {
     try {
-      const json = await handleServerRequest();
-      setIngredients(json.data);
+      const data = await getIngredients();
+      setIngredients(data);
       setIsLoading(false);
     } catch (err) {
       alert("Ошибка: " + err);
