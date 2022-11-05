@@ -1,5 +1,4 @@
 import styles from "./app.module.css";
-import { INGREDIENTS_URL } from "../../utils/constants.js";
 import { useEffect, useState } from "react";
 import BounceLoader from "react-spinners/BounceLoader";
 import AppHeader from "../AppHeader/AppHeader";
@@ -8,6 +7,8 @@ import BurgerConstructor from "../BurgerConstructor/BurgerConstructor";
 import Modal from "../Modal/Modal";
 import OrderDetails from "../Modal/OrderDetails/OrderDetails";
 import IngredientDetails from "../Modal/IngredientDetails/IngredientDetails";
+
+import { handleServerRequest } from "../../utils/api.js";
 
 function App() {
   useEffect(() => {
@@ -22,16 +23,12 @@ function App() {
 
   const fetchData = async () => {
     try {
-      const res = await fetch(INGREDIENTS_URL);
-      if (!res.ok) {
-        const message = `Ошибка HTTP: ${res.status}`;
-        throw new Error(message);
-      }
-      const json = await res.json();
+      const json = await handleServerRequest();
       setIngredients(json.data);
-      setIsLoading(false);
     } catch (err) {
       alert("Ошибка: " + err);
+    } finally {
+      setIsLoading(false);
     }
   };
 
