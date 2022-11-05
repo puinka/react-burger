@@ -6,7 +6,6 @@ import BurgerIngredients from "../BurgerIngredients/BurgerIngredients";
 import BurgerConstructor from "../BurgerConstructor/BurgerConstructor";
 import Modal from "../Modal/Modal";
 import OrderDetails from "../Modal/OrderDetails/OrderDetails";
-import IngredientDetails from "../Modal/IngredientDetails/IngredientDetails";
 
 import { handleServerRequest } from "../../utils/api.js";
 
@@ -21,7 +20,6 @@ function App() {
   const [ingredients, setIngredients] = useState();
   const [isOrderDetailsOpen, setOrderDetailsOpen] = useState(false);
   const [isIngredientDetailsOpen, setIngredientDetailsOpen] = useState(false);
-  const [currentIngredient, setCurrentIngredient] = useState(null);
 
   const fetchData = async () => {
     try {
@@ -36,11 +34,6 @@ function App() {
 
   const handleCreateOrder = () => {
     setOrderDetailsOpen(true);
-  };
-
-  const handleShowIngredientDetails = (item) => {
-    setIngredientDetailsOpen(true);
-    setCurrentIngredient(item);
   };
 
   const closeAllModals = () => {
@@ -65,7 +58,9 @@ function App() {
             {ingredients && (
               <BurgerIngredients
                 data={ingredients}
-                handleIngredientClick={handleShowIngredientDetails}
+                isIngredientDetailsOpen={isIngredientDetailsOpen}
+                closeAllModals={closeAllModals}
+                setIngredientDetailsOpen={setIngredientDetailsOpen}
               />
             )}
             {ingredients && (
@@ -77,11 +72,6 @@ function App() {
           {isOrderDetailsOpen && (
             <Modal onCloseClick={closeAllModals}>
               <OrderDetails number="034536" />
-            </Modal>
-          )}
-          {isIngredientDetailsOpen && (
-            <Modal title="Детали ингредиента" onCloseClick={closeAllModals}>
-              <IngredientDetails item={currentIngredient} />
             </Modal>
           )}
         </div>
