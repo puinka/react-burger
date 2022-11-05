@@ -23,6 +23,7 @@ function App() {
     try {
       const json = await handleServerRequest();
       setIngredients(json.data);
+      setIsLoading(false);
     } catch (err) {
       alert("Ошибка: " + err);
     } finally {
