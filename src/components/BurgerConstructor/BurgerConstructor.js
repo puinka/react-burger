@@ -1,3 +1,4 @@
+import { useContext } from "react";
 import styles from "./burgerconstructor.module.css";
 import PropTypes from "prop-types";
 import { INGREDIENT_TYPES } from "../../utils/constants.js";
@@ -9,6 +10,7 @@ import {
   CurrencyIcon,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
+import { BurgerConstructorContext } from "../../services/burgerConstructorContext";
 
 const getRandomBurger = (arr) => {
   const randomLength = Math.floor(Math.random() * 5 + 2);
@@ -28,7 +30,8 @@ const calcFinalPrice = (bun, main) => {
   }, bunPrice);
 };
 
-const BurgerConstructor = ({ data, makeOrder }) => {
+const BurgerConstructor = ({ makeOrder }) => {
+  const data = useContext(BurgerConstructorContext);
   const bun = data.find((item) => item.type === INGREDIENT_TYPES.BUN);
   const main = getRandomBurger(data).filter(
     (item) => item.type !== INGREDIENT_TYPES.BUN
@@ -86,7 +89,7 @@ const BurgerConstructor = ({ data, makeOrder }) => {
 };
 
 BurgerConstructor.propTypes = {
-  data: PropTypes.arrayOf(ingredientProps.isRequired).isRequired,
+  //data: PropTypes.arrayOf(ingredientProps.isRequired).isRequired,
   makeOrder: PropTypes.func.isRequired,
 };
 

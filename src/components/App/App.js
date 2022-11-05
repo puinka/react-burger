@@ -10,6 +10,8 @@ import IngredientDetails from "../Modal/IngredientDetails/IngredientDetails";
 
 import { handleServerRequest } from "../../utils/api.js";
 
+import { BurgerConstructorContext } from "../../services/burgerConstructorContext";
+
 function App() {
   useEffect(() => {
     fetchData();
@@ -67,10 +69,9 @@ function App() {
               />
             )}
             {ingredients && (
-              <BurgerConstructor
-                data={ingredients}
-                makeOrder={handleCreateOrder}
-              />
+              <BurgerConstructorContext.Provider value={ingredients}>
+                <BurgerConstructor makeOrder={handleCreateOrder} />
+              </BurgerConstructorContext.Provider>
             )}
           </main>
           {isOrderDetailsOpen && (
