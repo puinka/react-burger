@@ -4,8 +4,6 @@ import BounceLoader from "react-spinners/BounceLoader";
 import AppHeader from "../AppHeader/AppHeader";
 import BurgerIngredients from "../BurgerIngredients/BurgerIngredients";
 import BurgerConstructor from "../BurgerConstructor/BurgerConstructor";
-import Modal from "../Modal/Modal";
-import OrderDetails from "../Modal/OrderDetails/OrderDetails";
 
 import { handleServerRequest } from "../../utils/api.js";
 
@@ -32,10 +30,6 @@ function App() {
     }
   };
 
-  const handleCreateOrder = () => {
-    setOrderDetailsOpen(true);
-  };
-
   const closeAllModals = () => {
     setOrderDetailsOpen(false);
     setIngredientDetailsOpen(false);
@@ -58,22 +52,21 @@ function App() {
             {ingredients && (
               <BurgerIngredients
                 data={ingredients}
-                isIngredientDetailsOpen={isIngredientDetailsOpen}
                 closeAllModals={closeAllModals}
+                isIngredientDetailsOpen={isIngredientDetailsOpen}
                 setIngredientDetailsOpen={setIngredientDetailsOpen}
               />
             )}
             {ingredients && (
               <BurgerConstructorContext.Provider value={ingredients}>
-                <BurgerConstructor makeOrder={handleCreateOrder} />
+                <BurgerConstructor
+                  closeAllModals={closeAllModals}
+                  setOrderDetailsOpen={setOrderDetailsOpen}
+                  isOrderDetailsOpen={isOrderDetailsOpen}
+                />
               </BurgerConstructorContext.Provider>
             )}
           </main>
-          {isOrderDetailsOpen && (
-            <Modal onCloseClick={closeAllModals}>
-              <OrderDetails number="034536" />
-            </Modal>
-          )}
         </div>
       )}
     </>

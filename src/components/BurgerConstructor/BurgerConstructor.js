@@ -3,6 +3,8 @@ import styles from "./burgerconstructor.module.css";
 import PropTypes from "prop-types";
 import { INGREDIENT_TYPES } from "../../utils/constants.js";
 import { ingredientProps } from "../../utils/ingredientProps";
+import Modal from "../Modal/Modal";
+import OrderDetails from "../Modal/OrderDetails/OrderDetails";
 
 import {
   ConstructorElement,
@@ -30,7 +32,11 @@ const calcFinalPrice = (bun, main) => {
   }, bunPrice);
 };
 
-const BurgerConstructor = ({ makeOrder }) => {
+const BurgerConstructor = ({
+  closeAllModals,
+  setOrderDetailsOpen,
+  isOrderDetailsOpen,
+}) => {
   const data = useContext(BurgerConstructorContext);
   const bun = data.find((item) => item.type === INGREDIENT_TYPES.BUN);
   const main = getRandomBurger(data).filter(
@@ -39,58 +45,74 @@ const BurgerConstructor = ({ makeOrder }) => {
 
   const finalPrice = calcFinalPrice(bun, main);
 
-  return (
-    <section className={`pl-4 pt-25 pr-4 ${styles.container}`}>
-      <div className="ml-8">
-        <ConstructorElement
-          type="top"
-          isLocked
-          text={`${bun.name} (верх)`}
-          price={bun.price}
-          thumbnail={bun.image}
-        />
-      </div>
-      <ul className={`pr-2 ${styles.scrollContainer}`}>
-        {main.map(({ name, price, image }, index) => {
-          return (
-            <li className={`${styles.listItem}`} key={index}>
-              <DragIcon type="primary" />
-              <ConstructorElement text={name} price={price} thumbnail={image} />
-            </li>
-          );
-        })}
-      </ul>
-      <div className="ml-8">
-        <ConstructorElement
-          type="bottom"
-          isLocked
-          text={`${bun.name} (низ)`}
-          price={bun.price}
-          thumbnail={bun.image}
-        />
-      </div>
+  const handleCreateOrder = () => {
+    setOrderDetailsOpen(true);
+    console.log(isOrderDetailsOpen);
+  };
 
-      <div className={`mt-10 mr-8 ${styles.order}`}>
-        <div className={`mr-10 ${styles.price}`}>
-          <p className="text text_type_digits-medium mr-2">{finalPrice}</p>
-          <CurrencyIcon type="primary" />
+  return (
+    <>
+      <section className={`pl-4 pt-25 pr-4 ${styles.container}`}>
+        <div className="ml-8">
+          <ConstructorElement
+            type="top"
+            isLocked
+            text={`${bun.name} (верх)`}
+            price={bun.price}
+            thumbnail={bun.image}
+          />
         </div>
-        <Button
-          type="primary"
-          size="large"
-          onClick={makeOrder}
-          htmlType="button"
-        >
-          Оформить заказ
-        </Button>
-      </div>
-    </section>
+        <ul className={`pr-2 ${styles.scrollContainer}`}>
+          {main.map(({ name, price, image }, index) => {
+            return (
+              <li className={`${styles.listItem}`} key={index}>
+                <DragIcon type="primary" />
+                <ConstructorElement
+                  text={name}
+                  price={price}
+                  thumbnail={image}
+                />
+              </li>
+            );
+          })}
+        </ul>
+        <div className="ml-8">
+          <ConstructorElement
+            type="bottom"
+            isLocked
+            text={`${bun.name} (низ)`}
+            price={bun.price}
+            thumbnail={bun.image}
+          />
+        </div>
+
+        <div className={`mt-10 mr-8 ${styles.order}`}>
+          <div className={`mr-10 ${styles.price}`}>
+            <p className="text text_type_digits-medium mr-2">{finalPrice}</p>
+            <CurrencyIcon type="primary" />
+          </div>
+          <Button
+            type="primary"
+            size="large"
+            onClick={handleCreateOrder}
+            htmlType="button"
+          >
+            Оформить заказ
+          </Button>
+        </div>
+      </section>
+      {isOrderDetailsOpen && (
+        <Modal onCloseClick={closeAllModals}>
+          <OrderDetails number="034536" />
+        </Modal>
+      )}
+    </>
   );
 };
 
 BurgerConstructor.propTypes = {
   //data: PropTypes.arrayOf(ingredientProps.isRequired).isRequired,
-  makeOrder: PropTypes.func.isRequired,
+  //makeOrder: PropTypes.func.isRequired,
 };
 
 export default BurgerConstructor;
