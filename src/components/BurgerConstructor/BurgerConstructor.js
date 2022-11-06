@@ -51,9 +51,12 @@ const BurgerConstructor = ({
   const handleCreateOrder = async () => {
     const ingredientsIDs = data.map((item) => item._id);
     const res = await postOrder(ingredientsIDs);
-    const orderNumber = res.success ? res.order.number : 0;
-    setOrderNumber(orderNumber);
-    setOrderDetailsOpen(true);
+    if (res.success) {
+      setOrderNumber(res.order.number);
+      setOrderDetailsOpen(true);
+    } else {
+      throw new Error(`Не удалось зарегистрировать Ваш заказ.`);
+    }
   };
 
   return (
