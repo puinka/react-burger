@@ -26,6 +26,12 @@ const BurgerIngredients = ({
     setCurrentIngredient(item);
   };
 
+  const handleTabClick = (id) => {
+    setCurrent(id);
+    console.log(id);
+    document.querySelector(`#${id}`)?.scrollIntoView({ behavior: "smooth" });
+  };
+
   return (
     <>
       <section className={`pt-10 mr-10 ${styles.container}`}>
@@ -37,21 +43,21 @@ const BurgerIngredients = ({
           <Tab
             value={INGREDIENT_TYPES.BUN}
             active={current === INGREDIENT_TYPES.BUN}
-            onClick={setCurrent}
+            onClick={handleTabClick}
           >
             Булки
           </Tab>
           <Tab
             value={INGREDIENT_TYPES.SAUCE}
             active={current === INGREDIENT_TYPES.SAUCE}
-            onClick={setCurrent}
+            onClick={handleTabClick}
           >
             Соусы
           </Tab>
           <Tab
             value={INGREDIENT_TYPES.MAIN}
             active={current === INGREDIENT_TYPES.MAIN}
-            onClick={setCurrent}
+            onClick={handleTabClick}
           >
             Начинки
           </Tab>
@@ -59,16 +65,19 @@ const BurgerIngredients = ({
 
         <div className={styles.scrollContainer}>
           <IngredientsBlock
+            id={INGREDIENT_TYPES.BUN}
             title="Булки"
             data={bun}
             handleIngredientClick={handleIngredientClick}
           />
           <IngredientsBlock
+            id={INGREDIENT_TYPES.SAUCE}
             title="Соусы"
             data={sauce}
             handleIngredientClick={handleIngredientClick}
           />
           <IngredientsBlock
+            id={INGREDIENT_TYPES.MAIN}
             title="Начинки"
             data={main}
             handleIngredientClick={handleIngredientClick}
