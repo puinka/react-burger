@@ -23,7 +23,6 @@ function App() {
     try {
       const data = await getIngredients();
       setIngredients(data);
-      setIsLoading(false);
     } catch (err) {
       alert("Ошибка: " + err);
     } finally {
