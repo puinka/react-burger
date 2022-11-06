@@ -2,7 +2,6 @@ import { useContext, useState } from "react";
 import styles from "./burgerconstructor.module.css";
 import PropTypes from "prop-types";
 import { INGREDIENT_TYPES } from "../../utils/constants.js";
-import { ingredientProps } from "../../utils/ingredientProps";
 import Modal from "../Modal/Modal";
 import OrderDetails from "../Modal/OrderDetails/OrderDetails";
 import { postOrder } from "../../utils/api.js";
@@ -51,9 +50,12 @@ const BurgerConstructor = ({
   const handleCreateOrder = async () => {
     const ingredientsIDs = data.map((item) => item._id);
     const res = await postOrder(ingredientsIDs);
-    const orderNumber = res.success ? res.order.number : 0;
-    setOrderNumber(orderNumber);
-    setOrderDetailsOpen(true);
+    if (res.success) {
+      setOrderNumber(res.order.number);
+      setOrderDetailsOpen(true);
+    } else {
+      throw new Error(`Не удалось зарегистрировать Ваш заказ.`);
+    }
   };
 
   return (
