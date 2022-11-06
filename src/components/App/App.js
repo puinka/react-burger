@@ -9,6 +9,24 @@ import { getIngredients } from "../../utils/api.js";
 
 import { BurgerConstructorContext } from "../../services/burgerConstructorContext";
 
+import { INGREDIENT_TYPES } from "../../utils/constants.js";
+
+const getRandomBurger = (arr) => {
+  const randomLength = Math.floor(Math.random() * 5 + 2);
+  const randomBurger = [];
+  for (let i = 0; i <= randomLength; i++) {
+    const ranIndex = Math.floor(Math.random() * arr.length);
+    randomBurger.push(arr[ranIndex]);
+  }
+  if (
+    randomBurger.filter((item) => item.type === INGREDIENT_TYPES.BUN).length < 1
+  ) {
+    randomBurger.push(arr.find((item) => item.type === INGREDIENT_TYPES.BUN));
+  }
+
+  return randomBurger;
+};
+
 function App() {
   useEffect(() => {
     fetchData();
@@ -18,11 +36,14 @@ function App() {
   const [ingredients, setIngredients] = useState();
   const [isOrderDetailsOpen, setOrderDetailsOpen] = useState(false);
   const [isIngredientDetailsOpen, setIngredientDetailsOpen] = useState(false);
+  const [currentBurger, setCurrentBurger] = useState([]);
 
   const fetchData = async () => {
     try {
       const data = await getIngredients();
       setIngredients(data);
+      const resBurger = getRandomBurger(data);
+      setCurrentBurger(resBurger);
     } catch (err) {
       alert("Ошибка: " + err);
     } finally {
@@ -58,7 +79,7 @@ function App() {
               />
             )}
             {ingredients && (
-              <BurgerConstructorContext.Provider value={ingredients}>
+              <BurgerConstructorContext.Provider value={currentBurger}>
                 <BurgerConstructor
                   closeAllModals={closeAllModals}
                   setOrderDetailsOpen={setOrderDetailsOpen}

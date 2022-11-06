@@ -14,16 +14,6 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { BurgerConstructorContext } from "../../services/burgerConstructorContext";
 
-const getRandomBurger = (arr) => {
-  const randomLength = Math.floor(Math.random() * 5 + 2);
-  const randomBurger = [];
-  for (let i = 0; i <= randomLength; i++) {
-    const ranIndex = Math.floor(Math.random() * arr.length);
-    randomBurger.push(arr[ranIndex]);
-  }
-  return randomBurger;
-};
-
 const calcFinalPrice = (bun, main) => {
   const bunPrice = bun.price * 2;
 
@@ -37,18 +27,17 @@ const BurgerConstructor = ({
   setOrderDetailsOpen,
   isOrderDetailsOpen,
 }) => {
-  const data = useContext(BurgerConstructorContext);
+  const currentBurger = useContext(BurgerConstructorContext);
   const [orderNumber, setOrderNumber] = useState(0);
 
-  const bun = data.find((item) => item.type === INGREDIENT_TYPES.BUN);
-  const main = getRandomBurger(data).filter(
+  const bun = currentBurger.find((item) => item.type === INGREDIENT_TYPES.BUN);
+  const main = currentBurger.filter(
     (item) => item.type !== INGREDIENT_TYPES.BUN
   );
-
   const finalPrice = calcFinalPrice(bun, main);
 
   const handleCreateOrder = async () => {
-    const ingredientsIDs = data.map((item) => item._id);
+    const ingredientsIDs = currentBurger.map((item) => item._id);
     const res = await postOrder(ingredientsIDs);
     if (res.success) {
       setOrderNumber(res.order.number);
