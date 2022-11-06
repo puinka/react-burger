@@ -26,6 +26,7 @@ IngredientsBlock.propTypes = {
   data: PropTypes.arrayOf(ingredientProps.isRequired).isRequired,
   title: PropTypes.string.isRequired,
   handleIngredientClick: PropTypes.func.isRequired,
+  id: PropTypes.string.isRequired,
 };
 
 export default IngredientsBlock;

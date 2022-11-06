@@ -95,6 +95,9 @@ const BurgerIngredients = ({
 
 BurgerIngredients.propTypes = {
   data: PropTypes.arrayOf(ingredientProps.isRequired).isRequired,
+  isIngredientDetailsOpen: PropTypes.bool.isRequired,
+  closeAllModals: PropTypes.func.isRequired,
+  setIngredientDetailsOpen: PropTypes.func.isRequired,
 };
 
 export default BurgerIngredients;

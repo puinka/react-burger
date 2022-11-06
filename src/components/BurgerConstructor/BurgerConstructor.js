@@ -117,8 +117,9 @@ const BurgerConstructor = ({
 };
 
 BurgerConstructor.propTypes = {
-  //data: PropTypes.arrayOf(ingredientProps.isRequired).isRequired,
-  //makeOrder: PropTypes.func.isRequired,
+  closeAllModals: PropTypes.func.isRequired,
+  setOrderDetailsOpen: PropTypes.func.isRequired,
+  isOrderDetailsOpen: PropTypes.bool.isRequired,
 };
 
 export default BurgerConstructor;
