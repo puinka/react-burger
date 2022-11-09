@@ -10,7 +10,7 @@ const handleServerResponse = async (res) => {
   return res.json();
 };
 
-const getIngredients = async () => {
+const getData = async () => {
   const res = await fetch(INGREDIENTS_URL);
   const { data } = await handleServerResponse(res);
   return data;
@@ -29,4 +29,4 @@ const postOrder = async (ingredientsIDs) => {
   return order;
 };
 
-export { getIngredients, postOrder };
+export { getData, postOrder };
