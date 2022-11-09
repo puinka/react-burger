@@ -1,8 +1,8 @@
 import { getData } from "../../utils/api";
 
-const INGREDIENTS_REQUEST = "INGREDIENTS_REQUEST";
-const INGREDIENTS_SUCCESS = "INGREDIENTS_SUCCESS";
-const INGREDIENTS_FAILED = "INGREDIENTS_FAILED";
+export const INGREDIENTS_REQUEST = "INGREDIENTS_REQUEST";
+export const INGREDIENTS_SUCCESS = "INGREDIENTS_SUCCESS";
+export const INGREDIENTS_FAILED = "INGREDIENTS_FAILED";
 
 export const getIngredients = () => (dispatch) => {
   dispatch({

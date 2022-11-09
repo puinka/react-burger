@@ -1,8 +1,8 @@
 import postOrder from "../../utils/api.js";
 
-const CREATE_ORDER_REQUEST = "CREATE_ORDER_REQUEST";
-const CREATE_ORDER_SUCCESS = "CREATE_ORDER_SUCCESS";
-const CREATE_ORDER_FAILED = "CREATE_ORDER_FAILED";
+export const CREATE_ORDER_REQUEST = "CREATE_ORDER_REQUEST";
+export const CREATE_ORDER_SUCCESS = "CREATE_ORDER_SUCCESS";
+export const CREATE_ORDER_FAILED = "CREATE_ORDER_FAILED";
 
 export const createOrder = (ingredientsIDs) => (dispatch) => {
   dispatch({
