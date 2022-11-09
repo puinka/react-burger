@@ -20,7 +20,6 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 
 const BurgerConstructor = () => {
-  //const currentBurger = useContext(BurgerConstructorContext);
   //const [orderNumber, setOrderNumber] = useState(0);
 
   const dispatch = useDispatch();

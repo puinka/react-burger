@@ -15,12 +15,17 @@ export const constructorReducer = (state = initialState, action) => {
     case ADD_MAIN:
       return {
         ...state,
-        mains: [...state.mains, action.item],
+        mains: [
+          ...state.mains,
+          { ...action.item, currentID: action.currentID },
+        ],
       };
     case DELETE_MAIN:
       return {
         ...state,
-        //TODO filter !== id
+        mains: state.mains.filter(
+          (item) => item.currentID !== action.currentID
+        ),
       };
     default:
       return { ...state };
