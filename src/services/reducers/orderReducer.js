@@ -30,6 +30,6 @@ export const orderReducer = (state = initialState, action) => {
         error: action.error,
       };
     default:
-      state;
+      return { ...state };
   }
 };

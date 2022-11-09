@@ -22,11 +22,11 @@ const IngredientsBlock = ({ title, data, handleIngredientClick, id }) => {
   );
 };
 
-IngredientsBlock.propTypes = {
-  data: PropTypes.arrayOf(ingredientProps.isRequired).isRequired,
-  title: PropTypes.string.isRequired,
-  handleIngredientClick: PropTypes.func.isRequired,
-  id: PropTypes.string.isRequired,
-};
+// IngredientsBlock.propTypes = {
+//   data: PropTypes.arrayOf(ingredientProps.isRequired).isRequired,
+//   title: PropTypes.string.isRequired,
+//   handleIngredientClick: PropTypes.func.isRequired,
+//   id: PropTypes.string.isRequired,
+// };
 
 export default IngredientsBlock;

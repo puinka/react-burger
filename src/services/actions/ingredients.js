@@ -1,4 +1,4 @@
-import { getData } from "../../utils/api";
+import { getData } from "../../utils/api.js";
 
 export const INGREDIENTS_REQUEST = "INGREDIENTS_REQUEST";
 export const INGREDIENTS_SUCCESS = "INGREDIENTS_SUCCESS";
@@ -8,11 +8,11 @@ export const getIngredients = () => (dispatch) => {
   dispatch({
     type: INGREDIENTS_REQUEST,
   });
-  return getData()
+  getData()
     .then((res) => {
       dispatch({
         type: INGREDIENTS_SUCCESS,
-        ingredients: res.data,
+        ingredients: res,
       });
     })
     .catch((err) => {

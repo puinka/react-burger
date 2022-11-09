@@ -6,7 +6,7 @@ import {
 
 const initialState = {
   ingredients: [],
-  isLoading: true,
+  isLoading: false,
   error: "",
 };
 
@@ -30,6 +30,6 @@ export const ingredientsReducer = (state = initialState, action) => {
         error: action.error,
       };
     default:
-      state;
+      return { ...state };
   }
 };

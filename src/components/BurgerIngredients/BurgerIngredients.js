@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useSelector } from "react-redux";
 import { INGREDIENT_TYPES } from "../../utils/constants.js";
 import styles from "./burgeringredients.module.css";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
@@ -9,26 +10,30 @@ import Modal from "../Modal/Modal";
 import IngredientDetails from "../Modal/IngredientDetails/IngredientDetails";
 
 const BurgerIngredients = ({
-  data,
   isIngredientDetailsOpen,
   closeAllModals,
   setIngredientDetailsOpen,
 }) => {
+  const { ingredients } = useSelector((store) => store.ingredients);
+
   const [current, setCurrent] = useState(INGREDIENT_TYPES.BUN);
-  const [currentIngredient, setCurrentIngredient] = useState(null);
+  // const [currentIngredient, setCurrentIngredient] = useState(null);
 
-  const bun = data.filter((item) => item.type === INGREDIENT_TYPES.BUN);
-  const sauce = data.filter((item) => item.type === INGREDIENT_TYPES.SAUCE);
-  const main = data.filter((item) => item.type === INGREDIENT_TYPES.MAIN);
+  const bun = ingredients.filter((item) => item.type === INGREDIENT_TYPES.BUN);
+  const sauce = ingredients.filter(
+    (item) => item.type === INGREDIENT_TYPES.SAUCE
+  );
+  const main = ingredients.filter(
+    (item) => item.type === INGREDIENT_TYPES.MAIN
+  );
 
-  const handleIngredientClick = (item) => {
-    setIngredientDetailsOpen(true);
-    setCurrentIngredient(item);
-  };
+  // const handleIngredientClick = (item) => {
+  //   setIngredientDetailsOpen(true);
+  //   setCurrentIngredient(item);
+  // };
 
   const handleTabClick = (id) => {
     setCurrent(id);
-    console.log(id);
     document.querySelector(`#${id}`)?.scrollIntoView({ behavior: "smooth" });
   };
 
@@ -68,36 +73,36 @@ const BurgerIngredients = ({
             id={INGREDIENT_TYPES.BUN}
             title="Булки"
             data={bun}
-            handleIngredientClick={handleIngredientClick}
+            //handleIngredientClick={handleIngredientClick}
           />
           <IngredientsBlock
             id={INGREDIENT_TYPES.SAUCE}
             title="Соусы"
             data={sauce}
-            handleIngredientClick={handleIngredientClick}
+            //handleIngredientClick={handleIngredientClick}
           />
           <IngredientsBlock
             id={INGREDIENT_TYPES.MAIN}
             title="Начинки"
             data={main}
-            handleIngredientClick={handleIngredientClick}
+            //handleIngredientClick={handleIngredientClick}
           />
         </div>
       </section>
-      {isIngredientDetailsOpen && (
+      {/* {isIngredientDetailsOpen && (
         <Modal title="Детали ингредиента" onCloseClick={closeAllModals}>
           <IngredientDetails item={currentIngredient} />
         </Modal>
-      )}
+      )} */}
     </>
   );
 };
 
-BurgerIngredients.propTypes = {
-  data: PropTypes.arrayOf(ingredientProps.isRequired).isRequired,
-  isIngredientDetailsOpen: PropTypes.bool.isRequired,
-  closeAllModals: PropTypes.func.isRequired,
-  setIngredientDetailsOpen: PropTypes.func.isRequired,
-};
+// BurgerIngredients.propTypes = {
+//   data: PropTypes.arrayOf(ingredientProps.isRequired).isRequired,
+//   isIngredientDetailsOpen: PropTypes.bool.isRequired,
+//   closeAllModals: PropTypes.func.isRequired,
+//   setIngredientDetailsOpen: PropTypes.func.isRequired,
+// };
 
 export default BurgerIngredients;

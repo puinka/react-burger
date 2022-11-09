@@ -29,9 +29,9 @@ const IngredientItem = ({ item, handleIngredientClick }) => {
   );
 };
 
-IngredientItem.propTypes = {
-  item: ingredientProps.isRequired,
-  handleIngredientClick: PropTypes.func.isRequired,
-};
+// IngredientItem.propTypes = {
+//   item: ingredientProps.isRequired,
+//   handleIngredientClick: PropTypes.func.isRequired,
+// };
 
 export default IngredientItem;

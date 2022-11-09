@@ -23,6 +23,6 @@ export const constructorReducer = (state = initialState, action) => {
         //TODO filter !== id
       };
     default:
-      state;
+      return { ...state };
   }
 };

@@ -1,10 +1,15 @@
-import { useContext, useState } from "react";
 import styles from "./burgerconstructor.module.css";
 import PropTypes from "prop-types";
 import { INGREDIENT_TYPES } from "../../utils/constants.js";
 import Modal from "../Modal/Modal";
 import OrderDetails from "../Modal/OrderDetails/OrderDetails";
-import { postOrder } from "../../utils/api.js";
+//import { postOrder } from "../../utils/api.js";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  addBun,
+  addMain,
+  deleteMain,
+} from "../../services/actions/currentBurger";
 
 import {
   ConstructorElement,
@@ -12,7 +17,6 @@ import {
   CurrencyIcon,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { BurgerConstructorContext } from "../../services/burgerConstructorContext";
 
 const calcFinalPrice = (bun, main) => {
   const bunPrice = bun.price * 2;
@@ -22,34 +26,35 @@ const calcFinalPrice = (bun, main) => {
   }, bunPrice);
 };
 
-const BurgerConstructor = ({
-  closeAllModals,
-  setOrderDetailsOpen,
-  isOrderDetailsOpen,
-}) => {
-  const currentBurger = useContext(BurgerConstructorContext);
-  const [orderNumber, setOrderNumber] = useState(0);
+const BurgerConstructor = () => {
+  //const currentBurger = useContext(BurgerConstructorContext);
+  //const [orderNumber, setOrderNumber] = useState(0);
 
-  const bun = currentBurger.find((item) => item.type === INGREDIENT_TYPES.BUN);
-  const main = currentBurger.filter(
-    (item) => item.type !== INGREDIENT_TYPES.BUN
-  );
-  const finalPrice = calcFinalPrice(bun, main);
+  const dispatch = useDispatch();
+  const { bun, mains } = useSelector((store) => store.burgerConstructor);
 
-  const handleCreateOrder = async () => {
-    const ingredientsIDs = currentBurger.map((item) => item._id);
-    const res = await postOrder(ingredientsIDs);
-    if (res.success) {
-      setOrderNumber(res.order.number);
-      setOrderDetailsOpen(true);
-    } else {
-      throw new Error(`Не удалось зарегистрировать Ваш заказ.`);
-    }
-  };
+  // const bun = currentBurger.find((item) => item.type === INGREDIENT_TYPES.BUN);
+  // const main = currentBurger.filter(
+  //   (item) => item.type !== INGREDIENT_TYPES.BUN
+  // );
+
+  //const finalPrice = calcFinalPrice(bun, mains);
+
+  // const handleCreateOrder = async () => {
+  //   const ingredientsIDs = currentBurger.map((item) => item._id);
+  //   const res = await postOrder(ingredientsIDs);
+  //   if (res.success) {
+  //     setOrderNumber(res.order.number);
+  //     setOrderDetailsOpen(true);
+  //   } else {
+  //     throw new Error(`Не удалось зарегистрировать Ваш заказ.`);
+  //   }
+  // };
 
   return (
     <>
       <section className={`pl-4 pt-25 pr-4 ${styles.container}`}>
+        (
         <div className="ml-8">
           <ConstructorElement
             type="top"
@@ -60,7 +65,7 @@ const BurgerConstructor = ({
           />
         </div>
         <ul className={`pr-2 ${styles.scrollContainer}`}>
-          {main.map(({ name, price, image }, index) => {
+          {mains.map(({ name, price, image }, index) => {
             return (
               <li className={`${styles.listItem}`} key={index}>
                 <DragIcon type="primary" />
@@ -82,7 +87,6 @@ const BurgerConstructor = ({
             thumbnail={bun.image}
           />
         </div>
-
         <div className={`mt-10 mr-8 ${styles.order}`}>
           <div className={`mr-10 ${styles.price}`}>
             <p className="text text_type_digits-medium mr-2">{finalPrice}</p>
@@ -91,26 +95,27 @@ const BurgerConstructor = ({
           <Button
             type="primary"
             size="large"
-            onClick={handleCreateOrder}
+            //onClick={handleCreateOrder}
             htmlType="button"
           >
             Оформить заказ
           </Button>
         </div>
+        )
       </section>
-      {isOrderDetailsOpen && (
+      {/* {isOrderDetailsOpen && (
         <Modal onCloseClick={closeAllModals}>
           <OrderDetails number={orderNumber} />
         </Modal>
-      )}
+      )} */}
     </>
   );
 };
 
 BurgerConstructor.propTypes = {
-  closeAllModals: PropTypes.func.isRequired,
-  setOrderDetailsOpen: PropTypes.func.isRequired,
-  isOrderDetailsOpen: PropTypes.bool.isRequired,
+  //closeAllModals: PropTypes.func.isRequired,
+  //setOrderDetailsOpen: PropTypes.func.isRequired,
+  //isOrderDetailsOpen: PropTypes.bool.isRequired,
 };
 
 export default BurgerConstructor;

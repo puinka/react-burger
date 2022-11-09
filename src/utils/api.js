@@ -1,6 +1,7 @@
 const BASE_API_URL = "https://norma.nomoreparties.space/api";
 const INGREDIENTS_URL = `${BASE_API_URL}/ingredients`;
 const ORDER_URL = `${BASE_API_URL}/orders`;
+const HEADERS = { "Content-Type": "application/json" };
 
 const handleServerResponse = async (res) => {
   if (!res.ok) {
@@ -19,7 +20,7 @@ const getData = async () => {
 const postOrder = async (ingredientsIDs) => {
   const settings = {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: HEADERS,
     body: JSON.stringify({
       ingredients: ingredientsIDs,
     }),
