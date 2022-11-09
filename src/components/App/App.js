@@ -72,11 +72,7 @@ function App() {
           <AppHeader />
           <main className={styles.main}>
             {ingredients && <BurgerIngredients />}
-            {/* <BurgerConstructor
-            //closeAllModals={closeAllModals}
-            //setOrderDetailsOpen={setOrderDetailsOpen}
-            //isOrderDetailsOpen={isOrderDetailsOpen}
-            /> */}
+            <BurgerConstructor />
           </main>
         </div>
       )}
