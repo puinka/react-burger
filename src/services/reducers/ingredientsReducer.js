@@ -10,7 +10,7 @@ const initialState = {
   error: "",
 };
 
-export const orderReducer = (state = initialState, action) => {
+export const ingredientsReducer = (state = initialState, action) => {
   switch (action.type) {
     case INGREDIENTS_REQUEST:
       return {
