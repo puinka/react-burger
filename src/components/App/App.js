@@ -6,6 +6,9 @@ import BounceLoader from "react-spinners/BounceLoader";
 import AppHeader from "../AppHeader/AppHeader";
 import BurgerIngredients from "../BurgerIngredients/BurgerIngredients";
 import BurgerConstructor from "../BurgerConstructor/BurgerConstructor";
+import { resetIngredientModal } from "../../services/actions/currentIngredient";
+import Modal from "../Modal/Modal";
+import IngredientDetails from "../Modal/IngredientDetails/IngredientDetails";
 
 import { INGREDIENT_TYPES } from "../../utils/constants.js";
 
@@ -28,15 +31,13 @@ import { INGREDIENT_TYPES } from "../../utils/constants.js";
 function App() {
   const dispatch = useDispatch();
   const { isLoading, ingredients } = useSelector((store) => store.ingredients);
+  const { currentIngredient } = useSelector((store) => store.ingredientModal);
 
   useEffect(() => {
     dispatch(getIngredients());
   }, [dispatch]);
 
-  //const [isLoading, setIsLoading] = useState(true);
-  //const [ingredients, setIngredients] = useState();
   //const [isOrderDetailsOpen, setOrderDetailsOpen] = useState(false);
-  //const [isIngredientDetailsOpen, setIngredientDetailsOpen] = useState(false);
   //const [currentBurger, setCurrentBurger] = useState([]);
 
   // const fetchData = async () => {
@@ -52,10 +53,10 @@ function App() {
   //   }
   // };
 
-  // const closeAllModals = () => {
-  //   setOrderDetailsOpen(false);
-  //   setIngredientDetailsOpen(false);
-  // };
+  const closeAllModals = () => {
+    // setOrderDetailsOpen(false);
+    dispatch(resetIngredientModal());
+  };
 
   return (
     <>
@@ -71,10 +72,17 @@ function App() {
         <div className={styles.app}>
           <AppHeader />
           <main className={styles.main}>
-            {ingredients && <BurgerIngredients />}
+            {ingredients && (
+              <BurgerIngredients closeAllModals={closeAllModals} />
+            )}
             <BurgerConstructor />
           </main>
         </div>
+      )}
+      {currentIngredient && (
+        <Modal title="Детали ингредиента" onCloseClick={closeAllModals}>
+          <IngredientDetails item={currentIngredient} />
+        </Modal>
       )}
     </>
   );

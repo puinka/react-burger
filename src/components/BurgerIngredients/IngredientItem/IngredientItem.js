@@ -6,17 +6,22 @@ import {
   CurrencyIcon,
   Counter,
 } from "@ya.praktikum/react-developer-burger-ui-components";
+import { setIngredientModal } from "../../../services/actions/currentIngredient.js";
 
-const IngredientItem = ({ item, handleIngredientClick }) => {
+import { useDispatch } from "react-redux";
+
+const IngredientItem = ({ item }) => {
   const [count, setCount] = useState(3);
 
-  const onIngredientClick = () => {
-    handleIngredientClick(item);
-  };
+  const dispatch = useDispatch();
+
+  // const onIngredientClick = () => {
+  //   handleIngredientClick(item);
+  // };
   return (
     <li
       className={`pl-4 pr-4 pb-3 mr-6 mb-8 ${styles.container}`}
-      onClick={onIngredientClick}
+      onClick={() => dispatch(setIngredientModal(item))}
     >
       <img src={item.image} alt={item.name} />
       <div className={`mt-1 mb-1 ${styles.price}`}>
