@@ -13,6 +13,7 @@ import {
   CurrencyIcon,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
+import { deleteMain } from "../../services/actions/currentBurger";
 
 const BurgerConstructor = () => {
   //const [orderNumber, setOrderNumber] = useState(0);
@@ -55,9 +56,13 @@ const BurgerConstructor = () => {
           </div>
         )}
         <ul className={`pr-2 ${styles.scrollContainer}`}>
-          {mains.map(({ name, price, image }, index) => {
+          {mains.map(({ currentID, name, price, image }) => {
             return (
-              <li className={`${styles.listItem}`} key={index}>
+              <li
+                className={`${styles.listItem}`}
+                key={currentID}
+                onClick={() => dispatch(deleteMain(currentID))}
+              >
                 <DragIcon type="primary" />
                 <ConstructorElement
                   text={name}

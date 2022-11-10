@@ -8,11 +8,7 @@ import {
   Counter,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { setIngredientModal } from "../../../services/actions/currentIngredient.js";
-import {
-  addBun,
-  addMain,
-  deleteMain,
-} from "../../../services/actions/currentBurger.js";
+import { addBun, addMain } from "../../../services/actions/currentBurger.js";
 
 import { INGREDIENT_TYPES } from "../../../utils/constants.js";
 
