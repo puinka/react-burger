@@ -6,11 +6,6 @@ import OrderDetails from "../Modal/OrderDetails/OrderDetails";
 //import { postOrder } from "../../utils/api.js";
 import { useMemo } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import {
-  addBun,
-  addMain,
-  deleteMain,
-} from "../../services/actions/currentBurger";
 
 import {
   ConstructorElement,
@@ -23,7 +18,7 @@ const BurgerConstructor = () => {
   //const [orderNumber, setOrderNumber] = useState(0);
 
   const dispatch = useDispatch();
-  const { bun, mains } = useSelector((store) => store.burgerConstructor);
+  const { bun, mains } = useSelector((store) => store.currentBurger);
 
   const totalPrice = useMemo(() => {
     return (bun ? bun.price * 2 : 0) + mains.reduce((s, v) => s + v.price, 0);

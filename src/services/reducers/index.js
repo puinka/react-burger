@@ -6,7 +6,7 @@ import { currentIngredientReducer } from "./currentIngredientReducer.js";
 
 export const rootReducer = combineReducers({
   ingredients: ingredientsReducer,
-  burgerConstructor: constructorReducer,
+  currentBurger: constructorReducer,
   ingredientModal: currentIngredientReducer,
   orderModal: orderReducer,
 });
