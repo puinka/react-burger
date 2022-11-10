@@ -7,7 +7,7 @@ import IngredientsBlock from "./IngredientsBlock/IngredientsBlock";
 import PropTypes from "prop-types";
 import { ingredientProps } from "../../utils/ingredientProps";
 
-const BurgerIngredients = ({ closeAllModals }) => {
+const BurgerIngredients = () => {
   const { ingredients } = useSelector((store) => store.ingredients);
 
   const [current, setCurrent] = useState(INGREDIENT_TYPES.BUN);
