@@ -2,10 +2,11 @@ import {
   CREATE_ORDER_REQUEST,
   CREATE_ORDER_SUCCESS,
   CREATE_ORDER_FAILED,
+  RESET_ORDER,
 } from "../actions/order.js";
 
 const initialState = {
-  number: 0,
+  number: null,
   isLoading: false,
   error: "",
 };
@@ -28,6 +29,11 @@ export const orderReducer = (state = initialState, action) => {
         ...state,
         isLoading: false,
         error: action.error,
+      };
+    case RESET_ORDER:
+      return {
+        ...state,
+        number: null,
       };
     default:
       return { ...state };

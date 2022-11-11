@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import { INGREDIENT_TYPES } from "../../utils/constants.js";
 import Modal from "../Modal/Modal";
 import OrderDetails from "../Modal/OrderDetails/OrderDetails";
-//import { postOrder } from "../../utils/api.js";
 import { useMemo } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
@@ -14,32 +13,22 @@ import {
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { deleteMain } from "../../services/actions/currentBurger";
+import { createOrder, RESET_ORDER } from "../../services/actions/order";
 
 const BurgerConstructor = () => {
-  //const [orderNumber, setOrderNumber] = useState(0);
-
   const dispatch = useDispatch();
   const { bun, mains } = useSelector((store) => store.currentBurger);
+  const { number, isLoading } = useSelector((store) => store.orderModal);
 
   const totalPrice = useMemo(() => {
     return (bun ? bun.price * 2 : 0) + mains.reduce((s, v) => s + v.price, 0);
   }, [bun, mains]);
 
-  // const bun = currentBurger.find((item) => item.type === INGREDIENT_TYPES.BUN);
-  // const main = currentBurger.filter(
-  //   (item) => item.type !== INGREDIENT_TYPES.BUN
-  // );
-
-  // const handleCreateOrder = async () => {
-  //   const ingredientsIDs = currentBurger.map((item) => item._id);
-  //   const res = await postOrder(ingredientsIDs);
-  //   if (res.success) {
-  //     setOrderNumber(res.order.number);
-  //     setOrderDetailsOpen(true);
-  //   } else {
-  //     throw new Error(`Не удалось зарегистрировать Ваш заказ.`);
-  //   }
-  // };
+  const ingrIDs = useMemo(() => {
+    return bun || mains.length > 0
+      ? [bun._id, ...mains.map((item) => item._id)]
+      : null;
+  }, [bun, mains]);
 
   return (
     <>
@@ -93,19 +82,18 @@ const BurgerConstructor = () => {
             <Button
               type="primary"
               size="large"
-              //onClick={handleCreateOrder}
-              htmlType="button"
+              onClick={() => dispatch(createOrder(ingrIDs))}
             >
-              Оформить заказ
+              {isLoading ? `Отправка...` : `Оформить заказ`}
             </Button>
           </div>
         )}
       </section>
-      {/* {isOrderDetailsOpen && (
-        <Modal onCloseClick={closeAllModals}>
-          <OrderDetails number={orderNumber} />
+      {number && (
+        <Modal onCloseClick={() => dispatch({ type: RESET_ORDER })}>
+          <OrderDetails number={number} />
         </Modal>
-      )} */}
+      )}
     </>
   );
 };
