@@ -47,16 +47,13 @@ const BurgerConstructor = () => {
         <ul className={`pr-2 ${styles.scrollContainer}`}>
           {mains.map(({ currentID, name, price, image }) => {
             return (
-              <li
-                className={`${styles.listItem}`}
-                key={currentID}
-                onClick={() => dispatch(deleteMain(currentID))}
-              >
+              <li className={`${styles.listItem}`} key={currentID}>
                 <DragIcon type="primary" />
                 <ConstructorElement
                   text={name}
                   price={price}
                   thumbnail={image}
+                  handleClose={() => dispatch(deleteMain(currentID))}
                 />
               </li>
             );
