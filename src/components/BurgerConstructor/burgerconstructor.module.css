@@ -7,6 +7,10 @@
   gap: 10px;
 }
 
+.isHover {
+  background-color: var(--background);
+}
+
 .scrollContainer {
   overflow-y: auto;
   max-height: 350px;

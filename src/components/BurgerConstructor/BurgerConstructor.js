@@ -1,3 +1,5 @@
+import { useDrop } from "react-dnd";
+import { addBun, addMain } from "../../services/actions/currentBurger";
 import styles from "./burgerconstructor.module.css";
 import PropTypes from "prop-types";
 import { INGREDIENT_TYPES } from "../../utils/constants.js";
@@ -25,14 +27,41 @@ const BurgerConstructor = () => {
   }, [bun, mains]);
 
   const ingrIDs = useMemo(() => {
-    return bun || mains.length > 0
-      ? [bun._id, ...mains.map((item) => item._id)]
+    return bun
+      ? [bun._id, bun._id]
+      : mains.length > 0
+      ? [...mains.map((item) => item._id)]
+      : bun && mains.length > 0
+      ? [bun._id, ...mains.map((item) => item._id), bun._id]
       : null;
   }, [bun, mains]);
 
+  const handleAddIngredient = (item) => {
+    if (item.type === INGREDIENT_TYPES.BUN) {
+      return dispatch(addBun(item));
+    } else {
+      return dispatch(addMain(item));
+    }
+  };
+
+  const [{ isHover }, dropTarget] = useDrop({
+    accept: "ingredient",
+    drop(item) {
+      handleAddIngredient(item);
+    },
+    collect: (monitor) => ({
+      isHover: monitor.isOver(),
+    }),
+  });
+
   return (
     <>
-      <section className={`pl-4 pt-25 pr-4 ${styles.container}`}>
+      <section
+        className={`pl-4 pt-25 pr-4 ${styles.container} ${
+          isHover ? styles.isHover : ``
+        }`}
+        ref={dropTarget}
+      >
         {bun && (
           <div className="ml-8">
             <ConstructorElement

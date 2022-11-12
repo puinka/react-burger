@@ -11,6 +11,10 @@
   margin-right: 0;
 }
 
+.dragging {
+  opacity: 0.5;
+}
+
 .price {
   display: flex;
   align-items: center;
