@@ -79,6 +79,7 @@ const BurgerConstructor = () => {
             <Button
               type="primary"
               size="large"
+              htmlType="button"
               onClick={() => dispatch(createOrder(ingrIDs))}
             >
               {isLoading ? `Отправка...` : `Оформить заказ`}

@@ -1,6 +1,4 @@
-import { useState } from "react";
-import { useDispatch } from "react-redux";
-import PropTypes from "prop-types";
+import { useDispatch, useSelector } from "react-redux";
 import { ingredientProps } from "../../../utils/ingredientProps.js";
 import styles from "./ingredientitem.module.css";
 import {
@@ -13,13 +11,15 @@ import { addBun, addMain } from "../../../services/actions/currentBurger.js";
 import { INGREDIENT_TYPES } from "../../../utils/constants.js";
 
 const IngredientItem = ({ item }) => {
-  const [count, setCount] = useState(3);
-
   const dispatch = useDispatch();
+  const { bun, mains } = useSelector((store) => store.currentBurger);
 
-  // const onIngredientClick = () => {
-  //   handleIngredientClick(item);
-  // };
+  const count =
+    bun || mains.length > 0
+      ? bun._id === item._id
+        ? 2
+        : mains.filter((el) => el._id === item._id).length
+      : 0;
 
   const handleIngredientAdd = (item) => {
     //TEMPORARY -> put back to onClick when DnD is done
@@ -48,9 +48,8 @@ const IngredientItem = ({ item }) => {
   );
 };
 
-// IngredientItem.propTypes = {
-//   item: ingredientProps.isRequired,
-//   handleIngredientClick: PropTypes.func.isRequired,
-// };
+IngredientItem.propTypes = {
+  item: ingredientProps.isRequired,
+};
 
 export default IngredientItem;
