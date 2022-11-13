@@ -7,14 +7,13 @@ import Modal from "../Modal/Modal";
 import OrderDetails from "../Modal/OrderDetails/OrderDetails";
 import { useMemo } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import BurgerConstructorItem from "./BurgerConstructorItem/BurgerConstructorItem";
 
 import {
   ConstructorElement,
-  DragIcon,
   CurrencyIcon,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { deleteMain } from "../../services/actions/currentBurger";
 import { createOrder, RESET_ORDER } from "../../services/actions/order";
 
 const BurgerConstructor = () => {
@@ -76,15 +75,12 @@ const BurgerConstructor = () => {
         <ul className={`pr-2 ${styles.scrollContainer}`}>
           {mains.map(({ currentID, name, price, image }) => {
             return (
-              <li className={`${styles.listItem}`} key={currentID}>
-                <DragIcon type="primary" />
-                <ConstructorElement
-                  text={name}
-                  price={price}
-                  thumbnail={image}
-                  handleClose={() => dispatch(deleteMain(currentID))}
-                />
-              </li>
+              <BurgerConstructorItem
+                currentID={currentID}
+                name={name}
+                price={price}
+                image={image}
+              />
             );
           })}
         </ul>

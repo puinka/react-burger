@@ -33,10 +33,6 @@
   background-color: var(--text-inactive-color);
 }
 
-.listItem {
-  width: 568px;
-}
-
 .order {
   margin-left: auto;
   display: flex;
