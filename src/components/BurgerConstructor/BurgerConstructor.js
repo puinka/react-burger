@@ -1,7 +1,6 @@
 import { useDrop } from "react-dnd";
 import { addBun, addMain } from "../../services/actions/currentBurger";
 import styles from "./burgerconstructor.module.css";
-import PropTypes from "prop-types";
 import { INGREDIENT_TYPES } from "../../utils/constants.js";
 import Modal from "../Modal/Modal";
 import OrderDetails from "../Modal/OrderDetails/OrderDetails";
@@ -73,15 +72,8 @@ const BurgerConstructor = () => {
           </div>
         )}
         <ul className={`pr-2 ${styles.scrollContainer}`}>
-          {mains.map(({ currentID, name, price, image }) => {
-            return (
-              <BurgerConstructorItem
-                currentID={currentID}
-                name={name}
-                price={price}
-                image={image}
-              />
-            );
+          {mains.map((item, index) => {
+            return <BurgerConstructorItem item={item} index={index} />;
           })}
         </ul>
         {bun && (
@@ -119,12 +111,6 @@ const BurgerConstructor = () => {
       )}
     </>
   );
-};
-
-BurgerConstructor.propTypes = {
-  //closeAllModals: PropTypes.func.isRequired,
-  //setOrderDetailsOpen: PropTypes.func.isRequired,
-  //isOrderDetailsOpen: PropTypes.bool.isRequired,
 };
 
 export default BurgerConstructor;

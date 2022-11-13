@@ -1,4 +1,9 @@
-import { ADD_BUN, ADD_MAIN, DELETE_MAIN } from "../actions/currentBurger.js";
+import {
+  ADD_BUN,
+  ADD_MAIN,
+  DELETE_MAIN,
+  REORDER_MAINS,
+} from "../actions/currentBurger.js";
 
 const initialState = {
   bun: null,
@@ -26,6 +31,17 @@ export const constructorReducer = (state = initialState, action) => {
         mains: state.mains.filter(
           (item) => item.currentID !== action.currentID
         ),
+      };
+
+    case REORDER_MAINS:
+      const dragItem = state.mains[action.from];
+      const hoverItem = state.mains[action.to];
+      const resultMains = [...state.mains];
+      resultMains[action.from] = hoverItem;
+      resultMains[action.to] = dragItem;
+      return {
+        ...state,
+        mains: resultMains,
       };
     default:
       return { ...state };
