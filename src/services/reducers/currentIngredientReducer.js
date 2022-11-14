@@ -20,6 +20,6 @@ export const currentIngredientReducer = (state = initialState, action) => {
         currentIngredient: null,
       };
     default:
-      return { ...state };
+      return state;
   }
 };

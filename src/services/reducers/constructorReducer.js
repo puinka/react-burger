@@ -44,6 +44,6 @@ export const constructorReducer = (state = initialState, action) => {
         mains: resultMains,
       };
     default:
-      return { ...state };
+      return state;
   }
 };
