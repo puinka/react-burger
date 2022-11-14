@@ -51,16 +51,14 @@ function BurgerConstructorItem({ item, index }) {
 
       item.index = hoverIndex;
     },
+    collect: (monitor) => ({ isOver: monitor.isOver }),
   });
 
   drag(drop(ref));
 
   return (
     <li
-      className={`${styles.listItem} ${isDragging ? styles.isDragging : ``} ${
-        isOver ? styles.isOver : ``
-      }`}
-      key={currentID}
+      className={`${styles.listItem} ${isDragging ? styles.isDragging : ``} `}
       ref={ref}
     >
       <DragIcon type="primary" />

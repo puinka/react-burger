@@ -73,7 +73,13 @@ const BurgerConstructor = () => {
         )}
         <ul className={`pr-2 ${styles.scrollContainer}`}>
           {mains.map((item, index) => {
-            return <BurgerConstructorItem item={item} index={index} />;
+            return (
+              <BurgerConstructorItem
+                item={item}
+                index={index}
+                key={item.currentID}
+              />
+            );
           })}
         </ul>
         {bun && (
