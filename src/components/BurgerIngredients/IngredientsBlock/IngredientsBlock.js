@@ -1,12 +1,17 @@
 import styles from "./ingredientsblock.module.css";
+import { forwardRef } from "react";
 import PropTypes from "prop-types";
 import { ingredientProps } from "../../../utils/ingredientProps.js";
 import IngredientItem from "../IngredientItem/IngredientItem";
 
-const IngredientsBlock = ({ title, data, id }) => {
+const IngredientsBlock = forwardRef(({ title, data, id }, ref) => {
   return (
     <>
-      <h3 id={id} className={`text text_type_main-medium mb-6 ${styles.title}`}>
+      <h3
+        id={id}
+        className={`text text_type_main-medium mb-6 ${styles.title}`}
+        ref={ref}
+      >
         {title}
       </h3>
       <ul className={`pl-4 pr-2 pb-2 ${styles.ingredientsList}`}>
@@ -16,7 +21,7 @@ const IngredientsBlock = ({ title, data, id }) => {
       </ul>
     </>
   );
-};
+});
 
 IngredientsBlock.propTypes = {
   data: PropTypes.arrayOf(ingredientProps.isRequired).isRequired,

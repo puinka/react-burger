@@ -1,11 +1,10 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
+import { useInView } from "react-intersection-observer";
 import { INGREDIENT_TYPES } from "../../utils/constants.js";
 import styles from "./burgeringredients.module.css";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import IngredientsBlock from "./IngredientsBlock/IngredientsBlock";
-import PropTypes from "prop-types";
-import { ingredientProps } from "../../utils/ingredientProps";
 
 const BurgerIngredients = () => {
   const { ingredients } = useSelector((store) => store.ingredients);
@@ -20,10 +19,16 @@ const BurgerIngredients = () => {
     (item) => item.type === INGREDIENT_TYPES.MAIN
   );
 
-  const handleTabClick = (id) => {
+  const handleTabClick = (id, ref) => {
     setCurrent(id);
-    document.querySelector(`#${id}`)?.scrollIntoView({ behavior: "smooth" });
+    ref.current.scrollIntoView({ behavior: "smooth" });
   };
+
+  //scroll
+
+  const bunRef = useRef();
+  const sauceRef = useRef();
+  const mainRef = useRef();
 
   return (
     <section className={`pt-10 mr-10 ${styles.container}`}>
@@ -35,37 +40,44 @@ const BurgerIngredients = () => {
         <Tab
           value={INGREDIENT_TYPES.BUN}
           active={current === INGREDIENT_TYPES.BUN}
-          onClick={handleTabClick}
+          onClick={(value) => handleTabClick(value, bunRef)}
         >
           Булки
         </Tab>
         <Tab
           value={INGREDIENT_TYPES.SAUCE}
           active={current === INGREDIENT_TYPES.SAUCE}
-          onClick={handleTabClick}
+          onClick={(value) => handleTabClick(value, sauceRef)}
         >
           Соусы
         </Tab>
         <Tab
           value={INGREDIENT_TYPES.MAIN}
           active={current === INGREDIENT_TYPES.MAIN}
-          onClick={handleTabClick}
+          onClick={(value) => handleTabClick(value, mainRef)}
         >
           Начинки
         </Tab>
       </div>
 
       <div className={styles.scrollContainer}>
-        <IngredientsBlock id={INGREDIENT_TYPES.BUN} title="Булки" data={bun} />
+        <IngredientsBlock
+          id={INGREDIENT_TYPES.BUN}
+          title="Булки"
+          data={bun}
+          ref={bunRef}
+        />
         <IngredientsBlock
           id={INGREDIENT_TYPES.SAUCE}
           title="Соусы"
           data={sauce}
+          ref={sauceRef}
         />
         <IngredientsBlock
           id={INGREDIENT_TYPES.MAIN}
           title="Начинки"
           data={main}
+          ref={mainRef}
         />
       </div>
     </section>
