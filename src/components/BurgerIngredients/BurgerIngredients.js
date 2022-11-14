@@ -26,9 +26,30 @@ const BurgerIngredients = () => {
 
   //scroll
 
-  const bunRef = useRef();
-  const sauceRef = useRef();
-  const mainRef = useRef();
+  const bunAnchor = useRef();
+  const sauceAnchor = useRef();
+  const mainAnchor = useRef();
+
+  const [bunRef, inViewBun] = useInView({
+    threshold: 0,
+  });
+
+  const [sauceRef, inViewSauce] = useInView({
+    threshold: 0,
+  });
+  const [mainRef, inViewMain] = useInView({
+    threshold: 0,
+  });
+
+  useEffect(() => {
+    if (inViewBun) {
+      setCurrent(INGREDIENT_TYPES.BUN);
+    } else if (inViewSauce) {
+      setCurrent(INGREDIENT_TYPES.SAUCE);
+    } else if (inViewMain) {
+      setCurrent(INGREDIENT_TYPES.MAIN);
+    }
+  }, [inViewBun, inViewMain, inViewSauce]);
 
   return (
     <section className={`pt-10 mr-10 ${styles.container}`}>
@@ -40,39 +61,42 @@ const BurgerIngredients = () => {
         <Tab
           value={INGREDIENT_TYPES.BUN}
           active={current === INGREDIENT_TYPES.BUN}
-          onClick={(value) => handleTabClick(value, bunRef)}
+          onClick={(value) => handleTabClick(value, bunAnchor)}
         >
           Булки
         </Tab>
         <Tab
           value={INGREDIENT_TYPES.SAUCE}
           active={current === INGREDIENT_TYPES.SAUCE}
-          onClick={(value) => handleTabClick(value, sauceRef)}
+          onClick={(value) => handleTabClick(value, sauceAnchor)}
         >
           Соусы
         </Tab>
         <Tab
           value={INGREDIENT_TYPES.MAIN}
           active={current === INGREDIENT_TYPES.MAIN}
-          onClick={(value) => handleTabClick(value, mainRef)}
+          onClick={(value) => handleTabClick(value, mainAnchor)}
         >
           Начинки
         </Tab>
       </div>
 
       <div className={styles.scrollContainer}>
+        <div ref={bunAnchor} />
         <IngredientsBlock
           id={INGREDIENT_TYPES.BUN}
           title="Булки"
           data={bun}
           ref={bunRef}
         />
+        <div ref={sauceAnchor} />
         <IngredientsBlock
           id={INGREDIENT_TYPES.SAUCE}
           title="Соусы"
           data={sauce}
           ref={sauceRef}
         />
+        <div ref={mainAnchor} />
         <IngredientsBlock
           id={INGREDIENT_TYPES.MAIN}
           title="Начинки"
