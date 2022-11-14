@@ -7,9 +7,6 @@ import {
   Counter,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { setIngredientModal } from "../../../services/actions/currentIngredient.js";
-import { addBun, addMain } from "../../../services/actions/currentBurger.js";
-
-import { INGREDIENT_TYPES } from "../../../utils/constants.js";
 
 const IngredientItem = ({ item }) => {
   const dispatch = useDispatch();
@@ -48,6 +45,10 @@ const IngredientItem = ({ item }) => {
       {count !== 0 && <Counter count={count} size="default" />}
     </li>
   );
+};
+
+IngredientItem.propTypes = {
+  item: ingredientProps.isRequired,
 };
 
 export default IngredientItem;

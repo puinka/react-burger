@@ -73,10 +73,6 @@ function BurgerConstructorItem({ item, index }) {
 }
 
 BurgerConstructorItem.propTypes = {
-  //   currentID: PropTypes.string.isRequired,
-  //   name: PropTypes.string.isRequired,
-  //   price: PropTypes.number.isRequired,
-  //   image: PropTypes.string.isRequired,
   handleReorder: PropTypes.func,
   index: PropTypes.number.isRequired,
 };
