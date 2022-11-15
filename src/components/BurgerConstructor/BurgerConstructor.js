@@ -1,116 +1,122 @@
-import { useContext, useState } from "react";
+import { useDrop } from "react-dnd";
+import { addBun, addMain } from "../../services/actions/currentBurger";
 import styles from "./burgerconstructor.module.css";
-import PropTypes from "prop-types";
 import { INGREDIENT_TYPES } from "../../utils/constants.js";
 import Modal from "../Modal/Modal";
 import OrderDetails from "../Modal/OrderDetails/OrderDetails";
-import { postOrder } from "../../utils/api.js";
+import { useMemo } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import BurgerConstructorItem from "./BurgerConstructorItem/BurgerConstructorItem";
 
 import {
   ConstructorElement,
-  DragIcon,
   CurrencyIcon,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { BurgerConstructorContext } from "../../services/burgerConstructorContext";
+import { createOrder, RESET_ORDER } from "../../services/actions/order";
 
-const calcFinalPrice = (bun, main) => {
-  const bunPrice = bun.price * 2;
+const BurgerConstructor = () => {
+  const dispatch = useDispatch();
+  const { bun, mains } = useSelector((store) => store.currentBurger);
+  const { number, isLoading } = useSelector((store) => store.orderModal);
 
-  return main.reduce(function (accumulator, currentValue) {
-    return accumulator + currentValue.price;
-  }, bunPrice);
-};
+  const totalPrice = useMemo(() => {
+    return (bun ? bun.price * 2 : 0) + mains.reduce((s, v) => s + v.price, 0);
+  }, [bun, mains]);
 
-const BurgerConstructor = ({
-  closeAllModals,
-  setOrderDetailsOpen,
-  isOrderDetailsOpen,
-}) => {
-  const currentBurger = useContext(BurgerConstructorContext);
-  const [orderNumber, setOrderNumber] = useState(0);
+  const ingrIDs = useMemo(() => {
+    return bun
+      ? [bun._id, bun._id]
+      : mains.length > 0
+      ? [...mains.map((item) => item._id)]
+      : bun && mains.length > 0
+      ? [bun._id, ...mains.map((item) => item._id), bun._id]
+      : null;
+  }, [bun, mains]);
 
-  const bun = currentBurger.find((item) => item.type === INGREDIENT_TYPES.BUN);
-  const main = currentBurger.filter(
-    (item) => item.type !== INGREDIENT_TYPES.BUN
-  );
-  const finalPrice = calcFinalPrice(bun, main);
-
-  const handleCreateOrder = async () => {
-    const ingredientsIDs = currentBurger.map((item) => item._id);
-    const res = await postOrder(ingredientsIDs);
-    if (res.success) {
-      setOrderNumber(res.order.number);
-      setOrderDetailsOpen(true);
+  const handleAddIngredient = (item) => {
+    if (item.type === INGREDIENT_TYPES.BUN) {
+      return dispatch(addBun(item));
     } else {
-      throw new Error(`Не удалось зарегистрировать Ваш заказ.`);
+      return dispatch(addMain(item));
     }
   };
 
+  const [{ isHover }, dropTarget] = useDrop({
+    accept: "ingredient",
+    drop(item) {
+      handleAddIngredient(item);
+    },
+    collect: (monitor) => ({
+      isHover: monitor.isOver(),
+    }),
+  });
+
   return (
     <>
-      <section className={`pl-4 pt-25 pr-4 ${styles.container}`}>
-        <div className="ml-8">
-          <ConstructorElement
-            type="top"
-            isLocked
-            text={`${bun.name} (верх)`}
-            price={bun.price}
-            thumbnail={bun.image}
-          />
-        </div>
+      <section
+        className={`pl-4 pt-25 pr-4 ${styles.container} ${
+          isHover ? styles.isHover : ``
+        }`}
+        ref={dropTarget}
+      >
+        {bun && (
+          <div className="ml-8">
+            <ConstructorElement
+              type="top"
+              isLocked
+              text={`${bun.name} (верх)`}
+              price={bun.price}
+              thumbnail={bun.image}
+            />
+          </div>
+        )}
         <ul className={`pr-2 ${styles.scrollContainer}`}>
-          {main.map(({ name, price, image }, index) => {
+          {mains.map((item, index) => {
             return (
-              <li className={`${styles.listItem}`} key={index}>
-                <DragIcon type="primary" />
-                <ConstructorElement
-                  text={name}
-                  price={price}
-                  thumbnail={image}
-                />
-              </li>
+              <BurgerConstructorItem
+                item={item}
+                index={index}
+                key={item.currentID}
+              />
             );
           })}
         </ul>
-        <div className="ml-8">
-          <ConstructorElement
-            type="bottom"
-            isLocked
-            text={`${bun.name} (низ)`}
-            price={bun.price}
-            thumbnail={bun.image}
-          />
-        </div>
-
-        <div className={`mt-10 mr-8 ${styles.order}`}>
-          <div className={`mr-10 ${styles.price}`}>
-            <p className="text text_type_digits-medium mr-2">{finalPrice}</p>
-            <CurrencyIcon type="primary" />
+        {bun && (
+          <div className="ml-8">
+            <ConstructorElement
+              type="bottom"
+              isLocked
+              text={`${bun.name} (низ)`}
+              price={bun.price}
+              thumbnail={bun.image}
+            />
           </div>
-          <Button
-            type="primary"
-            size="large"
-            onClick={handleCreateOrder}
-            htmlType="button"
-          >
-            Оформить заказ
-          </Button>
-        </div>
+        )}
+        {bun && (
+          <div className={`mt-10 mr-8 ${styles.order}`}>
+            <div className={`mr-10 ${styles.price}`}>
+              <p className="text text_type_digits-medium mr-2">{totalPrice}</p>
+              <CurrencyIcon type="primary" />
+            </div>
+            <Button
+              type="primary"
+              size="large"
+              htmlType="button"
+              onClick={() => dispatch(createOrder(ingrIDs))}
+            >
+              {isLoading ? `Отправка...` : `Оформить заказ`}
+            </Button>
+          </div>
+        )}
       </section>
-      {isOrderDetailsOpen && (
-        <Modal onCloseClick={closeAllModals}>
-          <OrderDetails number={orderNumber} />
+      {number && (
+        <Modal onCloseClick={() => dispatch({ type: RESET_ORDER })}>
+          <OrderDetails number={number} />
         </Modal>
       )}
     </>
   );
-};
-
-BurgerConstructor.propTypes = {
-  closeAllModals: PropTypes.func.isRequired,
-  setOrderDetailsOpen: PropTypes.func.isRequired,
-  isOrderDetailsOpen: PropTypes.bool.isRequired,
 };
 
 export default BurgerConstructor;

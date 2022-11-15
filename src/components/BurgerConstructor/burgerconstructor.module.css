@@ -7,6 +7,10 @@
   gap: 10px;
 }
 
+.isHover {
+  background-color: var(--background);
+}
+
 .scrollContainer {
   overflow-y: auto;
   max-height: 350px;
@@ -27,10 +31,6 @@
 
 .scrollContainer::-webkit-scrollbar-thumb {
   background-color: var(--text-inactive-color);
-}
-
-.listItem {
-  width: 568px;
 }
 
 .order {

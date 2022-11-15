@@ -1,0 +1,11 @@
+.listItem {
+  width: 568px;
+}
+
+.isDragging {
+  opacity: 0;
+}
+
+.isOver {
+  opacity: 0.5;
+}
