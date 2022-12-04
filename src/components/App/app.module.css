@@ -3,12 +3,6 @@
   padding: 40px;
 }
 
-.main {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-}
-
 .loader {
   position: absolute;
   left: 50vw;
