@@ -4,7 +4,7 @@ import {
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link } from "react-router-dom";
-import styles from "./login.module.css";
+import styles from "./form.module.css";
 
 const handleLogin = (e) => {
   e.preventDefault();
