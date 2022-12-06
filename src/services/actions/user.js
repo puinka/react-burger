@@ -1,4 +1,5 @@
-import { registerRequest } from "../../utils/api";
+import { registerRequest, loginRequest } from "../../utils/api";
+import { setCookie } from "../../utils/api";
 
 export const REGISTER_REQUEST = "REGISTER_REQUEST";
 export const REGISTER_SUCCESS = "REGISTER_SUCCESS";
@@ -10,6 +11,8 @@ export const register = (form) => (dispatch) => {
   });
   registerRequest(form)
     .then((res) => {
+      const authToken = res.accessToken.split("Bearer ")[1];
+      setCookie("token", authToken);
       dispatch({
         type: REGISTER_SUCCESS,
         user: res.user,
@@ -20,6 +23,27 @@ export const register = (form) => (dispatch) => {
     .catch((err) => {
       dispatch({
         type: REGISTER_FAILED,
+        error: err.message,
+      });
+    });
+};
+
+export const login = (form) => (dispatch) => {
+  dispatch({
+    type: LOGIN_REQUEST,
+  });
+  loginRequest(form)
+    .then((res) => {
+      dispatch({
+        type: LOGIN_SUCCESS,
+        user: res.user,
+        accessToken: res.accessToken,
+        refreshToken: res.refreshToken,
+      });
+    })
+    .catch((err) => {
+      dispatch({
+        type: LOGIN_FAILED,
         error: err.message,
       });
     });
