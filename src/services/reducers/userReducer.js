@@ -2,15 +2,22 @@ import {
   REGISTER_REQUEST,
   REGISTER_SUCCESS,
   REGISTER_FAILED,
+  LOGIN_REQUEST,
+  LOGIN_SUCCESS,
+  LOGIN_FAILED,
 } from "../actions/user";
 
 const initialState = {
-  user: { name: "", email: "" },
-  isLoading: false,
-  error: "",
-  accessToken: "",
-  refreshToken: "",
-  isAuthenticated: false,
+  data: null,
+  registerUserRequest: false,
+  registerUserError: null,
+  loginUserRequest: false,
+  loginUserError: null,
+  getUserRequest: false,
+  getUserError: null,
+  updateUserRequest: false,
+  updateUserError: null,
+  isAuthChecked: false,
 };
 
 export const userReducer = (state = initialState, action) => {
@@ -18,22 +25,38 @@ export const userReducer = (state = initialState, action) => {
     case REGISTER_REQUEST:
       return {
         ...state,
-        isLoading: true,
+        registerUserRequest: true,
       };
     case REGISTER_SUCCESS:
       return {
         ...state,
-        isLoading: false,
-        error: "",
-        user: action.user,
-        accessToken: action.accessToken,
-        refreshToken: action.refreshToken,
+        registerUserRequest: false,
+        registerUserError: null,
+        data: action.user,
       };
     case REGISTER_FAILED:
       return {
         ...state,
-        isLoading: false,
-        error: action.error,
+        registerUserRequest: false,
+        registerUserError: action.error,
+      };
+    case LOGIN_REQUEST:
+      return {
+        ...state,
+        loginUserRequest: true,
+      };
+    case LOGIN_SUCCESS:
+      return {
+        ...state,
+        loginUserRequest: false,
+        loginUserError: null,
+        data: action.user,
+      };
+    case LOGIN_FAILED:
+      return {
+        ...state,
+        loginUserRequest: false,
+        loginUserError: action.error,
       };
     default:
       return state;

@@ -88,12 +88,7 @@ export const registerRequest = async ({ name, email, password }) => {
 export const loginRequest = async ({ email, password }) => {
   const settings = {
     method: "POST",
-    mode: "cors",
-    cache: "no-cache",
-    credentials: "same-origin",
     headers: HEADERS,
-    redirect: "follow",
-    referrerPolicy: "no-referrer",
     body: JSON.stringify({ email, password }),
   };
   const res = await fetch(LOGIN_URL, settings);
@@ -120,12 +115,7 @@ export const getUserRequest = async () => {
 export const logoutRequest = async () => {
   const settings = {
     method: "POST",
-    mode: "cors",
-    cache: "no-cache",
-    credentials: "same-origin",
     headers: HEADERS,
-    redirect: "follow",
-    referrerPolicy: "no-referrer",
   };
   const res = await fetch(LOGOUT_URL, settings);
   return await handleServerResponse(res);
