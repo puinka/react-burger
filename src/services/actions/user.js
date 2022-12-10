@@ -16,7 +16,7 @@ export const register = (form) => (dispatch) => {
   registerRequest(form)
     .then((res) => {
       const authToken = res.accessToken.split("Bearer ")[1];
-      setCookie("token", authToken);
+      setCookie("accessToken", authToken);
       localStorage.setItem("refreshToken", res.refreshToken);
       dispatch({
         type: REGISTER_SUCCESS,
@@ -38,7 +38,7 @@ export const login = (form) => (dispatch) => {
   loginRequest(form)
     .then((res) => {
       const authToken = res.accessToken.split("Bearer ")[1];
-      setCookie("token", authToken);
+      setCookie("accessToken", authToken);
       localStorage.setItem("refreshToken", res.refreshToken);
       dispatch({
         type: LOGIN_SUCCESS,
@@ -63,7 +63,7 @@ export const login = (form) => (dispatch) => {
 // const getUser = () => (dispatch) => {
 //   // dispatch запрос USER_REQUEST
 //   //эта функция проверяет не протух ли токен
-//   return getUserApi()
+//   return getUserRequest()
 //     .then((res) => {
 //       //dispatch add user
 //     })

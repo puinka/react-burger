@@ -98,15 +98,10 @@ export const loginRequest = async ({ email, password }) => {
 export const getUserRequest = async () => {
   const settings = {
     method: "GET",
-    mode: "cors",
-    cache: "no-cache",
-    credentials: "same-origin",
     headers: {
       "Content-Type": "application/json",
       Authorization: "Bearer " + getCookie("accessToken"),
     },
-    redirect: "follow",
-    referrerPolicy: "no-referrer",
   };
   const res = await fetch(USER_URL, settings);
   return await handleServerResponse(res);
