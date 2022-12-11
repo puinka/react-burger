@@ -5,6 +5,9 @@ import {
   LOGIN_REQUEST,
   LOGIN_SUCCESS,
   LOGIN_FAILED,
+  USER_REQUEST,
+  USER_SUCCESS,
+  USER_FAILED,
 } from "../actions/user";
 
 const initialState = {
@@ -57,6 +60,24 @@ export const userReducer = (state = initialState, action) => {
         ...state,
         loginUserRequest: false,
         loginUserError: action.error,
+      };
+    case USER_REQUEST:
+      return {
+        ...state,
+        getUserRequest: true,
+      };
+    case USER_SUCCESS:
+      return {
+        ...state,
+        getUserRequest: false,
+        getUserError: null,
+        data: action.user,
+      };
+    case USER_FAILED:
+      return {
+        ...state,
+        getUserRequest: false,
+        getUserError: action.error,
       };
     default:
       return state;

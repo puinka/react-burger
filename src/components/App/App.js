@@ -17,18 +17,24 @@ import RegisterPage from "../../pages/RegisterPage";
 import ForgotPasswordPage from "../../pages/ForgotPasswordPage";
 import ResetPasswordPage from "../../pages/ResetPasswordPage";
 import ProfilePage from "../../pages/ProfilePage";
+import { getCookie } from "../../utils/api";
+import { getUser } from "../../services/actions/user.js";
 
 function App() {
   const dispatch = useDispatch();
   const { isLoading } = useSelector((store) => store.ingredients);
   const { currentIngredient } = useSelector((store) => store.ingredientModal);
+  const accessToken = getCookie("accessToken");
 
   useEffect(() => {
     dispatch(getIngredients());
   }, [dispatch]);
 
+  useEffect(() => {
+    dispatch(getUser());
+  }, [dispatch]);
+
   const closeAllModals = () => {
-    // setOrderDetailsOpen(false);
     dispatch(resetIngredientModal());
   };
 
