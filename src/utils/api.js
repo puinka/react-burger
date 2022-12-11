@@ -9,12 +9,8 @@ const LOGOUT_URL = `${BASE_API_URL}/auth/logout`;
 const TOKEN_URL = `${BASE_API_URL}/auth/token`;
 const HEADERS = { "Content-Type": "application/json" };
 
-const handleServerResponse = async (res) => {
-  if (!res.ok) {
-    const message = `Ошибка HTTP: ${res.status}`;
-    throw new Error(message);
-  }
-  return res.json();
+export const handleServerResponse = (res) => {
+  return res.ok ? res.json() : res.json().then((err) => Promise.reject(err));
 };
 
 export const getData = async () => {
@@ -95,16 +91,45 @@ export const loginRequest = async ({ email, password }) => {
   return await handleServerResponse(res);
 };
 
-export const getUserRequest = async () => {
+export const refreshTokenRequest = async () => {
   const settings = {
-    method: "GET",
+    method: "POST",
+    headers: HEADERS,
+    body: JSON.stringify({ token: localStorage.getItem("refreshToken") }),
+  };
+  await fetch(TOKEN_URL, settings).then((res) => handleServerResponse(res));
+};
+
+const fetchWithRefresh = async (url, settings) => {
+  try {
+    const res = await fetch(url, settings);
+    await handleServerResponse(res);
+  } catch (err) {
+    if (err.message === "jwt expired") {
+      const refreshData = await refreshTokenRequest();
+
+      if (!refreshData.success) {
+        Promise.reject(refreshData);
+      }
+      localStorage.setItem("refreshToken", refreshData.refreshToken);
+      setCookie("accessToken", refreshData.refreshToken);
+
+      settings.headers.Authorization = refreshData.accessToken;
+
+      const res = await fetch(url, settings);
+      return await handleServerResponse(res);
+    }
+    return Promise.reject(err);
+  }
+};
+
+export const getUserRequest = () => {
+  const settings = {
     headers: {
-      "Content-Type": "application/json",
       Authorization: "Bearer " + getCookie("accessToken"),
     },
   };
-  const res = await fetch(USER_URL, settings);
-  return await handleServerResponse(res);
+  return fetchWithRefresh(USER_URL, settings);
 };
 
 export const logoutRequest = async () => {

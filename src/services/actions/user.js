@@ -1,4 +1,8 @@
-import { registerRequest, loginRequest } from "../../utils/api";
+import {
+  registerRequest,
+  loginRequest,
+  refreshTokenRequest,
+} from "../../utils/api";
 import { setCookie } from "../../utils/api";
 import { getUserRequest } from "../../utils/api";
 
@@ -13,6 +17,10 @@ export const LOGIN_FAILED = "LOGIN_FAILED";
 export const USER_REQUEST = "USER_REQUEST";
 export const USER_SUCCESS = "USER_SUCCESS";
 export const USER_FAILED = "USER_FAILED";
+
+export const REFRESH_TOKEN_REQUEST = "REFRESH_TOKEN_REQUEST";
+export const REFRESH_TOKEN_SUCCESS = "REFRESH_TOKEN_SUCCESS";
+export const REFRESH_TOKEN_FAILED = "REFRESH_TOKEN_FAILED";
 
 export const register = (form) => (dispatch) => {
   dispatch({
@@ -62,16 +70,40 @@ export const getUser = () => (dispatch) => {
   dispatch({
     type: USER_REQUEST,
   });
-  getUserRequest()
+  return getUserRequest()
     .then((res) => {
-      dispatch({
-        type: USER_SUCCESS,
-        user: res.user,
-      });
+      if (res.success) {
+        dispatch({
+          type: USER_SUCCESS,
+          user: res.user,
+        });
+      }
     })
     .catch((err) => {
       dispatch({
         type: USER_FAILED,
+        error: err.message,
+      });
+      throw new Error(err.message);
+    });
+};
+
+export const refreshToken = () => (dispatch) => {
+  dispatch({
+    type: REFRESH_TOKEN_REQUEST,
+  });
+  refreshTokenRequest()
+    .then((res) => {
+      const authToken = res.accessToken.split("Bearer ")[1];
+      setCookie("accessToken", authToken);
+      localStorage.setItem("refreshToken", res.refreshToken);
+      dispatch({
+        type: REFRESH_TOKEN_SUCCESS,
+      });
+    })
+    .catch((err) => {
+      dispatch({
+        type: REFRESH_TOKEN_FAILED,
         error: err.message,
       });
     });

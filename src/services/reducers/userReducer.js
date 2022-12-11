@@ -8,6 +8,9 @@ import {
   USER_REQUEST,
   USER_SUCCESS,
   USER_FAILED,
+  REFRESH_TOKEN_REQUEST,
+  REFRESH_TOKEN_SUCCESS,
+  REFRESH_TOKEN_FAILED,
 } from "../actions/user";
 
 const initialState = {
@@ -18,6 +21,8 @@ const initialState = {
   loginUserError: null,
   getUserRequest: false,
   getUserError: null,
+  refreshTokenRequest: false,
+  refreshTokenError: null,
   updateUserRequest: false,
   updateUserError: null,
   isAuthChecked: false,
@@ -78,6 +83,23 @@ export const userReducer = (state = initialState, action) => {
         ...state,
         getUserRequest: false,
         getUserError: action.error,
+      };
+    case REFRESH_TOKEN_REQUEST:
+      return {
+        ...state,
+        refreshTokenRequest: true,
+      };
+    case REFRESH_TOKEN_SUCCESS:
+      return {
+        ...state,
+        refreshTokenRequest: false,
+        refreshTokenError: null,
+      };
+    case REFRESH_TOKEN_FAILED:
+      return {
+        ...state,
+        refreshTokenRequest: false,
+        refreshTokenError: action.error,
       };
     default:
       return state;
