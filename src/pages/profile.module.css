@@ -1,0 +1,39 @@
+.container {
+  display: flex;
+  flex-direction: row;
+  padding-top: 120px;
+  padding-left: calc(50% - 600px);
+}
+
+.leftcol {
+  text-align: left;
+  max-width: 320px;
+  margin-right: 60px;
+}
+
+.list {
+  margin-bottom: 80px;
+}
+
+.link {
+  display: flex;
+  align-items: center;
+  height: 64px;
+  color: var(--text-inactive-color);
+}
+
+.link:hover {
+  opacity: 0.8;
+}
+
+.active {
+  color: var(--text-primary-color);
+}
+
+.active:hover {
+  opacity: 1;
+}
+
+.text {
+  opacity: 0.4;
+}

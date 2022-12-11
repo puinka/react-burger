@@ -5,6 +5,8 @@ import {
   ListIcon,
   ProfileIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
+import { useSelector } from "react-redux";
+import { NavLink } from "react-router-dom";
 
 const AppHeader = () => {
   return (
@@ -32,12 +34,12 @@ const AppHeader = () => {
           <Logo />
         </div>
         <div className={`pl-5 pr-5 pt-4 pb-4 ${styles.login}`}>
-          <a className={styles.link} href="#">
+          <NavLink className={styles.link} to="/profile">
             <ProfileIcon type="secondary" />
             <p className="text text_type_main-default text_color_inactive ml-2">
               Личный кабинет
             </p>
-          </a>
+          </NavLink>
         </div>
       </div>
     </header>
