@@ -20,6 +20,11 @@
   align-items: center;
   height: 64px;
   color: var(--text-inactive-color);
+  background-color: transparent;
+  border: none;
+  margin: 0;
+  padding: 0;
+  cursor: pointer;
 }
 
 .link:hover {

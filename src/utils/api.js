@@ -97,7 +97,9 @@ export const refreshTokenRequest = async () => {
     headers: HEADERS,
     body: JSON.stringify({ token: localStorage.getItem("refreshToken") }),
   };
-  await fetch(TOKEN_URL, settings).then((res) => handleServerResponse(res));
+
+  const res = await fetch(TOKEN_URL, settings);
+  return await handleServerResponse(res);
 };
 
 const fetchWithRefresh = async (url, settings) => {
@@ -123,19 +125,25 @@ const fetchWithRefresh = async (url, settings) => {
   }
 };
 
-export const getUserRequest = () => {
+export const getUserRequest = async () => {
   const settings = {
     headers: {
       Authorization: "Bearer " + getCookie("accessToken"),
     },
   };
-  return fetchWithRefresh(USER_URL, settings);
+  const res = await fetch(USER_URL, settings);
+  return await handleServerResponse(res);
+  //return fetchWithRefresh(USER_URL, settings);
 };
 
 export const logoutRequest = async () => {
+  const refreshToken = localStorage.getItem("refreshToken");
   const settings = {
     method: "POST",
     headers: HEADERS,
+    body: JSON.stringify({
+      token: refreshToken,
+    }),
   };
   const res = await fetch(LOGOUT_URL, settings);
   return await handleServerResponse(res);

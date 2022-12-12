@@ -4,14 +4,15 @@ import {
   Input,
   PasswordInput,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { NavLink } from "react-router-dom";
+import { NavLink, useHistory } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { getUser } from "../services/actions/user";
+import { getUser, logout } from "../services/actions/user";
 
 export default function ProfilePage() {
   const dispatch = useDispatch();
+  const history = useHistory();
   const [form, setValue] = useState({ name: "", email: "", password: "" });
 
   const onChange = (e) => {
@@ -25,7 +26,7 @@ export default function ProfilePage() {
   }, []);
 
   const handleLogout = () => {
-    console.log("Logout!");
+    dispatch(logout());
   };
 
   return (
@@ -51,9 +52,9 @@ export default function ProfilePage() {
             </NavLink>
           </li>
           <li>
-            <NavLink to="/login" className={styles.link}>
+            <button to="/login" className={styles.link} onClick={handleLogout}>
               <p className="text text_type_main-medium">Выход</p>
-            </NavLink>
+            </button>
           </li>
         </ul>
         <p

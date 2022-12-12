@@ -11,6 +11,9 @@ import {
   REFRESH_TOKEN_REQUEST,
   REFRESH_TOKEN_SUCCESS,
   REFRESH_TOKEN_FAILED,
+  LOGOUT_REQUEST,
+  LOGOUT_SUCCESS,
+  LOGOUT_FAILED,
 } from "../actions/user";
 
 const initialState = {
@@ -25,6 +28,8 @@ const initialState = {
   refreshTokenError: null,
   updateUserRequest: false,
   updateUserError: null,
+  logoutRequest: false,
+  logoutError: null,
   isAuthChecked: false,
 };
 
@@ -100,6 +105,24 @@ export const userReducer = (state = initialState, action) => {
         ...state,
         refreshTokenRequest: false,
         refreshTokenError: action.error,
+      };
+    case LOGOUT_REQUEST:
+      return {
+        ...state,
+        logoutRequest: true,
+      };
+    case LOGOUT_SUCCESS:
+      return {
+        ...state,
+        logoutRequest: false,
+        logoutError: null,
+        data: null,
+      };
+    case LOGOUT_FAILED:
+      return {
+        ...state,
+        logoutRequest: false,
+        logoutError: action.error,
       };
     default:
       return state;

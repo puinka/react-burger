@@ -4,7 +4,7 @@ import {
   refreshTokenRequest,
 } from "../../utils/api";
 import { setCookie } from "../../utils/api";
-import { getUserRequest } from "../../utils/api";
+import { getUserRequest, logoutRequest } from "../../utils/api";
 
 export const REGISTER_REQUEST = "REGISTER_REQUEST";
 export const REGISTER_SUCCESS = "REGISTER_SUCCESS";
@@ -21,6 +21,10 @@ export const USER_FAILED = "USER_FAILED";
 export const REFRESH_TOKEN_REQUEST = "REFRESH_TOKEN_REQUEST";
 export const REFRESH_TOKEN_SUCCESS = "REFRESH_TOKEN_SUCCESS";
 export const REFRESH_TOKEN_FAILED = "REFRESH_TOKEN_FAILED";
+
+export const LOGOUT_REQUEST = "LOGOUT_REQUEST";
+export const LOGOUT_SUCCESS = "LOGOUT_SUCCESS";
+export const LOGOUT_FAILED = "LOGOUT_FAILED";
 
 export const register = (form) => (dispatch) => {
   dispatch({
@@ -66,26 +70,25 @@ export const login = (form) => (dispatch) => {
     });
 };
 
-export const getUser = () => (dispatch) => {
+export const getUser = () => async (dispatch) => {
   dispatch({
     type: USER_REQUEST,
   });
-  return getUserRequest()
-    .then((res) => {
-      if (res.success) {
-        dispatch({
-          type: USER_SUCCESS,
-          user: res.user,
-        });
-      }
-    })
-    .catch((err) => {
+  try {
+    const res = await getUserRequest();
+    if (res.success) {
       dispatch({
-        type: USER_FAILED,
-        error: err.message,
+        type: USER_SUCCESS,
+        user: res.user,
       });
-      throw new Error(err.message);
+    }
+  } catch (err) {
+    dispatch({
+      type: USER_FAILED,
+      error: err.message,
     });
+    throw new Error(err.message);
+  }
 };
 
 export const refreshToken = () => (dispatch) => {
@@ -104,6 +107,26 @@ export const refreshToken = () => (dispatch) => {
     .catch((err) => {
       dispatch({
         type: REFRESH_TOKEN_FAILED,
+        error: err.message,
+      });
+    });
+};
+
+export const logout = () => (dispatch) => {
+  dispatch({
+    type: LOGOUT_REQUEST,
+  });
+  logoutRequest()
+    .then((res) => {
+      setCookie("accessToken", "");
+      localStorage.removeItem("refreshToken");
+      dispatch({
+        type: LOGOUT_SUCCESS,
+      });
+    })
+    .catch((err) => {
+      dispatch({
+        type: LOGOUT_FAILED,
         error: err.message,
       });
     });
