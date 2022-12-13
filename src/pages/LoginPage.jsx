@@ -5,14 +5,16 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useState, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, Redirect } from "react-router-dom";
+import { Link, Redirect, useHistory, useLocation } from "react-router-dom";
 import styles from "./form.module.css";
 
 import { login } from "../services/actions/user";
 
 export default function LoginPage() {
   const dispatch = useDispatch();
-
+  const location = useLocation();
+  const from = location.state?.from;
+  const history = useHistory();
   const isUser = useSelector((store) => store.user.data);
   const [form, setValue] = useState({ email: "", password: "" });
 
@@ -24,18 +26,15 @@ export default function LoginPage() {
     (e) => {
       e.preventDefault();
       dispatch(login(form));
+      if (from) {
+        history.push("/");
+      }
     },
     [form]
   );
 
   if (isUser) {
-    return (
-      <Redirect
-        to={{
-          pathname: "/",
-        }}
-      />
-    );
+    return <Redirect to={location?.state?.from || "/"} />;
   }
 
   return (
