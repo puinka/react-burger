@@ -33,11 +33,11 @@ export const UPDATE_USER_FAILED = "UPDATE_USER_FAILED";
 
 export const AUTH_CHECKED = "AUTH_CHECKED";
 
-export const register = (form) => (dispatch) => {
+export const register = (name, email, password) => (dispatch) => {
   dispatch({
     type: REGISTER_REQUEST,
   });
-  registerRequest(form)
+  registerRequest(name, email, password)
     .then((res) => {
       const authToken = res.accessToken.split("Bearer ")[1];
       setCookie("accessToken", authToken);
@@ -55,11 +55,11 @@ export const register = (form) => (dispatch) => {
     });
 };
 
-export const login = (form) => (dispatch) => {
+export const login = (email, password) => (dispatch) => {
   dispatch({
     type: LOGIN_REQUEST,
   });
-  loginRequest(form)
+  loginRequest(email, password)
     .then((res) => {
       const authToken = res.accessToken.split("Bearer ")[1];
       setCookie("accessToken", authToken);

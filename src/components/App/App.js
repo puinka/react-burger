@@ -56,9 +56,9 @@ function App() {
             <ProtectedRoute onlyUnAuth exact path="/login">
               <LoginPage />
             </ProtectedRoute>
-            <Route exact path="/register">
+            <ProtectedRoute onlyUnAuth exact path="/register">
               <RegisterPage />
-            </Route>
+            </ProtectedRoute>
             <ProtectedRoute onlyUnAuth exact path="/forgot-password">
               <ForgotPasswordPage />
             </ProtectedRoute>

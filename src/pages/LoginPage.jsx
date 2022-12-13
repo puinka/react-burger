@@ -4,35 +4,36 @@ import {
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useState, useCallback } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Link, Redirect, useHistory, useLocation } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
 import styles from "./form.module.css";
 
 import { login } from "../services/actions/user";
 
 export default function LoginPage() {
   const dispatch = useDispatch();
-  const location = useLocation();
-  const from = location.state?.from;
-  const history = useHistory();
-  const isUser = useSelector((store) => store.user.data);
-  const [form, setValue] = useState({ email: "", password: "" });
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-  const onChange = (e) => {
-    setValue({ ...form, [e.target.name]: e.target.value });
+  const onEmailChange = (e) => {
+    e.preventDefault();
+    const value = e.target.value;
+    setEmail(value);
+  };
+
+  const onPasswordChange = (e) => {
+    e.preventDefault();
+    const value = e.target.value;
+    setPassword(value);
   };
 
   const handleLogin = useCallback(
     (e) => {
       e.preventDefault();
-      dispatch(login(form));
+      dispatch(login(email, password));
     },
-    [form]
+    [dispatch]
   );
-
-  if (isUser) {
-    return <Redirect to={location?.state?.from || "/"} />;
-  }
 
   return (
     <main className={styles.main}>
@@ -42,14 +43,14 @@ export default function LoginPage() {
           <EmailInput
             extraClass="mb-6"
             name="email"
-            value={form.email}
-            onChange={onChange}
+            value={email}
+            onChange={onEmailChange}
           />
           <PasswordInput
             extraClass="mb-6"
             name="password"
-            value={form.password}
-            onChange={onChange}
+            value={password}
+            onChange={onPasswordChange}
           />
           <Button onClick={handleLogin} htmlType="submit">
             Войти

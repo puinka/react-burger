@@ -70,7 +70,7 @@ export const setCookie = (name, value, props) => {
 
 // AUTH
 
-export const registerRequest = async ({ name, email, password }) => {
+export const registerRequest = async (name, email, password) => {
   const settings = {
     method: "POST",
     headers: HEADERS,
@@ -80,7 +80,7 @@ export const registerRequest = async ({ name, email, password }) => {
   return await handleServerResponse(res);
 };
 
-export const loginRequest = async ({ email, password }) => {
+export const loginRequest = async (email, password) => {
   const settings = {
     method: "POST",
     headers: HEADERS,
@@ -127,6 +127,7 @@ const fetchWithRefresh = async (url, settings) => {
 export const getUserRequest = async () => {
   const settings = {
     headers: {
+      "content-Type": "application/json",
       Authorization: "Bearer " + getCookie("accessToken"),
     },
   };

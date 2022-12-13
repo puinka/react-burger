@@ -1,5 +1,5 @@
-import { useCallback, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import {
   Input,
   EmailInput,
@@ -13,19 +13,32 @@ import { register } from "../services/actions/user";
 
 export default function RegisterPage() {
   const dispatch = useDispatch();
-  const [form, setValue] = useState({ name: "", email: "", password: "" });
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-  const onChange = (e) => {
-    setValue({ ...form, [e.target.name]: e.target.value });
+  const onNameChange = (e) => {
+    e.preventDefault();
+    const value = e.target.value;
+    setName(value);
   };
 
-  const handleRegister = useCallback(
-    (e) => {
-      e.preventDefault();
-      dispatch(register(form));
-    },
-    [form]
-  );
+  const onEmailChange = (e) => {
+    e.preventDefault();
+    const value = e.target.value;
+    setEmail(value);
+  };
+
+  const onPasswordChange = (e) => {
+    e.preventDefault();
+    const value = e.target.value;
+    setPassword(value);
+  };
+
+  const handleRegister = (e) => {
+    e.preventDefault();
+    dispatch(register(name, email, password));
+  };
 
   return (
     <main className={styles.main}>
@@ -37,20 +50,20 @@ export default function RegisterPage() {
             type="text"
             placeholder="Имя"
             name="name"
-            value={form.name}
-            onChange={onChange}
+            value={name}
+            onChange={onNameChange}
           ></Input>
           <EmailInput
             extraClass="mb-6"
             name="email"
-            value={form.email}
-            onChange={onChange}
+            value={email}
+            onChange={onEmailChange}
           />
           <PasswordInput
             extraClass="mb-6"
             name="password"
-            value={form.password}
-            onChange={onChange}
+            value={password}
+            onChange={onPasswordChange}
           />
           <Button onClick={handleRegister} htmlType="submit">
             Зарегистрироваться
