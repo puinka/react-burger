@@ -14,6 +14,9 @@ import {
   LOGOUT_REQUEST,
   LOGOUT_SUCCESS,
   LOGOUT_FAILED,
+  UPDATE_USER_REQUEST,
+  UPDATE_USER_SUCCESS,
+  UPDATE_USER_FAILED,
 } from "../actions/user";
 
 const initialState = {
@@ -123,6 +126,24 @@ export const userReducer = (state = initialState, action) => {
         ...state,
         logoutRequest: false,
         logoutError: action.error,
+      };
+    case UPDATE_USER_REQUEST:
+      return {
+        ...state,
+        updateUserRequest: true,
+      };
+    case UPDATE_USER_SUCCESS:
+      return {
+        ...state,
+        updateUserRequest: false,
+        updateUserError: null,
+        data: action.user,
+      };
+    case UPDATE_USER_FAILED:
+      return {
+        ...state,
+        updateUserRequest: false,
+        updateUserError: action.error,
       };
     default:
       return state;

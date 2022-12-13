@@ -76,7 +76,6 @@ export const registerRequest = async ({ name, email, password }) => {
     headers: HEADERS,
     body: JSON.stringify({ email, password, name }),
   };
-  console.log({ email, password, name });
   const res = await fetch(REGISTER_URL, settings);
   return await handleServerResponse(res);
 };
@@ -146,5 +145,17 @@ export const logoutRequest = async () => {
     }),
   };
   const res = await fetch(LOGOUT_URL, settings);
+  return await handleServerResponse(res);
+};
+
+export const updateUserRequest = async ({ name, email, password }) => {
+  const settings = {
+    method: "PATCH",
+    headers: {
+      Authorization: "Bearer " + getCookie("accessToken"),
+    },
+    body: JSON.stringify({ name, email, password }),
+  };
+  const res = await fetch(USER_URL, settings);
   return await handleServerResponse(res);
 };

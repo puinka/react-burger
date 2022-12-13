@@ -2,6 +2,7 @@ import {
   registerRequest,
   loginRequest,
   refreshTokenRequest,
+  updateUserRequest,
 } from "../../utils/api";
 import { setCookie } from "../../utils/api";
 import { getUserRequest, logoutRequest } from "../../utils/api";
@@ -25,6 +26,10 @@ export const REFRESH_TOKEN_FAILED = "REFRESH_TOKEN_FAILED";
 export const LOGOUT_REQUEST = "LOGOUT_REQUEST";
 export const LOGOUT_SUCCESS = "LOGOUT_SUCCESS";
 export const LOGOUT_FAILED = "LOGOUT_FAILED";
+
+export const UPDATE_USER_REQUEST = "UPDATE_USER_REQUEST";
+export const UPDATE_USER_SUCCESS = "UPDATE_USER_SUCCESS";
+export const UPDATE_USER_FAILED = "UPDATE_USER_FAILED";
 
 export const register = (form) => (dispatch) => {
   dispatch({
@@ -127,6 +132,25 @@ export const logout = () => (dispatch) => {
     .catch((err) => {
       dispatch({
         type: LOGOUT_FAILED,
+        error: err.message,
+      });
+    });
+};
+
+export const updateUser = (form) => (dispatch) => {
+  dispatch({
+    type: UPDATE_USER_REQUEST,
+  });
+  updateUserRequest(form)
+    .then((res) => {
+      dispatch({
+        type: UPDATE_USER_SUCCESS,
+        user: res.user,
+      });
+    })
+    .catch((err) => {
+      dispatch({
+        type: UPDATE_USER_FAILED,
         error: err.message,
       });
     });

@@ -1,37 +1,50 @@
 import styles from "./profile.module.css";
 import {
+  Button,
   EmailInput,
   Input,
   PasswordInput,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { NavLink, useHistory } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { getUser, logout } from "../services/actions/user";
+import { getUser, logout, updateUser } from "../services/actions/user";
 
 export default function ProfilePage() {
   const dispatch = useDispatch();
-  const history = useHistory();
-  const [form, setValue] = useState({ name: "", email: "", password: "" });
+  const data = useSelector((store) => store.user.data);
+  const [form, setValue] = useState({ ...data });
 
   const onChange = (e) => {
     setValue({ ...form, [e.target.name]: e.target.value });
   };
 
-  const data = useSelector((store) => store.user.data);
-
   useEffect(() => {
     dispatch(getUser());
-  }, []);
+  }, [form]);
 
   const handleLogout = () => {
     dispatch(logout());
   };
 
+  const handleUpdate = useCallback(
+    (e) => {
+      e.preventDefault();
+      dispatch(updateUser(form));
+      dispatch(getUser());
+    },
+    [form, dispatch]
+  );
+
+  const handleCancelUpdate = () => {
+    setValue({ ...data });
+    console.log({ ...data });
+  };
+
   return (
     <main className={styles.container}>
-      <div className={styles.leftcol}>
+      <div className={styles.nav}>
         <ul className={styles.list}>
           <li>
             <NavLink
@@ -58,7 +71,7 @@ export default function ProfilePage() {
           </li>
         </ul>
         <p
-          className={`${styles.text} text text_type_main-default text_color_inactive`}
+          className={`${styles.caption} text text_type_main-default text_color_inactive`}
         >
           В этом разделе вы можете изменить&nbsp;свои персональные данные
         </p>
@@ -67,14 +80,14 @@ export default function ProfilePage() {
         <Input
           name="name"
           placeholder="Имя"
-          value={data.name}
+          value={form.name}
           icon={"EditIcon"}
           extraClass="mb-6"
           onChange={onChange}
         />
         <EmailInput
           name="email"
-          value={data.email}
+          value={form.email}
           icon={"EditIcon"}
           extraClass="mb-6"
           onChange={onChange}
@@ -85,6 +98,18 @@ export default function ProfilePage() {
           extraClass="mb-6"
           value="Password"
         />
+        <div>
+          <Button
+            type="secondary"
+            htmlType="reset"
+            onClick={handleCancelUpdate}
+          >
+            <p>Отмена</p>
+          </Button>
+          <Button type="primary" htmlType="submit" onClick={handleUpdate}>
+            <p>Сохранить</p>
+          </Button>
+        </div>
       </form>
     </main>
   );
