@@ -32,7 +32,7 @@ export default function LoginPage() {
       e.preventDefault();
       dispatch(login(email, password));
     },
-    [dispatch]
+    [dispatch, email, password]
   );
 
   return (
