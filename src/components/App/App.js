@@ -18,7 +18,7 @@ import ForgotPasswordPage from "../../pages/ForgotPasswordPage";
 import ResetPasswordPage from "../../pages/ResetPasswordPage";
 import ProfilePage from "../../pages/ProfilePage";
 import { getCookie } from "../../utils/api";
-import { getUser } from "../../services/actions/user.js";
+import { getUser, checkAuth } from "../../services/actions/user.js";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 
 function App() {
@@ -29,10 +29,7 @@ function App() {
 
   useEffect(() => {
     dispatch(getIngredients());
-  }, [dispatch]);
-
-  useEffect(() => {
-    dispatch(getUser());
+    dispatch(checkAuth());
   }, [dispatch]);
 
   const closeAllModals = () => {

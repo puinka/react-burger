@@ -26,9 +26,6 @@ export default function LoginPage() {
     (e) => {
       e.preventDefault();
       dispatch(login(form));
-      if (from) {
-        history.push("/");
-      }
     },
     [form]
   );

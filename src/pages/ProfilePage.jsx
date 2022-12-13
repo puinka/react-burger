@@ -14,7 +14,7 @@ import { getUser, logout, updateUser } from "../services/actions/user";
 export default function ProfilePage() {
   const dispatch = useDispatch();
   const data = useSelector((store) => store.user.data);
-  const [form, setValue] = useState({ ...data });
+  const [form, setValue] = useState({ ...data, password: "" });
 
   const onChange = (e) => {
     setValue({ ...form, [e.target.name]: e.target.value });

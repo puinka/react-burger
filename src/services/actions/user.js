@@ -4,7 +4,7 @@ import {
   refreshTokenRequest,
   updateUserRequest,
 } from "../../utils/api";
-import { setCookie } from "../../utils/api";
+import { setCookie, getCookie } from "../../utils/api";
 import { getUserRequest, logoutRequest } from "../../utils/api";
 
 export const REGISTER_REQUEST = "REGISTER_REQUEST";
@@ -30,6 +30,8 @@ export const LOGOUT_FAILED = "LOGOUT_FAILED";
 export const UPDATE_USER_REQUEST = "UPDATE_USER_REQUEST";
 export const UPDATE_USER_SUCCESS = "UPDATE_USER_SUCCESS";
 export const UPDATE_USER_FAILED = "UPDATE_USER_FAILED";
+
+export const AUTH_CHECKED = "AUTH_CHECKED";
 
 export const register = (form) => (dispatch) => {
   dispatch({
@@ -156,9 +158,10 @@ export const updateUser = (form) => (dispatch) => {
     });
 };
 
-// export const checkAuth = () => (dispatch) => {
-//   if (getCookie("accessToken")) {
-//     dispatch(getUser().finally(() => dispatch({ type: AUTH_CHECKED })));
-//   } else {
-//     dispatch({ type: AUTH_CHECKED }
-// }}
+export const checkAuth = () => (dispatch) => {
+  if (getCookie("accessToken")) {
+    dispatch(getUser()).finally(() => dispatch({ type: AUTH_CHECKED }));
+  } else {
+    dispatch({ type: AUTH_CHECKED });
+  }
+};
