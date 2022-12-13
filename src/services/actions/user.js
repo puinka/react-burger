@@ -94,7 +94,6 @@ export const getUser = () => async (dispatch) => {
       type: USER_FAILED,
       error: err.message,
     });
-    throw new Error(err.message);
   }
 };
 

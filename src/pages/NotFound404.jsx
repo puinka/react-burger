@@ -19,7 +19,7 @@ export default function NotFound404() {
     <main className={styles.main}>
       <div className={styles.container} ref={container}></div>
       <Link to="/">
-        <Button>На главную</Button>
+        <Button htmlType="button">На главную</Button>
       </Link>
     </main>
   );
