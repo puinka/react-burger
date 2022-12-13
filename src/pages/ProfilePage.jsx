@@ -32,14 +32,12 @@ export default function ProfilePage() {
     (e) => {
       e.preventDefault();
       dispatch(updateUser(form));
-      dispatch(getUser());
     },
     [form, dispatch]
   );
 
   const handleCancelUpdate = () => {
     setValue({ ...data });
-    console.log({ ...data });
   };
 
   return (

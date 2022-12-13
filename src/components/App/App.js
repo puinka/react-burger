@@ -1,5 +1,5 @@
 import styles from "./app.module.css";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getIngredients } from "../../services/actions/ingredients";
 import BounceLoader from "react-spinners/BounceLoader";
@@ -19,12 +19,13 @@ import ResetPasswordPage from "../../pages/ResetPasswordPage";
 import ProfilePage from "../../pages/ProfilePage";
 import { getCookie } from "../../utils/api";
 import { getUser } from "../../services/actions/user.js";
+import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 
 function App() {
   const dispatch = useDispatch();
+
   const { isLoading } = useSelector((store) => store.ingredients);
   const { currentIngredient } = useSelector((store) => store.ingredientModal);
-  const accessToken = getCookie("accessToken");
 
   useEffect(() => {
     dispatch(getIngredients());
@@ -52,24 +53,24 @@ function App() {
         <div className={styles.app}>
           <AppHeader />
           <Switch>
-            <Route exact path="/login">
-              <LoginPage />
-            </Route>
             <Route exact path="/">
               <HomePage closeAllModals={closeAllModals} />
             </Route>
+            <ProtectedRoute onlyUnAuth exact path="/login">
+              <LoginPage />
+            </ProtectedRoute>
             <Route exact path="/register">
               <RegisterPage />
             </Route>
-            <Route exact path="/forgot-password">
+            <ProtectedRoute onlyUnAuth exact path="/forgot-password">
               <ForgotPasswordPage />
-            </Route>
-            <Route exact path="/reset-password">
+            </ProtectedRoute>
+            <ProtectedRoute onlyUnAuth exact path="/reset-password">
               <ResetPasswordPage />
-            </Route>
-            <Route exact path="/profile">
+            </ProtectedRoute>
+            <ProtectedRoute exact path="/profile">
               <ProfilePage />
-            </Route>
+            </ProtectedRoute>
             <Route exact path="/ingredients/:id">
               <IngredientDetails />
             </Route>
