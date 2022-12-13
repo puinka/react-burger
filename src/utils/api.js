@@ -131,9 +131,9 @@ export const getUserRequest = async () => {
       Authorization: "Bearer " + getCookie("accessToken"),
     },
   };
-  const res = await fetch(USER_URL, settings);
-  return await handleServerResponse(res);
-  //return fetchWithRefresh(USER_URL, settings);
+  // const res = await fetch(USER_URL, settings);
+  // return await handleServerResponse(res);
+  return fetchWithRefresh(USER_URL, settings);
 };
 
 export const logoutRequest = async () => {
