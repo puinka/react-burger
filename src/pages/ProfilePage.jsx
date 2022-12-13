@@ -7,37 +7,51 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { NavLink } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { getUser, logout, updateUser } from "../services/actions/user";
 
 export default function ProfilePage() {
   const dispatch = useDispatch();
   const data = useSelector((store) => store.user.data);
-  const [form, setValue] = useState({ ...data, password: "" });
-
-  const onChange = (e) => {
-    setValue({ ...form, [e.target.name]: e.target.value });
-  };
+  const [name, setName] = useState(data.name);
+  const [email, setEmail] = useState(data.email);
+  const [password, setPassword] = useState("");
 
   useEffect(() => {
     dispatch(getUser());
-  }, [form]);
+  }, [dispatch]);
 
   const handleLogout = () => {
     dispatch(logout());
   };
 
-  const handleUpdate = useCallback(
-    (e) => {
-      e.preventDefault();
-      dispatch(updateUser(form));
-    },
-    [form, dispatch]
-  );
+  const handleUpdate = (e) => {
+    e.preventDefault();
+    dispatch(updateUser(name, email, password));
+  };
+
+  const onNameChange = (e) => {
+    e.preventDefault();
+    const value = e.target.value;
+    setName(value);
+  };
+
+  const onEmailChange = (e) => {
+    e.preventDefault();
+    const value = e.target.value;
+    setEmail(value);
+  };
+
+  const onPasswordChange = (e) => {
+    e.preventDefault();
+    const value = e.target.value;
+    setPassword(value);
+  };
 
   const handleCancelUpdate = () => {
-    setValue({ ...data });
+    setName(data.name);
+    setEmail(data.email);
   };
 
   return (
@@ -78,23 +92,24 @@ export default function ProfilePage() {
         <Input
           name="name"
           placeholder="Имя"
-          value={form.name}
+          value={name}
           icon={"EditIcon"}
           extraClass="mb-6"
-          onChange={onChange}
+          onChange={onNameChange}
         />
         <EmailInput
           name="email"
-          value={form.email}
+          value={email}
           icon={"EditIcon"}
           extraClass="mb-6"
-          onChange={onChange}
+          onChange={onEmailChange}
         />
         <PasswordInput
           name="password"
           icon={"EditIcon"}
           extraClass="mb-6"
           value="Password"
+          onChange={onPasswordChange}
         />
         <div>
           <Button

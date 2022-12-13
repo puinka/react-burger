@@ -139,11 +139,11 @@ export const logout = () => (dispatch) => {
     });
 };
 
-export const updateUser = (form) => (dispatch) => {
+export const updateUser = (name, email, password) => (dispatch) => {
   dispatch({
     type: UPDATE_USER_REQUEST,
   });
-  updateUserRequest(form)
+  updateUserRequest(name, email, password)
     .then((res) => {
       dispatch({
         type: UPDATE_USER_SUCCESS,

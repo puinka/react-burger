@@ -148,10 +148,11 @@ export const logoutRequest = async () => {
   return await handleServerResponse(res);
 };
 
-export const updateUserRequest = async ({ name, email, password }) => {
+export const updateUserRequest = async (name, email, password) => {
   const settings = {
     method: "PATCH",
     headers: {
+      "content-Type": "application/json",
       Authorization: "Bearer " + getCookie("accessToken"),
     },
     body: JSON.stringify({ name, email, password }),
