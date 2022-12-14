@@ -7,3 +7,12 @@
 .title {
   text-align: left;
 }
+
+.container {
+  display: flex;
+  flex-direction: column;
+  max-width: 272px;
+  box-sizing: border-box;
+  position: relative;
+  cursor: pointer;
+}

@@ -1,39 +1,42 @@
 import styles from "./app.module.css";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Route, Switch, useHistory, useLocation } from "react-router-dom";
+
 import { getIngredients } from "../../services/actions/ingredients";
+import { resetIngredientModal } from "../../services/actions/currentIngredient";
+import { checkAuth } from "../../services/actions/user.js";
+
 import BounceLoader from "react-spinners/BounceLoader";
 import AppHeader from "../AppHeader/AppHeader";
-import HomePage from "../../pages/HomePage";
-import NotFound404 from "../../pages/NotFound404";
-import { resetIngredientModal } from "../../services/actions/currentIngredient";
 import Modal from "../Modal/Modal";
 import IngredientDetails from "../Modal/IngredientDetails/IngredientDetails";
+import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 
-import { INGREDIENT_TYPES } from "../../utils/constants.js";
-import { Route, Switch } from "react-router-dom";
+import HomePage from "../../pages/HomePage";
+import NotFound404 from "../../pages/NotFound404";
 import LoginPage from "../../pages/LoginPage";
 import RegisterPage from "../../pages/RegisterPage";
 import ForgotPasswordPage from "../../pages/ForgotPasswordPage";
 import ResetPasswordPage from "../../pages/ResetPasswordPage";
 import ProfilePage from "../../pages/ProfilePage";
-import { getCookie } from "../../utils/api";
-import { getUser, checkAuth } from "../../services/actions/user.js";
-import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 
 function App() {
   const dispatch = useDispatch();
+  const history = useHistory();
+  const location = useLocation();
+  const background = location.state?.background;
 
   const { isLoading } = useSelector((store) => store.ingredients);
-  const { currentIngredient } = useSelector((store) => store.ingredientModal);
 
   useEffect(() => {
     dispatch(getIngredients());
     dispatch(checkAuth());
   }, [dispatch]);
 
-  const closeAllModals = () => {
+  const onModalClose = () => {
     dispatch(resetIngredientModal());
+    history.replace("/");
   };
 
   return (
@@ -49,9 +52,9 @@ function App() {
       ) : (
         <div className={styles.app}>
           <AppHeader />
-          <Switch>
+          <Switch location={background || location}>
             <Route exact path="/">
-              <HomePage closeAllModals={closeAllModals} />
+              <HomePage />
             </Route>
             <ProtectedRoute onlyUnAuth exact path="/login">
               <LoginPage />
@@ -68,19 +71,22 @@ function App() {
             <ProtectedRoute exact path="/profile">
               <ProfilePage />
             </ProtectedRoute>
-            <Route exact path="/ingredients/:id">
+            <Route path="/ingredients/:id">
               <IngredientDetails />
             </Route>
             <Route path="*">
               <NotFound404 />
             </Route>
           </Switch>
+
+          {background && (
+            <Route path="/ingredients/:id">
+              <Modal title="Детали ингредиента" onCloseClick={onModalClose}>
+                <IngredientDetails />
+              </Modal>
+            </Route>
+          )}
         </div>
-      )}
-      {currentIngredient && (
-        <Modal title="Детали ингредиента" onCloseClick={closeAllModals}>
-          <IngredientDetails item={currentIngredient} />
-        </Modal>
       )}
     </>
   );

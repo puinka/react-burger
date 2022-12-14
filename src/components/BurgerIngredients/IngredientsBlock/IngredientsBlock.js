@@ -3,8 +3,11 @@ import { forwardRef } from "react";
 import PropTypes from "prop-types";
 import { ingredientProps } from "../../../utils/ingredientProps.js";
 import IngredientItem from "../IngredientItem/IngredientItem";
+import { Link, useLocation } from "react-router-dom";
 
 const IngredientsBlock = forwardRef(({ title, data, id }, ref) => {
+  const location = useLocation();
+
   return (
     <>
       <h3
@@ -16,7 +19,16 @@ const IngredientsBlock = forwardRef(({ title, data, id }, ref) => {
       </h3>
       <ul className={`pl-4 pr-2 pb-2 ${styles.ingredientsList}`}>
         {data.map((item) => (
-          <IngredientItem item={item} key={item._id} />
+          <Link
+            className={styles.container}
+            key={item._id}
+            to={{
+              pathname: `/ingredients/${item._id}`,
+              state: { background: location },
+            }}
+          >
+            <IngredientItem item={item} />
+          </Link>
         ))}
       </ul>
     </>

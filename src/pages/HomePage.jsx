@@ -5,12 +5,12 @@ import BurgerIngredients from "../components/BurgerIngredients/BurgerIngredients
 import BurgerConstructor from "../components/BurgerConstructor/BurgerConstructor";
 import styles from "./home.module.css";
 
-const HomePage = ({ closeAllModals }) => {
+const HomePage = () => {
   const { ingredients } = useSelector((store) => store.ingredients);
   return (
     <DndProvider backend={HTML5Backend}>
       <main className={styles.main}>
-        {ingredients && <BurgerIngredients closeAllModals={closeAllModals} />}
+        {ingredients && <BurgerIngredients />}
         <BurgerConstructor />
       </main>
     </DndProvider>

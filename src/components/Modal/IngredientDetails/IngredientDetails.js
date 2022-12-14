@@ -1,7 +1,16 @@
 import styles from "./ingredientdetails.module.css";
 import { ingredientProps } from "../../../utils/ingredientProps";
+import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
+import { useEffect } from "react";
+import { setIngredientModal } from "../../../services/actions/currentIngredient";
+import { getIngredients } from "../../../services/actions/ingredients";
 
-const IngredientDetails = ({ item }) => {
+const IngredientDetails = () => {
+  const { id } = useParams();
+  const { ingredients } = useSelector((store) => store.ingredients);
+  const item = ingredients.find((item) => item._id === id);
+
   return (
     <div className={`pb-12 ${styles.container}`}>
       <img
