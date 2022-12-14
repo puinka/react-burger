@@ -1,8 +1,11 @@
+import { useHistory } from "react-router-dom";
 import {
   registerRequest,
   loginRequest,
   refreshTokenRequest,
   updateUserRequest,
+  passwordResetEmailRequest,
+  passwordResetConfirmRequest,
 } from "../../utils/api";
 import { setCookie, getCookie } from "../../utils/api";
 import { getUserRequest, logoutRequest } from "../../utils/api";
@@ -32,6 +35,14 @@ export const UPDATE_USER_SUCCESS = "UPDATE_USER_SUCCESS";
 export const UPDATE_USER_FAILED = "UPDATE_USER_FAILED";
 
 export const AUTH_CHECKED = "AUTH_CHECKED";
+
+export const FORGOT_PASSWORD_REQUEST = "FORGOT_PASSWORD_REQUEST";
+export const FORGOT_PASSWORD_SUCCESS = "FORGOT_PASSWORD_SUCCESS";
+export const FORGOT_PASSWORD_FAILED = "FORGOT_PASSWORD_FAILED";
+
+export const RESET_PASSWORD_REQUEST = "RESET_PASSWORD_REQUEST";
+export const RESET_PASSWORD_SUCCESS = "RESET_PASSWORD_SUCCESS";
+export const RESET_PASSWORD_FAILED = "RESET_PASSWORD_FAILED";
 
 export const register = (name, email, password) => (dispatch) => {
   dispatch({
@@ -163,4 +174,43 @@ export const checkAuth = () => (dispatch) => {
   } else {
     dispatch({ type: AUTH_CHECKED });
   }
+};
+
+export const sendResetPassEmail = (email, history) => (dispatch) => {
+  dispatch({
+    type: FORGOT_PASSWORD_REQUEST,
+  });
+  passwordResetEmailRequest(email)
+    .then((res) => {
+      dispatch({
+        type: FORGOT_PASSWORD_SUCCESS,
+        restoreEmail: res.success,
+      });
+      history.replace({ pathname: "/reset-password" });
+    })
+    .catch((err) => {
+      dispatch({
+        type: FORGOT_PASSWORD_FAILED,
+        error: err.message,
+      });
+    });
+};
+
+export const resetPass = (password, token) => (dispatch) => {
+  dispatch({
+    type: RESET_PASSWORD_REQUEST,
+  });
+  passwordResetConfirmRequest(password, token)
+    .then((res) => {
+      dispatch({
+        type: RESET_PASSWORD_SUCCESS,
+        passRestore: res.success,
+      });
+    })
+    .catch((err) => {
+      dispatch({
+        type: RESET_PASSWORD_FAILED,
+        error: err.message,
+      });
+    });
 };

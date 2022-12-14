@@ -2,14 +2,28 @@ import {
   EmailInput,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { Link } from "react-router-dom";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { Link, useHistory } from "react-router-dom";
+import { sendResetPassEmail } from "../services/actions/user";
 import styles from "./form.module.css";
 
-const handleReset = (e) => {
-  e.preventDefault();
-};
-
 export default function ForgotPasswordPage() {
+  const history = useHistory();
+  const dispatch = useDispatch();
+  const [email, setEmail] = useState("");
+
+  const onEmailChange = (e) => {
+    e.preventDefault();
+    const value = e.target.value;
+    setEmail(value);
+  };
+
+  const handleResetPass = (e) => {
+    e.preventDefault();
+    dispatch(sendResetPassEmail(email, history));
+  };
+
   return (
     <main className={styles.main}>
       <div>
@@ -17,8 +31,13 @@ export default function ForgotPasswordPage() {
           Восстановление пароля
         </h1>
         <form className="mb-20">
-          <EmailInput extraClass="mb-6" placeholder="Укажите e-mail" />
-          <Button onClick={handleReset} htmlType="submit">
+          <EmailInput
+            extraClass="mb-6"
+            placeholder="Укажите e-mail"
+            value={email}
+            onChange={onEmailChange}
+          />
+          <Button onClick={handleResetPass} htmlType="submit">
             Восстановить
           </Button>
         </form>

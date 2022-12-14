@@ -4,7 +4,8 @@ const ORDER_URL = `${BASE_API_URL}/orders`;
 const LOGIN_URL = `${BASE_API_URL}/auth/login`;
 const USER_URL = `${BASE_API_URL}/auth/user`;
 const REGISTER_URL = `${BASE_API_URL}/auth/register`;
-const PASSWORD_RESET_URL = `${BASE_API_URL}/password-reset/reset`;
+const PASSWORD_RESET_EMAIL_URL = `${BASE_API_URL}/password-reset`;
+const PASSWORD_RESET_CONFIRM_URL = `${BASE_API_URL}/password-reset/reset`;
 const LOGOUT_URL = `${BASE_API_URL}/auth/logout`;
 const TOKEN_URL = `${BASE_API_URL}/auth/token`;
 const HEADERS = { "Content-Type": "application/json" };
@@ -159,5 +160,25 @@ export const updateUserRequest = async (name, email, password) => {
     body: JSON.stringify({ name, email, password }),
   };
   const res = await fetch(USER_URL, settings);
+  return await handleServerResponse(res);
+};
+
+export const passwordResetEmailRequest = async (email) => {
+  const settings = {
+    method: "POST",
+    headers: HEADERS,
+    body: JSON.stringify({ email }),
+  };
+  const res = await fetch(PASSWORD_RESET_EMAIL_URL, settings);
+  return await handleServerResponse(res);
+};
+
+export const passwordResetConfirmRequest = async (password, code) => {
+  const settings = {
+    method: "POST",
+    headers: HEADERS,
+    body: JSON.stringify({ password, code }),
+  };
+  const res = await fetch(PASSWORD_RESET_CONFIRM_URL, settings);
   return await handleServerResponse(res);
 };

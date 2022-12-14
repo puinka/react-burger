@@ -18,6 +18,12 @@ import {
   UPDATE_USER_SUCCESS,
   UPDATE_USER_FAILED,
   AUTH_CHECKED,
+  FORGOT_PASSWORD_REQUEST,
+  FORGOT_PASSWORD_SUCCESS,
+  FORGOT_PASSWORD_FAILED,
+  RESET_PASSWORD_REQUEST,
+  RESET_PASSWORD_SUCCESS,
+  RESET_PASSWORD_FAILED,
 } from "../actions/user";
 
 const initialState = {
@@ -34,6 +40,9 @@ const initialState = {
   updateUserError: null,
   logoutRequest: false,
   logoutError: null,
+  forgotPasswordRequest: false,
+  forgotPasswordError: null,
+  restoreEmail: false,
   isAuthChecked: false,
 };
 
@@ -163,6 +172,44 @@ export const userReducer = (state = initialState, action) => {
       return {
         ...state,
         isAuthChecked: true,
+      };
+
+    case FORGOT_PASSWORD_REQUEST:
+      return {
+        ...state,
+        forgotPasswordRequest: true,
+      };
+    case FORGOT_PASSWORD_SUCCESS:
+      return {
+        ...state,
+        forgotPasswordRequest: false,
+        forgotPasswordError: null,
+        restoreEmail: action.restoreEmail,
+      };
+    case FORGOT_PASSWORD_FAILED:
+      return {
+        ...state,
+        forgotPasswordRequest: false,
+        forgotPasswordError: action.error,
+      };
+
+    case RESET_PASSWORD_REQUEST:
+      return {
+        ...state,
+        resetPasswordRequest: true,
+      };
+    case RESET_PASSWORD_SUCCESS:
+      return {
+        ...state,
+        resetPasswordRequest: false,
+        resetPasswordError: null,
+        restoreEmail: false,
+      };
+    case RESET_PASSWORD_FAILED:
+      return {
+        ...state,
+        resetPasswordRequest: false,
+        resetPasswordError: action.error,
       };
 
     default:
