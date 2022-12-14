@@ -23,7 +23,10 @@ export const getData = async () => {
 export const postOrder = async (ingredientsIDs) => {
   const settings = {
     method: "POST",
-    headers: HEADERS,
+    headers: {
+      "content-Type": "application/json",
+      Authorization: "Bearer " + getCookie("accessToken"),
+    },
     body: JSON.stringify({
       ingredients: ingredientsIDs,
     }),
@@ -132,8 +135,7 @@ export const getUserRequest = async () => {
       Authorization: "Bearer " + getCookie("accessToken"),
     },
   };
-  // const res = await fetch(USER_URL, settings);
-  // return await handleServerResponse(res);
+
   return fetchWithRefresh(USER_URL, settings);
 };
 
