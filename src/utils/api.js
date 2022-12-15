@@ -39,7 +39,7 @@ export const registerRequest = async (name, email, password) => {
     headers: HEADERS,
     body: JSON.stringify({ email, password, name }),
   };
-  request(REGISTER_URL, settings);
+  return request(REGISTER_URL, settings);
 };
 
 export const loginRequest = async (email, password) => {
@@ -96,7 +96,6 @@ export const getUserRequest = async () => {
       Authorization: "Bearer " + getCookie("accessToken"),
     },
   };
-  //return request(USER_URL, settings);
   return fetchWithRefresh(USER_URL, settings);
 };
 
@@ -109,7 +108,7 @@ export const logoutRequest = async () => {
       token: refreshToken,
     }),
   };
-  request(LOGOUT_URL, settings);
+  return request(LOGOUT_URL, settings);
 };
 
 export const updateUserRequest = async (name, email, password) => {
@@ -121,7 +120,7 @@ export const updateUserRequest = async (name, email, password) => {
     },
     body: JSON.stringify({ name, email, password }),
   };
-  request(USER_URL, settings);
+  return request(USER_URL, settings);
 };
 
 export const passwordResetEmailRequest = async (email) => {
@@ -130,7 +129,7 @@ export const passwordResetEmailRequest = async (email) => {
     headers: HEADERS,
     body: JSON.stringify({ email }),
   };
-  request(PASSWORD_RESET_EMAIL_URL, settings);
+  return request(PASSWORD_RESET_EMAIL_URL, settings);
 };
 
 export const passwordResetConfirmRequest = async (password, code) => {
@@ -139,5 +138,5 @@ export const passwordResetConfirmRequest = async (password, code) => {
     headers: HEADERS,
     body: JSON.stringify({ password, code }),
   };
-  request(PASSWORD_RESET_CONFIRM_URL, settings);
+  return request(PASSWORD_RESET_CONFIRM_URL, settings);
 };
