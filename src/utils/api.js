@@ -70,7 +70,7 @@ export const refreshTokenRequest = async () => {
 
 const fetchWithRefresh = async (url, settings) => {
   try {
-    request(url, settings);
+    return request(url, settings);
   } catch (err) {
     if (err.message === "jwt expired") {
       const refreshData = await refreshTokenRequest();
@@ -96,8 +96,8 @@ export const getUserRequest = async () => {
       Authorization: "Bearer " + getCookie("accessToken"),
     },
   };
-  return request(USER_URL, settings);
-  //return fetchWithRefresh(USER_URL, settings);
+  //return request(USER_URL, settings);
+  return fetchWithRefresh(USER_URL, settings);
 };
 
 export const logoutRequest = async () => {
