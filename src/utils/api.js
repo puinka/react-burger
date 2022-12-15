@@ -1,3 +1,6 @@
+import { request } from "./request";
+import { setCookie, getCookie } from "./cookie";
+
 const BASE_API_URL = "https://norma.nomoreparties.space/api";
 const INGREDIENTS_URL = `${BASE_API_URL}/ingredients`;
 const ORDER_URL = `${BASE_API_URL}/orders`;
@@ -10,14 +13,8 @@ const LOGOUT_URL = `${BASE_API_URL}/auth/logout`;
 const TOKEN_URL = `${BASE_API_URL}/auth/token`;
 const HEADERS = { "Content-Type": "application/json" };
 
-export const handleServerResponse = (res) => {
-  return res.ok ? res.json() : res.json().then((err) => Promise.reject(err));
-};
-
 export const getData = async () => {
-  const res = await fetch(INGREDIENTS_URL);
-  const { data } = await handleServerResponse(res);
-  return data;
+  return request(INGREDIENTS_URL, {});
 };
 
 export const postOrder = async (ingredientsIDs) => {
@@ -25,51 +22,13 @@ export const postOrder = async (ingredientsIDs) => {
     method: "POST",
     headers: {
       "content-Type": "application/json",
-      Authorization: "Bearer " + getCookie("accessToken"),
+      //Authorization: "Bearer " + getCookie("accessToken"),
     },
     body: JSON.stringify({
       ingredients: ingredientsIDs,
     }),
   };
-  const res = await fetch(ORDER_URL, settings);
-  const order = await handleServerResponse(res);
-  return order;
-};
-
-//COOKIES
-
-export const getCookie = (name) => {
-  const matches = document.cookie.match(
-    new RegExp(
-      "(?:^|; )" +
-        name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, "\\$1") +
-        "=([^;]*)"
-    )
-  );
-  return matches ? decodeURIComponent(matches[1]) : undefined;
-};
-
-export const setCookie = (name, value, props) => {
-  props = { path: "/", ...props };
-  let exp = props.expires;
-  if (typeof exp == "number" && exp) {
-    const d = new Date();
-    d.setTime(d.getTime() + exp * 1000);
-    exp = props.expires = d;
-  }
-  if (exp && exp.toUTCString) {
-    props.expires = exp.toUTCString();
-  }
-  value = encodeURIComponent(value);
-  let updatedCookie = name + "=" + value;
-  for (const propName in props) {
-    updatedCookie += "; " + propName;
-    const propValue = props[propName];
-    if (propValue !== true) {
-      updatedCookie += "=" + propValue;
-    }
-  }
-  document.cookie = updatedCookie;
+  request(ORDER_URL, settings);
 };
 
 // AUTH
@@ -80,8 +39,7 @@ export const registerRequest = async (name, email, password) => {
     headers: HEADERS,
     body: JSON.stringify({ email, password, name }),
   };
-  const res = await fetch(REGISTER_URL, settings);
-  return await handleServerResponse(res);
+  request(REGISTER_URL, settings);
 };
 
 export const loginRequest = async (email, password) => {
@@ -90,8 +48,7 @@ export const loginRequest = async (email, password) => {
     headers: HEADERS,
     body: JSON.stringify({ email, password }),
   };
-  const res = await fetch(LOGIN_URL, settings);
-  return await handleServerResponse(res);
+  return request(LOGIN_URL, settings);
 };
 
 export const refreshTokenRequest = async () => {
@@ -101,14 +58,19 @@ export const refreshTokenRequest = async () => {
     body: JSON.stringify({ token: localStorage.getItem("refreshToken") }),
   };
 
-  const res = await fetch(TOKEN_URL, settings);
-  return await handleServerResponse(res);
+  request(TOKEN_URL, settings).then((refreshData) => {
+    if (!refreshData.success) {
+      Promise.reject(refreshData);
+    }
+
+    localStorage.setItem("refreshToken", refreshData.refreshToken);
+    setCookie("accessToken", refreshData.accessToken);
+  });
 };
 
 const fetchWithRefresh = async (url, settings) => {
   try {
-    const res = await fetch(url, settings);
-    await handleServerResponse(res);
+    request(url, settings);
   } catch (err) {
     if (err.message === "jwt expired") {
       const refreshData = await refreshTokenRequest();
@@ -121,8 +83,7 @@ const fetchWithRefresh = async (url, settings) => {
 
       settings.headers.Authorization = refreshData.accessToken;
 
-      const res = await fetch(url, settings);
-      return await handleServerResponse(res);
+      request(url, settings);
     }
     return Promise.reject(err);
   }
@@ -135,8 +96,8 @@ export const getUserRequest = async () => {
       Authorization: "Bearer " + getCookie("accessToken"),
     },
   };
-
-  return fetchWithRefresh(USER_URL, settings);
+  return request(USER_URL, settings);
+  //return fetchWithRefresh(USER_URL, settings);
 };
 
 export const logoutRequest = async () => {
@@ -148,8 +109,7 @@ export const logoutRequest = async () => {
       token: refreshToken,
     }),
   };
-  const res = await fetch(LOGOUT_URL, settings);
-  return await handleServerResponse(res);
+  request(LOGOUT_URL, settings);
 };
 
 export const updateUserRequest = async (name, email, password) => {
@@ -161,8 +121,7 @@ export const updateUserRequest = async (name, email, password) => {
     },
     body: JSON.stringify({ name, email, password }),
   };
-  const res = await fetch(USER_URL, settings);
-  return await handleServerResponse(res);
+  request(USER_URL, settings);
 };
 
 export const passwordResetEmailRequest = async (email) => {
@@ -171,8 +130,7 @@ export const passwordResetEmailRequest = async (email) => {
     headers: HEADERS,
     body: JSON.stringify({ email }),
   };
-  const res = await fetch(PASSWORD_RESET_EMAIL_URL, settings);
-  return await handleServerResponse(res);
+  request(PASSWORD_RESET_EMAIL_URL, settings);
 };
 
 export const passwordResetConfirmRequest = async (password, code) => {
@@ -181,6 +139,5 @@ export const passwordResetConfirmRequest = async (password, code) => {
     headers: HEADERS,
     body: JSON.stringify({ password, code }),
   };
-  const res = await fetch(PASSWORD_RESET_CONFIRM_URL, settings);
-  return await handleServerResponse(res);
+  request(PASSWORD_RESET_CONFIRM_URL, settings);
 };

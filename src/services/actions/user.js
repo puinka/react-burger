@@ -7,7 +7,7 @@ import {
   passwordResetEmailRequest,
   passwordResetConfirmRequest,
 } from "../../utils/api";
-import { setCookie, getCookie } from "../../utils/api";
+import { setCookie, getCookie } from "../../utils/cookie";
 import { getUserRequest, logoutRequest } from "../../utils/api";
 
 export const REGISTER_REQUEST = "REGISTER_REQUEST";
@@ -92,20 +92,25 @@ export const getUser = () => async (dispatch) => {
   dispatch({
     type: USER_REQUEST,
   });
-  try {
-    const res = await getUserRequest();
-    if (res.success) {
+  getUserRequest()
+    .then((res) => {
+      if (res.success) {
+        dispatch({
+          type: USER_SUCCESS,
+          user: res.user,
+        });
+      } else {
+        dispatch({
+          type: USER_FAILED,
+        });
+      }
+    })
+    .catch((err) => {
       dispatch({
-        type: USER_SUCCESS,
-        user: res.user,
+        type: USER_FAILED,
+        error: err.message,
       });
-    }
-  } catch (err) {
-    dispatch({
-      type: USER_FAILED,
-      error: err.message,
     });
-  }
 };
 
 export const refreshToken = () => (dispatch) => {
