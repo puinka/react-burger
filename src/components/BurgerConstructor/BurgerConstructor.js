@@ -46,7 +46,6 @@ const BurgerConstructor = () => {
   };
 
   const handleCreateOrder = () => {
-    console.log(isUser);
     if (!isUser) {
       history.push("/login");
     } else {
