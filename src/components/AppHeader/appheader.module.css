@@ -20,6 +20,24 @@
 
 .link {
   display: flex;
+  color: var(--text-inactive-color);
+}
+
+.link:hover {
+  opacity: 0.8;
+}
+
+.active {
+  color: var(--text-primary-color);
+}
+
+.active:hover {
+  opacity: 1;
+  cursor: default;
+}
+
+.active svg {
+  fill: var(--text-primary-color);
 }
 
 .logoWrap {

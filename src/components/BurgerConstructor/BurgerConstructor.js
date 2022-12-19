@@ -14,11 +14,14 @@ import {
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { createOrder, RESET_ORDER } from "../../services/actions/order";
+import { useHistory } from "react-router-dom";
 
 const BurgerConstructor = () => {
   const dispatch = useDispatch();
+  const history = useHistory();
   const { bun, mains } = useSelector((store) => store.currentBurger);
   const { number, isLoading } = useSelector((store) => store.orderModal);
+  const isUser = useSelector((store) => store.user.data);
 
   const totalPrice = useMemo(() => {
     return (bun ? bun.price * 2 : 0) + mains.reduce((s, v) => s + v.price, 0);
@@ -40,6 +43,18 @@ const BurgerConstructor = () => {
     } else {
       return dispatch(addMain(item));
     }
+  };
+
+  const handleCreateOrder = () => {
+    if (!isUser) {
+      history.push("/login");
+    } else {
+      dispatch(createOrder(ingrIDs));
+    }
+  };
+
+  const handleCloseModal = () => {
+    dispatch({ type: RESET_ORDER });
   };
 
   const [{ isHover }, dropTarget] = useDrop({
@@ -103,7 +118,7 @@ const BurgerConstructor = () => {
               type="primary"
               size="large"
               htmlType="button"
-              onClick={() => dispatch(createOrder(ingrIDs))}
+              onClick={handleCreateOrder}
             >
               {isLoading ? `Отправка...` : `Оформить заказ`}
             </Button>
@@ -111,7 +126,7 @@ const BurgerConstructor = () => {
         )}
       </section>
       {number && (
-        <Modal onCloseClick={() => dispatch({ type: RESET_ORDER })}>
+        <Modal onCloseClick={handleCloseModal}>
           <OrderDetails number={number} />
         </Modal>
       )}

@@ -1,31 +1,42 @@
 import styles from "./app.module.css";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { DndProvider } from "react-dnd";
-import { HTML5Backend } from "react-dnd-html5-backend";
+import { Route, Switch, useHistory, useLocation } from "react-router-dom";
+
 import { getIngredients } from "../../services/actions/ingredients";
+import { resetIngredientModal } from "../../services/actions/currentIngredient";
+import { checkAuth } from "../../services/actions/user.js";
+
 import BounceLoader from "react-spinners/BounceLoader";
 import AppHeader from "../AppHeader/AppHeader";
-import BurgerIngredients from "../BurgerIngredients/BurgerIngredients";
-import BurgerConstructor from "../BurgerConstructor/BurgerConstructor";
-import { resetIngredientModal } from "../../services/actions/currentIngredient";
 import Modal from "../Modal/Modal";
 import IngredientDetails from "../Modal/IngredientDetails/IngredientDetails";
+import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 
-import { INGREDIENT_TYPES } from "../../utils/constants.js";
+import HomePage from "../../pages/HomePage";
+import NotFound404 from "../../pages/NotFound404";
+import LoginPage from "../../pages/LoginPage";
+import RegisterPage from "../../pages/RegisterPage";
+import ForgotPasswordPage from "../../pages/ForgotPasswordPage";
+import ResetPasswordPage from "../../pages/ResetPasswordPage";
+import ProfilePage from "../../pages/ProfilePage";
 
 function App() {
   const dispatch = useDispatch();
-  const { isLoading, ingredients } = useSelector((store) => store.ingredients);
-  const { currentIngredient } = useSelector((store) => store.ingredientModal);
+  const history = useHistory();
+  const location = useLocation();
+  const background = location.state?.background;
+
+  const { isLoading } = useSelector((store) => store.ingredients);
 
   useEffect(() => {
     dispatch(getIngredients());
+    dispatch(checkAuth());
   }, [dispatch]);
 
-  const closeAllModals = () => {
-    // setOrderDetailsOpen(false);
+  const onModalClose = () => {
     dispatch(resetIngredientModal());
+    history.replace("/");
   };
 
   return (
@@ -41,20 +52,41 @@ function App() {
       ) : (
         <div className={styles.app}>
           <AppHeader />
-          <DndProvider backend={HTML5Backend}>
-            <main className={styles.main}>
-              {ingredients && (
-                <BurgerIngredients closeAllModals={closeAllModals} />
-              )}
-              <BurgerConstructor />
-            </main>
-          </DndProvider>
+          <Switch location={background || location}>
+            <Route exact path="/">
+              <HomePage />
+            </Route>
+            <ProtectedRoute onlyUnAuth exact path="/login">
+              <LoginPage />
+            </ProtectedRoute>
+            <ProtectedRoute onlyUnAuth exact path="/register">
+              <RegisterPage />
+            </ProtectedRoute>
+            <ProtectedRoute onlyUnAuth exact path="/forgot-password">
+              <ForgotPasswordPage />
+            </ProtectedRoute>
+            <ProtectedRoute onlyUnAuth exact path="/reset-password">
+              <ResetPasswordPage />
+            </ProtectedRoute>
+            <ProtectedRoute exact path="/profile">
+              <ProfilePage />
+            </ProtectedRoute>
+            <Route path="/ingredients/:id">
+              <IngredientDetails />
+            </Route>
+            <Route path="*">
+              <NotFound404 />
+            </Route>
+          </Switch>
+
+          {background && (
+            <Route path="/ingredients/:id">
+              <Modal title="Детали ингредиента" onCloseClick={onModalClose}>
+                <IngredientDetails />
+              </Modal>
+            </Route>
+          )}
         </div>
-      )}
-      {currentIngredient && (
-        <Modal title="Детали ингредиента" onCloseClick={closeAllModals}>
-          <IngredientDetails item={currentIngredient} />
-        </Modal>
       )}
     </>
   );

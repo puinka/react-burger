@@ -29,9 +29,7 @@ const IngredientItem = ({ item }) => {
 
   return (
     <li
-      className={`pl-4 pr-4 pb-3 mr-6 mb-8 ${styles.container} ${
-        isDrag ? styles.dragging : ``
-      }`}
+      className={`pl-4 pr-4 pb-3 mr-6 mb-8 ${isDrag ? styles.dragging : ``}`}
       onClick={() => dispatch(setIngredientModal(item))}
       draggable
       ref={dragRef}
