@@ -21,7 +21,7 @@ const BurgerConstructor = () => {
   const history = useHistory();
   const { bun, mains } = useSelector((store) => store.currentBurger);
   const { number, isLoading } = useSelector((store) => store.orderModal);
-  const { isUser } = useSelector((store) => store.user);
+  const isUser = useSelector((store) => store.user.data);
 
   const totalPrice = useMemo(() => {
     return (bun ? bun.price * 2 : 0) + mains.reduce((s, v) => s + v.price, 0);
@@ -46,6 +46,7 @@ const BurgerConstructor = () => {
   };
 
   const handleCreateOrder = () => {
+    console.log(isUser);
     if (!isUser) {
       history.push("/login");
     } else {
