@@ -93,7 +93,7 @@ export const getUserRequest = async () => {
   const settings = {
     headers: {
       "content-Type": "application/json",
-      Authorization: getCookie("accessToken"),
+      Authorization: "Bearer " + getCookie("accessToken"),
     },
   };
   return fetchWithRefresh(USER_URL, settings);
@@ -116,7 +116,7 @@ export const updateUserRequest = async (name, email, password) => {
     method: "PATCH",
     headers: {
       "content-Type": "application/json",
-      Authorization: getCookie("accessToken"),
+      Authorization: "Bearer " + getCookie("accessToken"),
     },
     body: JSON.stringify({ name, email, password }),
   };
