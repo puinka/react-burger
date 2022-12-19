@@ -44,7 +44,7 @@ export default function ResetPasswordPage() {
         <h1 className="text text_type_main-medium mb-6">
           Восстановление пароля
         </h1>
-        <form className="mb-20">
+        <form className="mb-20" onSubmit={handleResetPass}>
           <PasswordInput
             extraClass="mb-6"
             placeholder="Введите новый пароль"
@@ -57,9 +57,7 @@ export default function ResetPasswordPage() {
             value={code}
             onChange={onCodeChange}
           />
-          <Button onClick={handleResetPass} htmlType="submit">
-            Сохранить
-          </Button>
+          <Button htmlType="submit">Сохранить</Button>
         </form>
         <p className="text text_type_main-default text_color_inactive mb-4">
           Вспомнили пароль?{" "}

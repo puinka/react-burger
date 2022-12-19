@@ -39,7 +39,7 @@ export default function LoginPage() {
     <main className={styles.main}>
       <div>
         <h1 className="text text_type_main-medium mb-6">Вход</h1>
-        <form className="mb-20">
+        <form className="mb-20" onSubmit={handleLogin}>
           <EmailInput
             extraClass="mb-6"
             name="email"
@@ -52,9 +52,7 @@ export default function LoginPage() {
             value={password}
             onChange={onPasswordChange}
           />
-          <Button onClick={handleLogin} htmlType="submit">
-            Войти
-          </Button>
+          <Button htmlType="submit">Войти</Button>
         </form>
         <p className="text text_type_main-default text_color_inactive mb-4">
           Вы — новый пользователь?{" "}

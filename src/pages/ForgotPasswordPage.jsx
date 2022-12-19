@@ -30,16 +30,14 @@ export default function ForgotPasswordPage() {
         <h1 className="text text_type_main-medium mb-6">
           Восстановление пароля
         </h1>
-        <form className="mb-20">
+        <form className="mb-20" onSubmit={handleResetPass}>
           <EmailInput
             extraClass="mb-6"
             placeholder="Укажите e-mail"
             value={email}
             onChange={onEmailChange}
           />
-          <Button onClick={handleResetPass} htmlType="submit">
-            Восстановить
-          </Button>
+          <Button htmlType="submit">Восстановить</Button>
         </form>
         <p className="text text_type_main-default text_color_inactive mb-4">
           Вспомнили пароль?{" "}

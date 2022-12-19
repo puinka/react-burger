@@ -88,7 +88,7 @@ export default function ProfilePage() {
           В этом разделе вы можете изменить&nbsp;свои персональные данные
         </p>
       </div>
-      <form>
+      <form onSubmit={handleUpdate}>
         <Input
           name="name"
           placeholder="Имя"
@@ -119,7 +119,7 @@ export default function ProfilePage() {
           >
             <p>Отмена</p>
           </Button>
-          <Button type="primary" htmlType="submit" onClick={handleUpdate}>
+          <Button type="primary" htmlType="submit">
             <p>Сохранить</p>
           </Button>
         </div>

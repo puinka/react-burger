@@ -44,7 +44,7 @@ export default function RegisterPage() {
     <main className={styles.main}>
       <div>
         <h1 className="text text_type_main-medium mb-6">Регистрация</h1>
-        <form className="mb-20">
+        <form className="mb-20" onSubmit={handleRegister}>
           <Input
             extraClass="mb-6"
             type="text"
@@ -65,9 +65,7 @@ export default function RegisterPage() {
             value={password}
             onChange={onPasswordChange}
           />
-          <Button onClick={handleRegister} htmlType="submit">
-            Зарегистрироваться
-          </Button>
+          <Button htmlType="submit">Зарегистрироваться</Button>
         </form>
         <p className="text text_type_main-default text_color_inactive mb-4">
           Уже зарегистрированы?{" "}
