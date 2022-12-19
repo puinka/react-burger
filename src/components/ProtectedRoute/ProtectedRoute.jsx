@@ -19,7 +19,7 @@ function ProtectedRoute({ onlyUnAuth, children, ...props }) {
   }
 
   if (onlyUnAuth && isUser) {
-    const from = location.from || { from: { pathname: "/" } };
+    const { from } = location.state || { from: { pathname: "/" } };
     return <Redirect to={from} />;
   }
 
