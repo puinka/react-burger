@@ -70,7 +70,7 @@ export const refreshTokenRequest = async () => {
 
 const fetchWithRefresh = async (url, settings) => {
   try {
-    return request(url, settings);
+    return await request(url, settings);
   } catch (err) {
     if (err.message === "jwt expired") {
       const refreshData = await refreshTokenRequest();
@@ -93,7 +93,7 @@ export const getUserRequest = async () => {
   const settings = {
     headers: {
       "content-Type": "application/json",
-      Authorization: "Bearer " + getCookie("accessToken"),
+      Authorization: getCookie("accessToken"),
     },
   };
   return fetchWithRefresh(USER_URL, settings);
@@ -116,7 +116,7 @@ export const updateUserRequest = async (name, email, password) => {
     method: "PATCH",
     headers: {
       "content-Type": "application/json",
-      Authorization: "Bearer " + getCookie("accessToken"),
+      Authorization: getCookie("accessToken"),
     },
     body: JSON.stringify({ name, email, password }),
   };
