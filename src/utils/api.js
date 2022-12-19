@@ -28,7 +28,7 @@ export const postOrder = async (ingredientsIDs) => {
       ingredients: ingredientsIDs,
     }),
   };
-  request(ORDER_URL, settings);
+  return request(ORDER_URL, settings);
 };
 
 // AUTH
