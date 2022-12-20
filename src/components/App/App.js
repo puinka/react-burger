@@ -20,6 +20,7 @@ import RegisterPage from "../../pages/RegisterPage";
 import ForgotPasswordPage from "../../pages/ForgotPasswordPage";
 import ResetPasswordPage from "../../pages/ResetPasswordPage";
 import ProfilePage from "../../pages/ProfilePage";
+import FeedPage from "../../pages/FeedPage";
 
 function App() {
   const dispatch = useDispatch();
@@ -73,6 +74,9 @@ function App() {
             </ProtectedRoute>
             <Route path="/ingredients/:id">
               <IngredientDetails />
+            </Route>
+            <Route>
+              <FeedPage />
             </Route>
             <Route path="*">
               <NotFound404 />

@@ -69,7 +69,7 @@ export default function ProfilePage() {
           </li>
           <li>
             <NavLink
-              to="/profile/order"
+              to="/profile/orders"
               className={styles.link}
               activeClassName={styles.active}
             >

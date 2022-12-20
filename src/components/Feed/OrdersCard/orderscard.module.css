@@ -1,0 +1,45 @@
+.container {
+  box-sizing: border-box;
+  width: 584px;
+  background-color: var(--background);
+  border-radius: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.info {
+  display: flex;
+  justify-content: space-between;
+}
+
+.content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.ingredientslist {
+  padding-left: 16px;
+  display: flex;
+}
+
+.ingredientitem {
+  box-sizing: border-box;
+  width: 64px;
+  height: 64px;
+  overflow: hidden;
+  border-radius: 50%;
+  border: 2px solid var(--colors-interface-accent);
+  margin-left: -16px;
+}
+
+.ingredientimg {
+  width: 100%;
+  height: auto;
+}
+
+.price {
+  display: flex;
+  gap: 8px;
+}
