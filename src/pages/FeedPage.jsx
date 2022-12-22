@@ -1,8 +1,20 @@
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import Completed from "../components/Feed/Completed/Completed";
 import OrdersCard from "../components/Feed/OrdersCard/OrdersCard";
+import { wsInit } from "../services/actions/wsActionTypes";
 import styles from "./feedpage.module.css";
 
 export const FeedPage = () => {
+  const dispatch = useDispatch();
+
+  const { orders, total, totalToday } = useSelector((store) => store.ws);
+  console.log(orders, total, totalToday);
+
+  useEffect(() => {
+    dispatch(wsInit());
+  }, dispatch);
+
   return (
     <main className={`pt-10 ${styles.container}`}>
       <h2 className="text text_type_main-large mb-5">Лента заказов</h2>

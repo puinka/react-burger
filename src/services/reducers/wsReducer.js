@@ -11,6 +11,8 @@ const initialState = {
   wsConnected: false,
   wsError: null,
   orders: [],
+  total: null,
+  totalToday: null,
 };
 
 export const wsReducer = (state = initialState, action) => {
@@ -47,7 +49,9 @@ export const wsReducer = (state = initialState, action) => {
       return {
         ...state,
         wsError: null,
-        orders: [...state.orders, action.payload],
+        orders: action.payload.orders,
+        total: action.payload.total,
+        totalToday: action.payload.totalToday,
       };
     default:
       return state;
