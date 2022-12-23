@@ -31,12 +31,16 @@
   overflow: hidden;
   border-radius: 50%;
   border: 2px solid var(--colors-interface-accent);
+  background-color: var(--background-alt);
   margin-left: -16px;
 }
 
 .ingredientimg {
-  width: 100%;
-  height: auto;
+  object-fit: cover;
+  object-position: -24px 4px;
+  display: block;
+  width: 90%;
+  height: 90%;
 }
 
 .price {

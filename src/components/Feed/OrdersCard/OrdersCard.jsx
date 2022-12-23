@@ -1,49 +1,54 @@
 import styles from "./orderscard.module.css";
-import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
+import {
+  CurrencyIcon,
+  FormattedDate,
+} from "@ya.praktikum/react-developer-burger-ui-components";
+import { useSelector } from "react-redux";
 
-export const OrdersCard = () => {
+export const OrdersCard = ({ order }) => {
+  const { name, number, createdAt, ingredients } = order;
+  const allIngredients = useSelector((store) => store.ingredients.ingredients);
+
+  const orderIngredients = ingredients.map((id) =>
+    allIngredients.find((item) => item._id === id)
+  );
+
+  //console.log(orderIngredients);
+
+  const totalPrice = orderIngredients.reduce(
+    (acc, item) => acc + item.price,
+    0
+  );
+
   return (
     <li>
       <article className={`p-6 ${styles.container}`}>
         <div className={styles.info}>
-          <p className="text text_type_digits-default">#034535</p>
-          {/* FormattedDate */}
+          <p className="text text_type_digits-default">#{number}</p>
           <p className="text text_type_main-default text_color_inactive">
-            Сегодня, 16:20 i-GMT+3
+            <FormattedDate date={new Date(createdAt)} />
           </p>
         </div>
-        <h4 className="text text_type_main-medium">
-          Death Star Starship Main бургер
-        </h4>
+        <h4 className="text text_type_main-medium">{name}</h4>
         <div className={styles.content}>
           <ul className={styles.ingredientslist}>
-            <li className={styles.ingredientitem}>
-              <img
-                className={styles.ingredientimg}
-                src="https://images.unsplash.com/photo-1582215669338-6cfdb76bca45?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80"
-              ></img>
-            </li>
-            <li className={styles.ingredientitem}>
-              <img
-                className={styles.ingredientimg}
-                src="https://images.unsplash.com/photo-1582215669338-6cfdb76bca45?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80"
-              ></img>
-            </li>
-            <li className={styles.ingredientitem}>
-              <img
-                className={styles.ingredientimg}
-                src="https://images.unsplash.com/photo-1582215669338-6cfdb76bca45?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80"
-              ></img>
-            </li>
-            <li className={styles.ingredientitem}>
-              <img
-                className={styles.ingredientimg}
-                src="https://images.unsplash.com/photo-1582215669338-6cfdb76bca45?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80"
-              ></img>
-            </li>
+            {orderIngredients.map((item, index) => {
+              console.log(item);
+              return (
+                !!item && (
+                  <li className={styles.ingredientitem} key={index}>
+                    <img
+                      className={styles.ingredientimg}
+                      src={item.image_mobile}
+                      alt={item.name}
+                    ></img>
+                  </li>
+                )
+              );
+            })}
           </ul>
           <div className={styles.price}>
-            <p className="text text_type_digits-default">480</p>
+            <p className="text text_type_digits-default">{totalPrice}</p>
             <CurrencyIcon />
           </div>
         </div>

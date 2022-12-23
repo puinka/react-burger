@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { BounceLoader } from "react-spinners";
 import Completed from "../components/Feed/Completed/Completed";
 import OrdersCard from "../components/Feed/OrdersCard/OrdersCard";
 import { wsInit } from "../services/actions/wsActionTypes";
@@ -8,69 +9,79 @@ import styles from "./feedpage.module.css";
 export const FeedPage = () => {
   const dispatch = useDispatch();
 
-  const { orders, total, totalToday } = useSelector((store) => store.ws);
-  console.log(orders, total, totalToday);
+  const { orders, total, totalToday, wsLoading } = useSelector(
+    (store) => store.ws
+  );
 
   useEffect(() => {
     dispatch(wsInit());
-  }, dispatch);
+  }, [dispatch]);
 
   return (
     <main className={`pt-10 ${styles.container}`}>
       <h2 className="text text_type_main-large mb-5">Лента заказов</h2>
-      <div className={styles.mainwrap}>
-        <ul className={`pr-2 ${styles.cardslist}`}>
-          <OrdersCard />
-          <OrdersCard />
-          <OrdersCard />
-          <OrdersCard />
-          <OrdersCard />
-        </ul>
-        <div className={styles.stats}>
-          <div className={styles.orderswrap}>
-            <div className={styles.ordersboard}>
-              <h3 className="text text_type_main-medium mb-6">Готовы:</h3>
-              <ul className={styles.statslist}>
-                <li
-                  className={`text text_type_digits-default ${styles.success}`}
-                >
-                  034533
-                </li>
-                <li
-                  className={`text text_type_digits-default ${styles.success}`}
-                >
-                  034533
-                </li>
-                <li
-                  className={`text text_type_digits-default ${styles.success}`}
-                >
-                  034533
-                </li>
-                <li
-                  className={`text text_type_digits-default ${styles.success}`}
-                >
-                  034533
-                </li>
-                <li
-                  className={`text text_type_digits-default ${styles.success}`}
-                >
-                  034533
-                </li>
-              </ul>
-            </div>
-            <div className={styles.ordersboard}>
-              <h3 className="text text_type_main-medium mb-6">В работе:</h3>
-              <ul className={styles.statslist}>
-                <li className="text text_type_digits-default">034533</li>
-                <li className="text text_type_digits-default">034533</li>
-                <li className="text text_type_digits-default">034533</li>
-              </ul>
+      {wsLoading ? (
+        <BounceLoader
+          color="#4C4CFF"
+          size={80}
+          aria-label="Loading Spinner"
+          data-testid="loader"
+        />
+      ) : (
+        orders && (
+          <div className={styles.mainwrap}>
+            <ul className={`pr-2 ${styles.cardslist}`}>
+              {orders.map((order) => (
+                <OrdersCard order={order} key={order._id} />
+              ))}
+            </ul>
+            <div className={styles.stats}>
+              <div className={styles.orderswrap}>
+                <div className={styles.ordersboard}>
+                  <h3 className="text text_type_main-medium mb-6">Готовы:</h3>
+                  <ul className={styles.statslist}>
+                    <li
+                      className={`text text_type_digits-default ${styles.success}`}
+                    >
+                      034533
+                    </li>
+                    <li
+                      className={`text text_type_digits-default ${styles.success}`}
+                    >
+                      034533
+                    </li>
+                    <li
+                      className={`text text_type_digits-default ${styles.success}`}
+                    >
+                      034533
+                    </li>
+                    <li
+                      className={`text text_type_digits-default ${styles.success}`}
+                    >
+                      034533
+                    </li>
+                    <li
+                      className={`text text_type_digits-default ${styles.success}`}
+                    >
+                      034533
+                    </li>
+                  </ul>
+                </div>
+                <div className={styles.ordersboard}>
+                  <h3 className="text text_type_main-medium mb-6">В работе:</h3>
+                  <ul className={styles.statslist}>
+                    <li className="text text_type_digits-default">034533</li>
+                    <li className="text text_type_digits-default">034533</li>
+                    <li className="text text_type_digits-default">034533</li>
+                  </ul>
+                </div>
+              </div>
+              <Completed title="Выполнено за все время:" value={total} />
+              <Completed title="Выполнено за сегодня:" value={totalToday} />
             </div>
           </div>
-          <Completed title="Выполнено за все время:" value="28 752" />
-          <Completed title="Выполнено за сегодня:" value="138" />
-        </div>
-      </div>
+        )
+      )}
     </main>
   );
 };
