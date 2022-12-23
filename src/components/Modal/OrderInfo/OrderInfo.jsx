@@ -6,6 +6,12 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useSelector } from "react-redux";
 
+const getCounter = (arr, item) => {
+  let counter = 0;
+  arr.forEach((element) => element._id === item._id && counter++);
+  return counter > 1 ? counter : null;
+};
+
 export const OrderInfo = () => {
   const { id } = useParams();
   const location = useLocation();
@@ -14,8 +20,6 @@ export const OrderInfo = () => {
 
   const { number, name, status, createdAt } = order;
   const { ingredients } = location.state;
-
-  console.log(ingredients);
 
   const orderStatus =
     status === "done"
@@ -26,6 +30,8 @@ export const OrderInfo = () => {
 
   const total = ingredients.reduce((acc, current) => acc + current.price, 0);
 
+  const ingredientsSet = [...new Set(ingredients)];
+
   return (
     <div className={styles.container}>
       <p className={`text text_type_digits-default mb-10 ${styles.number}`}>
@@ -35,7 +41,7 @@ export const OrderInfo = () => {
       <p className="text text_type_main-default mb-15">{orderStatus}</p>
       <p className="text text_type_main-medium mb-6">Состав:</p>
       <ul className={styles.ingredientsList}>
-        {ingredients.map((item, index) => (
+        {ingredientsSet.map((item, index) => (
           <li className={styles.ingredient} key={index}>
             <div className={styles.ingredientWrap}>
               <img
@@ -45,8 +51,13 @@ export const OrderInfo = () => {
               />
               <p className="text text_type_main-default">{item.name}</p>
             </div>
-            <div className={styles.price}>
-              <p className="text text_type_digits-default">{item.price}</p>
+            <div
+              className={`className="text text_type_digits-default ${styles.price}`}
+            >
+              {getCounter(ingredients, item) && (
+                <p>{getCounter(ingredients, item)} x </p>
+              )}
+              <p>{item.price}</p>
               <CurrencyIcon />
             </div>
           </li>
