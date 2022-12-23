@@ -21,6 +21,8 @@ import ForgotPasswordPage from "../../pages/ForgotPasswordPage";
 import ResetPasswordPage from "../../pages/ResetPasswordPage";
 import ProfilePage from "../../pages/ProfilePage";
 import FeedPage from "../../pages/FeedPage";
+import OrderDetails from "../Modal/OrderDetails/OrderDetails";
+import { OrderInfo } from "../Modal/OrderInfo/OrderInfo";
 
 function App() {
   const dispatch = useDispatch();
@@ -37,7 +39,7 @@ function App() {
 
   const onModalClose = () => {
     dispatch(resetIngredientModal());
-    history.replace("/");
+    history.go(-1);
   };
 
   return (
@@ -75,8 +77,11 @@ function App() {
             <Route path="/ingredients/:id">
               <IngredientDetails />
             </Route>
-            <Route>
+            <Route path="/feed">
               <FeedPage />
+            </Route>
+            <Route path="/feed/:id">
+              <OrderDetails />
             </Route>
             <Route path="*">
               <NotFound404 />
@@ -84,9 +89,17 @@ function App() {
           </Switch>
 
           {background && (
-            <Route path="/ingredients/:id">
+            <Route exact path="/ingredients/:id">
               <Modal title="Детали ингредиента" onCloseClick={onModalClose}>
                 <IngredientDetails />
+              </Modal>
+            </Route>
+          )}
+
+          {background && (
+            <Route exact path="/feed/:id">
+              <Modal onCloseClick={onModalClose}>
+                <OrderInfo />
               </Modal>
             </Route>
           )}

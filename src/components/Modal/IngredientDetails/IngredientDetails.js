@@ -1,10 +1,6 @@
 import styles from "./ingredientdetails.module.css";
-import { ingredientProps } from "../../../utils/ingredientProps";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { useEffect } from "react";
-import { setIngredientModal } from "../../../services/actions/currentIngredient";
-import { getIngredients } from "../../../services/actions/ingredients";
 
 const IngredientDetails = () => {
   const { id } = useParams();

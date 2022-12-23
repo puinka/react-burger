@@ -4,9 +4,10 @@ import {
   FormattedDate,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useSelector } from "react-redux";
+import { Link, useLocation } from "react-router-dom";
 
 export const OrdersCard = ({ order }) => {
-  const { name, number, createdAt, ingredients } = order;
+  const { name, number, createdAt, ingredients, _id } = order;
   const allIngredients = useSelector((store) => store.ingredients.ingredients);
 
   const orderIngredients = ingredients.map((id) =>
@@ -18,8 +19,15 @@ export const OrdersCard = ({ order }) => {
     0
   );
 
+  const location = useLocation();
+
   return (
-    <li>
+    <Link
+      to={{
+        pathname: `feed/${_id}`,
+        state: { background: location, ingredients: orderIngredients },
+      }}
+    >
       <article className={`p-6 ${styles.container}`}>
         <div className={styles.info}>
           <p className="text text_type_digits-default">#{number}</p>
@@ -50,7 +58,7 @@ export const OrdersCard = ({ order }) => {
           </div>
         </div>
       </article>
-    </li>
+    </Link>
   );
 };
 

@@ -30,7 +30,7 @@ const AppHeader = () => {
                 className={styles.link}
                 activeClassName={styles.active}
                 exact
-                to="/orders"
+                to="/feed"
               >
                 <ListIcon type="secondary" />
                 <p className="text text_type_main-default ml-2">

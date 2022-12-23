@@ -42,7 +42,9 @@ export const FeedPage = () => {
           <div className={styles.mainwrap}>
             <ul className={`pr-2 ${styles.cardslist}`}>
               {orders.map((order) => (
-                <OrdersCard order={order} key={order._id} />
+                <li key={order._id}>
+                  <OrdersCard order={order} />
+                </li>
               ))}
             </ul>
             <div className={styles.stats}>
