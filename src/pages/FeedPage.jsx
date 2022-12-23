@@ -13,6 +13,16 @@ export const FeedPage = () => {
     (store) => store.ws
   );
 
+  const doneOrders = orders
+    .filter((order) => order.status === "done")
+    .slice(1)
+    .slice(-10);
+
+  const pendingOrders = orders
+    .filter((order) => order.status === "pending")
+    .slice(1)
+    .slice(-10);
+
   useEffect(() => {
     dispatch(wsInit());
   }, [dispatch]);
@@ -40,39 +50,24 @@ export const FeedPage = () => {
                 <div className={styles.ordersboard}>
                   <h3 className="text text_type_main-medium mb-6">Готовы:</h3>
                   <ul className={styles.statslist}>
-                    <li
-                      className={`text text_type_digits-default ${styles.success}`}
-                    >
-                      034533
-                    </li>
-                    <li
-                      className={`text text_type_digits-default ${styles.success}`}
-                    >
-                      034533
-                    </li>
-                    <li
-                      className={`text text_type_digits-default ${styles.success}`}
-                    >
-                      034533
-                    </li>
-                    <li
-                      className={`text text_type_digits-default ${styles.success}`}
-                    >
-                      034533
-                    </li>
-                    <li
-                      className={`text text_type_digits-default ${styles.success}`}
-                    >
-                      034533
-                    </li>
+                    {doneOrders.map((order) => (
+                      <li
+                        key={order.number}
+                        className={`text text_type_digits-default ${styles.success}`}
+                      >
+                        {order.number}
+                      </li>
+                    ))}
                   </ul>
                 </div>
                 <div className={styles.ordersboard}>
                   <h3 className="text text_type_main-medium mb-6">В работе:</h3>
                   <ul className={styles.statslist}>
-                    <li className="text text_type_digits-default">034533</li>
-                    <li className="text text_type_digits-default">034533</li>
-                    <li className="text text_type_digits-default">034533</li>
+                    {pendingOrders.map((order) => (
+                      <li className="text text_type_digits-default">
+                        {order.number}
+                      </li>
+                    ))}
                   </ul>
                 </div>
               </div>

@@ -13,8 +13,6 @@ export const OrdersCard = ({ order }) => {
     allIngredients.find((item) => item._id === id)
   );
 
-  //console.log(orderIngredients);
-
   const totalPrice = orderIngredients.reduce(
     (acc, item) => acc + item.price,
     0
@@ -33,7 +31,6 @@ export const OrdersCard = ({ order }) => {
         <div className={styles.content}>
           <ul className={styles.ingredientslist}>
             {orderIngredients.map((item, index) => {
-              console.log(item);
               return (
                 !!item && (
                   <li className={styles.ingredientitem} key={index}>

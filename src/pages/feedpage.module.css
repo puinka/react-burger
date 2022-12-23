@@ -48,8 +48,10 @@
 
 .statslist {
   display: flex;
+  flex-wrap: wrap;
   flex-direction: column;
   gap: 8px;
+  max-height: 160px;
 }
 
 .success {
