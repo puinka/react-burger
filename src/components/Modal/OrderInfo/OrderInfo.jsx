@@ -38,7 +38,12 @@ export const OrderInfo = () => {
         #{number}
       </p>
       <h2 className="text text_type_main-medium mb-3">{name}</h2>
-      <p className="text text_type_main-default mb-15">{orderStatus}</p>
+      <p
+        className="text text_type_main-default mb-15"
+        style={status === "done" ? { color: "#00cccc" } : null}
+      >
+        {orderStatus}
+      </p>
       <p className="text text_type_main-medium mb-6">Состав:</p>
       <ul className={styles.ingredientsList}>
         {ingredientsSet.map((item, index) => (
