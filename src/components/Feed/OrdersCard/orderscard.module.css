@@ -1,11 +1,12 @@
 .container {
   box-sizing: border-box;
-  width: 584px;
+  width: 100%;
   background-color: var(--background);
   border-radius: 40px;
   display: flex;
   flex-direction: column;
   gap: 24px;
+  text-align: left;
 }
 
 .info {

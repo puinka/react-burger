@@ -4,3 +4,26 @@
   padding-top: 120px;
   padding-left: calc(50% - 600px);
 }
+
+.cardslist {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-width: 860px;
+  max-height: calc(100vh - 200px);
+  overflow: auto;
+  scrollbar-color: var(--background-element) var(--text-inactive-color);
+  scrollbar-width: 8px;
+}
+
+.cardslist::-webkit-scrollbar {
+  width: 8px;
+}
+
+.cardslist::-webkit-scrollbar-track {
+  background-color: var(--background-element);
+}
+
+.cardslist::-webkit-scrollbar-thumb {
+  background-color: var(--text-inactive-color);
+}

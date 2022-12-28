@@ -6,8 +6,8 @@ import {
 import { useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
 
-export const OrdersCard = ({ order }) => {
-  const { name, number, createdAt, ingredients, _id } = order;
+export const OrdersCard = ({ order, isMine }) => {
+  const { name, number, createdAt, ingredients, _id, status } = order;
   const allIngredients = useSelector((store) => store.ingredients.ingredients);
 
   const orderIngredients = ingredients.map((id) =>
@@ -15,11 +15,18 @@ export const OrdersCard = ({ order }) => {
   );
 
   const totalPrice = orderIngredients.reduce(
-    (acc, item) => acc + item.price,
+    (acc, item) => acc + item?.price,
     0
   );
 
   const location = useLocation();
+
+  const orderStatus =
+    status === "done"
+      ? "Выполнен"
+      : status === "pending"
+      ? "Готовится"
+      : "Создан";
 
   return (
     <Link
@@ -36,6 +43,11 @@ export const OrdersCard = ({ order }) => {
           </p>
         </div>
         <h4 className="text text_type_main-medium">{name}</h4>
+        {isMine ? (
+          <p className="text text_type_main-default mb-6">{orderStatus}</p>
+        ) : (
+          ``
+        )}
         <div className={styles.content}>
           <ul className={styles.ingredientslist}>
             {orderIngredients.map((item, index) => {
