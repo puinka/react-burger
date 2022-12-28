@@ -4,16 +4,18 @@ import {
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useState, useCallback } from "react";
-import { useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, Redirect, useLocation } from "react-router-dom";
 import styles from "./form.module.css";
 
 import { login } from "../services/actions/user";
 
 const LoginPage = () => {
   const dispatch = useDispatch();
+  const location = useLocation();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const user = useSelector((store) => store.user.data);
 
   const onEmailChange = (e) => {
     e.preventDefault();
@@ -34,6 +36,10 @@ const LoginPage = () => {
     },
     [dispatch, email, password]
   );
+
+  if (user) {
+    return <Redirect to={location.state?.from || "/"} />;
+  }
 
   return (
     <main className={styles.main}>
