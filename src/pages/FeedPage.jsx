@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { BounceLoader } from "react-spinners";
 import Completed from "../components/Feed/Completed/Completed";
 import OrdersCard from "../components/Feed/OrdersCard/OrdersCard";
-import { wsInit } from "../services/actions/wsActionTypes";
+import { wsConnectionClose, wsInit } from "../services/actions/wsActionTypes";
 import styles from "./feedpage.module.css";
 
 export const FeedPage = () => {
@@ -25,6 +25,7 @@ export const FeedPage = () => {
 
   useEffect(() => {
     dispatch(wsInit());
+    return dispatch(wsConnectionClose());
   }, [dispatch]);
 
   return (
