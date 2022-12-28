@@ -4,6 +4,7 @@ import { BounceLoader } from "react-spinners";
 import Completed from "../components/Feed/Completed/Completed";
 import OrdersCard from "../components/Feed/OrdersCard/OrdersCard";
 import { wsConnectionClose, wsInit } from "../services/actions/wsActionTypes";
+import { wsUrlAll } from "../utils/constants";
 import styles from "./feedpage.module.css";
 
 const FeedPage = () => {
@@ -24,7 +25,7 @@ const FeedPage = () => {
     .slice(-10);
 
   useEffect(() => {
-    dispatch(wsInit());
+    dispatch(wsInit(wsUrlAll));
     return dispatch(wsConnectionClose());
   }, [dispatch]);
 

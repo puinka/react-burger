@@ -10,12 +10,10 @@ import { BrowserRouter } from "react-router-dom";
 import { socketMiddleware } from "./services/socketMiddleware/socketMiddleware";
 import { wsActions } from "./services/actions/wsActionTypes";
 
-const wsUrl = "wss://norma.nomoreparties.space/orders/all";
-
 const composeEnhancers =
   (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const enhancer = composeEnhancers(
-  applyMiddleware(thunk, socketMiddleware(wsUrl, wsActions))
+  applyMiddleware(thunk, socketMiddleware(wsActions))
 );
 
 const store = createStore(rootReducer, enhancer);
