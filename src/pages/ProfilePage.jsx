@@ -11,7 +11,7 @@ import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { getUser, logout, updateUser } from "../services/actions/user";
 
-export default function ProfilePage() {
+const ProfilePage = () => {
   const dispatch = useDispatch();
   const data = useSelector((store) => store.user.data);
   const [name, setName] = useState(data.name);
@@ -126,4 +126,6 @@ export default function ProfilePage() {
       </form>
     </main>
   );
-}
+};
+
+export default ProfilePage;

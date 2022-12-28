@@ -9,7 +9,7 @@ import { Link, useHistory } from "react-router-dom";
 import { resetPass } from "../services/actions/user";
 import styles from "./form.module.css";
 
-export default function ResetPasswordPage() {
+const ResetPasswordPage = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const { restoreEmail } = useSelector((store) => store.user);
@@ -68,4 +68,6 @@ export default function ResetPasswordPage() {
       </div>
     </main>
   );
-}
+};
+
+export default ResetPasswordPage;

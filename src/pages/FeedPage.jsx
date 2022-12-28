@@ -6,7 +6,7 @@ import OrdersCard from "../components/Feed/OrdersCard/OrdersCard";
 import { wsConnectionClose, wsInit } from "../services/actions/wsActionTypes";
 import styles from "./feedpage.module.css";
 
-export const FeedPage = () => {
+const FeedPage = () => {
   const dispatch = useDispatch();
 
   const { orders, total, totalToday, wsLoading } = useSelector(

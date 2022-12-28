@@ -10,7 +10,7 @@ import styles from "./form.module.css";
 
 import { login } from "../services/actions/user";
 
-export default function LoginPage() {
+const LoginPage = () => {
   const dispatch = useDispatch();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -70,4 +70,6 @@ export default function LoginPage() {
       </div>
     </main>
   );
-}
+};
+
+export default LoginPage;

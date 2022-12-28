@@ -11,7 +11,7 @@ import styles from "./form.module.css";
 
 import { register } from "../services/actions/user";
 
-export default function RegisterPage() {
+const RegisterPage = () => {
   const dispatch = useDispatch();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -76,4 +76,6 @@ export default function RegisterPage() {
       </div>
     </main>
   );
-}
+};
+
+export default RegisterPage;

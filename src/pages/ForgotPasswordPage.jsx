@@ -8,7 +8,7 @@ import { Link, useHistory } from "react-router-dom";
 import { sendResetPassEmail } from "../services/actions/user";
 import styles from "./form.module.css";
 
-export default function ForgotPasswordPage() {
+const ForgotPasswordPage = () => {
   const history = useHistory();
   const dispatch = useDispatch();
   const [email, setEmail] = useState("");
@@ -48,4 +48,6 @@ export default function ForgotPasswordPage() {
       </div>
     </main>
   );
-}
+};
+
+export default ForgotPasswordPage;

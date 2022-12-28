@@ -4,7 +4,7 @@ import styles from "./notFound.module.css";
 import lottie from "lottie-web";
 import { Link } from "react-router-dom";
 
-export default function NotFound404() {
+const NotFound404 = () => {
   const container = useRef(null);
   useEffect(() => {
     lottie.loadAnimation({
@@ -23,4 +23,6 @@ export default function NotFound404() {
       </Link>
     </main>
   );
-}
+};
+
+export default NotFound404;
