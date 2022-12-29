@@ -9,7 +9,7 @@
   display: flex;
   flex-direction: column;
   gap: 16px;
-  max-width: 860px;
+  width: 860px;
   max-height: calc(100vh - 200px);
   overflow: auto;
   scrollbar-color: var(--background-element) var(--text-inactive-color);

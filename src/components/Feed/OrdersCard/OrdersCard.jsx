@@ -4,7 +4,7 @@ import {
   FormattedDate,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useSelector } from "react-redux";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useRouteMatch } from "react-router-dom";
 
 export const OrdersCard = ({ order, isMine }) => {
   const { name, number, createdAt, ingredients, _id, status } = order;
@@ -20,6 +20,7 @@ export const OrdersCard = ({ order, isMine }) => {
   );
 
   const location = useLocation();
+  const { url } = useRouteMatch();
 
   const orderStatus =
     status === "done"
@@ -31,7 +32,7 @@ export const OrdersCard = ({ order, isMine }) => {
   return (
     <Link
       to={{
-        pathname: `feed/${_id}`,
+        pathname: `${url}/${_id}`,
         state: { background: location, ingredients: orderIngredients },
       }}
     >

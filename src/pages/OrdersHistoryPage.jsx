@@ -4,17 +4,18 @@ import { BounceLoader } from "react-spinners";
 import OrdersCard from "../components/Feed/OrdersCard/OrdersCard";
 import ProfileNav from "../components/ProfileNav/ProfileNav";
 import { wsConnectionClose, wsInit } from "../services/actions/wsActionTypes";
-import { wsUrlAll } from "../utils/constants";
+import { wsUrl, wsUrlAll } from "../utils/constants";
+import { getCookie } from "../utils/cookie";
 import styles from "./ordershistorypage.module.css";
 
 const OrdersHistoryPage = () => {
   const dispatch = useDispatch();
 
   const { orders, wsLoading } = useSelector((store) => store.ws);
-  console.log(wsLoading);
+  const token = getCookie("accessToken");
 
   useEffect(() => {
-    dispatch(wsInit(wsUrlAll));
+    dispatch(wsInit(`${wsUrl}?token=${token}`));
     return dispatch(wsConnectionClose());
   }, [dispatch]);
 

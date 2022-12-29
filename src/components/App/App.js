@@ -107,6 +107,14 @@ function App() {
               </Modal>
             </Route>
           )}
+
+          {background && (
+            <Route exact path="/profile/orders/:id">
+              <Modal onCloseClick={onModalClose}>
+                <OrderInfo />
+              </Modal>
+            </Route>
+          )}
         </div>
       )}
     </>
