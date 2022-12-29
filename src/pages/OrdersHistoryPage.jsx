@@ -4,7 +4,7 @@ import { BounceLoader } from "react-spinners";
 import OrdersCard from "../components/Feed/OrdersCard/OrdersCard";
 import ProfileNav from "../components/ProfileNav/ProfileNav";
 import { wsConnectionClose, wsInit } from "../services/actions/wsActionTypes";
-import { wsUrl, wsUrlAll } from "../utils/constants";
+import { wsUrl } from "../utils/constants";
 import { getCookie } from "../utils/cookie";
 import styles from "./ordershistorypage.module.css";
 
@@ -33,7 +33,7 @@ const OrdersHistoryPage = () => {
         orders && (
           <div className={styles.mainwrap}>
             <ul className={`pr-2 ${styles.cardslist}`}>
-              {orders.map((order) => (
+              {orders.reverse().map((order) => (
                 <li key={order._id}>
                   <OrdersCard order={order} isMine />
                 </li>
