@@ -51,19 +51,39 @@ export const OrdersCard = ({ order, isMine }) => {
         )}
         <div className={styles.content}>
           <ul className={styles.ingredientslist}>
-            {orderIngredients.map((item, index) => {
+            {orderIngredients.slice(0, 5).map((item, index) => {
               return (
-                !!item && (
-                  <li className={styles.ingredientitem} key={index}>
-                    <img
-                      className={styles.ingredientimg}
-                      src={item.image_mobile}
-                      alt={item.name}
-                    ></img>
-                  </li>
-                )
+                <li
+                  className={styles.ingredientitem}
+                  key={index}
+                  style={{ zIndex: `${orderIngredients.length - index}` }}
+                >
+                  <img
+                    className={styles.ingredientimg}
+                    src={item.image_mobile}
+                    alt={item.name}
+                  ></img>
+                </li>
               );
             })}
+            {orderIngredients.length > 5 && (
+              <li
+                className={styles.ingredientitem}
+                key={6}
+                style={{ zIndex: `${orderIngredients.length - 6}` }}
+              >
+                <div className={styles.hiddencounter}>
+                  <p className="text text_type_main-default">{`+${
+                    orderIngredients.length - 5
+                  }`}</p>
+                </div>
+                <img
+                  className={styles.ingredientimg}
+                  src={orderIngredients[5].image_mobile}
+                  alt={orderIngredients[5].name}
+                ></img>
+              </li>
+            )}
           </ul>
           <div className={styles.price}>
             <p className="text text_type_digits-default">{totalPrice}</p>

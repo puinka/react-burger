@@ -34,6 +34,7 @@
   border: 2px solid var(--colors-interface-accent);
   background-color: var(--background-alt);
   margin-left: -16px;
+  position: relative;
 }
 
 .ingredientimg {
@@ -47,4 +48,16 @@
 .price {
   display: flex;
   gap: 8px;
+}
+
+.hiddencounter {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: rgba(28, 28, 33, 0.6);
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
