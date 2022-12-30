@@ -24,6 +24,7 @@ import FeedPage from "../../pages/FeedPage";
 import OrderDetails from "../Modal/OrderDetails/OrderDetails";
 import { OrderInfo } from "../Modal/OrderInfo/OrderInfo";
 import OrdersHistoryPage from "../../pages/OrdersHistoryPage";
+import OrderInfoPage from "../../pages/OrderInfoPage";
 
 function App() {
   const dispatch = useDispatch();
@@ -78,14 +79,17 @@ function App() {
             <ProtectedRoute exact path="/profile/orders">
               <OrdersHistoryPage />
             </ProtectedRoute>
+            <ProtectedRoute exact path="/profile/orders/:id">
+              <OrderInfoPage />
+            </ProtectedRoute>
             <Route path="/ingredients/:id">
               <IngredientDetails />
             </Route>
-            <Route path="/feed">
+            <Route exact path="/feed">
               <FeedPage />
             </Route>
-            <Route path="/feed/:id">
-              <OrderDetails />
+            <Route exact path="/feed/:id">
+              <OrderInfoPage />
             </Route>
             <Route path="*">
               <NotFound404 />
