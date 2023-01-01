@@ -7,34 +7,22 @@ import { useState, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, Redirect, useLocation } from "react-router-dom";
 import styles from "./form.module.css";
-
 import { login } from "../services/actions/user";
+import { useForm } from "../hooks/useForm";
 
 const LoginPage = () => {
   const dispatch = useDispatch();
   const location = useLocation();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const user = useSelector((store) => store.user.data);
 
-  const onEmailChange = (e) => {
-    e.preventDefault();
-    const value = e.target.value;
-    setEmail(value);
-  };
-
-  const onPasswordChange = (e) => {
-    e.preventDefault();
-    const value = e.target.value;
-    setPassword(value);
-  };
+  const { values, handleChange } = useForm({});
 
   const handleLogin = useCallback(
     (e) => {
       e.preventDefault();
-      dispatch(login(email, password));
+      dispatch(login(values));
     },
-    [dispatch, email, password]
+    [dispatch, values]
   );
 
   if (user) {
@@ -49,14 +37,14 @@ const LoginPage = () => {
           <EmailInput
             extraClass="mb-6"
             name="email"
-            value={email}
-            onChange={onEmailChange}
+            value={values.email}
+            onChange={handleChange}
           />
           <PasswordInput
             extraClass="mb-6"
             name="password"
-            value={password}
-            onChange={onPasswordChange}
+            value={values.password}
+            onChange={handleChange}
           />
           <Button htmlType="submit">Войти</Button>
         </form>

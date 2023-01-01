@@ -10,34 +10,15 @@ import { Link } from "react-router-dom";
 import styles from "./form.module.css";
 
 import { register } from "../services/actions/user";
+import { useForm } from "../hooks/useForm";
 
 const RegisterPage = () => {
   const dispatch = useDispatch();
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-
-  const onNameChange = (e) => {
-    e.preventDefault();
-    const value = e.target.value;
-    setName(value);
-  };
-
-  const onEmailChange = (e) => {
-    e.preventDefault();
-    const value = e.target.value;
-    setEmail(value);
-  };
-
-  const onPasswordChange = (e) => {
-    e.preventDefault();
-    const value = e.target.value;
-    setPassword(value);
-  };
+  const { values, handleChange } = useForm({});
 
   const handleRegister = (e) => {
     e.preventDefault();
-    dispatch(register(name, email, password));
+    dispatch(register(values));
   };
 
   return (
@@ -50,20 +31,20 @@ const RegisterPage = () => {
             type="text"
             placeholder="Имя"
             name="name"
-            value={name}
-            onChange={onNameChange}
+            value={values.name}
+            onChange={handleChange}
           ></Input>
           <EmailInput
             extraClass="mb-6"
             name="email"
-            value={email}
-            onChange={onEmailChange}
+            value={values.email}
+            onChange={handleChange}
           />
           <PasswordInput
             extraClass="mb-6"
             name="password"
-            value={password}
-            onChange={onPasswordChange}
+            value={values.password}
+            onChange={handleChange}
           />
           <Button htmlType="submit">Зарегистрироваться</Button>
         </form>
