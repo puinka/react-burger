@@ -21,10 +21,9 @@ import ForgotPasswordPage from "../../pages/ForgotPasswordPage";
 import ResetPasswordPage from "../../pages/ResetPasswordPage";
 import ProfilePage from "../../pages/ProfilePage";
 import FeedPage from "../../pages/FeedPage";
-import OrderDetails from "../Modal/OrderDetails/OrderDetails";
+
 import { OrderInfo } from "../Modal/OrderInfo/OrderInfo";
 import OrdersHistoryPage from "../../pages/OrdersHistoryPage";
-import OrderInfoPage from "../../pages/OrderInfoPage";
 
 function App() {
   const dispatch = useDispatch();
@@ -80,7 +79,7 @@ function App() {
               <OrdersHistoryPage />
             </ProtectedRoute>
             <ProtectedRoute exact path="/profile/orders/:id">
-              <OrderInfoPage />
+              <OrderInfo isPage />
             </ProtectedRoute>
             <Route path="/ingredients/:id">
               <IngredientDetails />
@@ -89,7 +88,7 @@ function App() {
               <FeedPage />
             </Route>
             <Route exact path="/feed/:id">
-              <OrderInfoPage />
+              <OrderInfo isPage />
             </Route>
             <Route path="*">
               <NotFound404 />
@@ -97,27 +96,25 @@ function App() {
           </Switch>
 
           {background && (
-            <Route exact path="/ingredients/:id">
-              <Modal title="Детали ингредиента" onCloseClick={onModalClose}>
-                <IngredientDetails />
-              </Modal>
-            </Route>
-          )}
+            <>
+              <Route exact path="/ingredients/:id">
+                <Modal title="Детали ингредиента" onCloseClick={onModalClose}>
+                  <IngredientDetails />
+                </Modal>
+              </Route>
 
-          {background && (
-            <Route exact path="/feed/:id">
-              <Modal onCloseClick={onModalClose}>
-                <OrderInfo />
-              </Modal>
-            </Route>
-          )}
+              <Route exact path="/feed/:id">
+                <Modal onCloseClick={onModalClose}>
+                  <OrderInfo />
+                </Modal>
+              </Route>
 
-          {background && (
-            <Route exact path="/profile/orders/:id">
-              <Modal onCloseClick={onModalClose}>
-                <OrderInfo />
-              </Modal>
-            </Route>
+              <Route exact path="/profile/orders/:id">
+                <Modal onCloseClick={onModalClose}>
+                  <OrderInfo />
+                </Modal>
+              </Route>
+            </>
           )}
         </div>
       )}

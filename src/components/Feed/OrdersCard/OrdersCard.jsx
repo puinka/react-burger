@@ -33,7 +33,7 @@ export const OrdersCard = ({ order, isMine }) => {
     <Link
       to={{
         pathname: `${url}/${_id}`,
-        state: { background: location, ingredients: orderIngredients },
+        state: { background: location },
       }}
     >
       <article className={`p-6 ${styles.container}`}>
