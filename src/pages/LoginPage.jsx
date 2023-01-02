@@ -15,7 +15,7 @@ const LoginPage = () => {
   const location = useLocation();
   const user = useSelector((store) => store.user.data);
 
-  const { values, handleChange } = useForm({});
+  const { values, handleChange } = useForm({ email: "", password: "" });
 
   const handleLogin = useCallback(
     (e) => {

@@ -1,5 +1,4 @@
-import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import {
   Input,
   EmailInput,
@@ -14,7 +13,11 @@ import { useForm } from "../hooks/useForm";
 
 const RegisterPage = () => {
   const dispatch = useDispatch();
-  const { values, handleChange } = useForm({});
+  const { values, handleChange } = useForm({
+    name: "",
+    email: "",
+    password: "",
+  });
 
   const handleRegister = (e) => {
     e.preventDefault();
