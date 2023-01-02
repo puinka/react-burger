@@ -7,6 +7,9 @@ export const socketMiddleware = (wsActions) => {
       const { wsInit, onOpen, onClose, onError, onMessage } = wsActions;
 
       if (type === wsInit) {
+        if (socket) {
+          return;
+        }
         socket = new WebSocket(payload);
       }
 
@@ -30,13 +33,11 @@ export const socketMiddleware = (wsActions) => {
         socket.onclose = (event) => {
           dispatch({ type: onClose, payload: event });
         };
-
-        // if (type === "WS_SEND_MESSAGE") {
-        //   const orders = { ...payload };
-        //   // функция для отправки сообщения на сервер
-        //   socket.send(JSON.stringify(orders));
-        // }
       }
+
+      // if (type === onClose) {
+      //   socket.close(1000, "diconnected");
+      // }
 
       next(action);
     };
