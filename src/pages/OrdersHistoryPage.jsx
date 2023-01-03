@@ -16,7 +16,9 @@ const OrdersHistoryPage = () => {
 
   useEffect(() => {
     dispatch(wsInit(`${wsUrl}?token=${token}`));
-    return dispatch(wsConnectionClose());
+    return () => {
+      dispatch(wsConnectionClose());
+    };
   }, [dispatch]);
 
   return (

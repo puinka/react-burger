@@ -26,7 +26,9 @@ const FeedPage = () => {
 
   useEffect(() => {
     dispatch(wsInit(wsUrlAll));
-    return dispatch(wsConnectionClose());
+    return () => {
+      dispatch(wsConnectionClose());
+    };
   }, [dispatch]);
 
   return (

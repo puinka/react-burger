@@ -7,9 +7,9 @@ export const socketMiddleware = (wsActions) => {
       const { wsInit, onOpen, onClose, onError, onMessage } = wsActions;
 
       if (type === wsInit) {
-        if (socket) {
-          return;
-        }
+        // if (socket) {
+        //   return;
+        // }
         socket = new WebSocket(payload);
       }
 
