@@ -10,8 +10,9 @@ import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { getUser, logout, updateUser } from "../services/actions/user";
+import ProfileNav from "../components/ProfileNav/ProfileNav";
 
-export default function ProfilePage() {
+const ProfilePage = () => {
   const dispatch = useDispatch();
   const data = useSelector((store) => store.user.data);
   const [name, setName] = useState(data.name);
@@ -21,10 +22,6 @@ export default function ProfilePage() {
   useEffect(() => {
     dispatch(getUser());
   }, [dispatch]);
-
-  const handleLogout = () => {
-    dispatch(logout());
-  };
 
   const handleUpdate = (e) => {
     e.preventDefault();
@@ -56,38 +53,7 @@ export default function ProfilePage() {
 
   return (
     <main className={styles.container}>
-      <div className={styles.nav}>
-        <ul className={styles.list}>
-          <li>
-            <NavLink
-              to="/profile"
-              className={styles.link}
-              activeClassName={styles.active}
-            >
-              <p className="text text_type_main-medium">Профиль</p>
-            </NavLink>
-          </li>
-          <li>
-            <NavLink
-              to="/profile/order"
-              className={styles.link}
-              activeClassName={styles.active}
-            >
-              <p className="text text_type_main-medium">История заказов</p>
-            </NavLink>
-          </li>
-          <li>
-            <button to="/login" className={styles.link} onClick={handleLogout}>
-              <p className="text text_type_main-medium">Выход</p>
-            </button>
-          </li>
-        </ul>
-        <p
-          className={`${styles.caption} text text_type_main-default text_color_inactive`}
-        >
-          В этом разделе вы можете изменить&nbsp;свои персональные данные
-        </p>
-      </div>
+      <ProfileNav />
       <form onSubmit={handleUpdate}>
         <Input
           name="name"
@@ -126,4 +92,6 @@ export default function ProfilePage() {
       </form>
     </main>
   );
-}
+};
+
+export default ProfilePage;

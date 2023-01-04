@@ -1,0 +1,60 @@
+.container {
+  text-align: left;
+  max-width: 1248px;
+  margin: 0 auto;
+}
+
+.mainwrap {
+  display: flex;
+  gap: 60px;
+}
+
+.cardslist {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-width: 608px;
+  max-height: calc(100vh - 200px);
+  overflow: auto;
+  scrollbar-color: var(--background-element) var(--text-inactive-color);
+  scrollbar-width: 8px;
+}
+
+.cardslist::-webkit-scrollbar {
+  width: 8px;
+}
+
+.cardslist::-webkit-scrollbar-track {
+  background-color: var(--background-element);
+}
+
+.cardslist::-webkit-scrollbar-thumb {
+  background-color: var(--text-inactive-color);
+}
+
+.stats {
+  display: flex;
+  flex-direction: column;
+  gap: 60px;
+}
+
+.orderswrap {
+  display: flex;
+  gap: 36px;
+}
+
+.ordersboard {
+  width: 100%;
+}
+
+.statslist {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  gap: 8px;
+  max-height: 160px;
+}
+
+.success {
+  color: var(--colors-interface-success);
+}

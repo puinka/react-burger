@@ -28,13 +28,7 @@ const BurgerConstructor = () => {
   }, [bun, mains]);
 
   const ingrIDs = useMemo(() => {
-    return bun
-      ? [bun._id, bun._id]
-      : mains.length > 0
-      ? [...mains.map((item) => item._id)]
-      : bun && mains.length > 0
-      ? [bun._id, ...mains.map((item) => item._id), bun._id]
-      : null;
+    return bun && [bun._id, ...mains.map((item) => item._id), bun._id];
   }, [bun, mains]);
 
   const handleAddIngredient = (item) => {

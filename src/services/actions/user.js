@@ -44,49 +44,53 @@ export const RESET_PASSWORD_REQUEST = "RESET_PASSWORD_REQUEST";
 export const RESET_PASSWORD_SUCCESS = "RESET_PASSWORD_SUCCESS";
 export const RESET_PASSWORD_FAILED = "RESET_PASSWORD_FAILED";
 
-export const register = (name, email, password) => (dispatch) => {
-  dispatch({
-    type: REGISTER_REQUEST,
-  });
-  registerRequest(name, email, password)
-    .then((res) => {
-      const authToken = res.accessToken.split("Bearer ")[1];
-      setCookie("accessToken", authToken);
-      localStorage.setItem("refreshToken", res.refreshToken);
-      dispatch({
-        type: REGISTER_SUCCESS,
-        user: res.user,
-      });
-    })
-    .catch((err) => {
-      dispatch({
-        type: REGISTER_FAILED,
-        error: err.message,
-      });
+export const register =
+  ({ name, email, password }) =>
+  (dispatch) => {
+    dispatch({
+      type: REGISTER_REQUEST,
     });
-};
+    registerRequest(name, email, password)
+      .then((res) => {
+        const authToken = res.accessToken.split("Bearer ")[1];
+        setCookie("accessToken", authToken);
+        localStorage.setItem("refreshToken", res.refreshToken);
+        dispatch({
+          type: REGISTER_SUCCESS,
+          user: res.user,
+        });
+      })
+      .catch((err) => {
+        dispatch({
+          type: REGISTER_FAILED,
+          error: err.message,
+        });
+      });
+  };
 
-export const login = (email, password) => (dispatch) => {
-  dispatch({
-    type: LOGIN_REQUEST,
-  });
-  loginRequest(email, password)
-    .then((res) => {
-      const authToken = res.accessToken.split("Bearer ")[1];
-      setCookie("accessToken", authToken);
-      localStorage.setItem("refreshToken", res.refreshToken);
-      dispatch({
-        type: LOGIN_SUCCESS,
-        user: res.user,
-      });
-    })
-    .catch((err) => {
-      dispatch({
-        type: LOGIN_FAILED,
-        error: err.message,
-      });
+export const login =
+  ({ email, password }) =>
+  (dispatch) => {
+    dispatch({
+      type: LOGIN_REQUEST,
     });
-};
+    loginRequest(email, password)
+      .then((res) => {
+        const authToken = res.accessToken.split("Bearer ")[1];
+        setCookie("accessToken", authToken);
+        localStorage.setItem("refreshToken", res.refreshToken);
+        dispatch({
+          type: LOGIN_SUCCESS,
+          user: res.user,
+        });
+      })
+      .catch((err) => {
+        dispatch({
+          type: LOGIN_FAILED,
+          error: err.message,
+        });
+      });
+  };
 
 export const getUser = () => async (dispatch) => {
   dispatch({

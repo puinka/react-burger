@@ -22,7 +22,7 @@ export const postOrder = async (ingredientsIDs) => {
     method: "POST",
     headers: {
       "content-Type": "application/json",
-      //Authorization: "Bearer " + getCookie("accessToken"),
+      Authorization: "Bearer " + getCookie("accessToken"),
     },
     body: JSON.stringify({
       ingredients: ingredientsIDs,
@@ -78,8 +78,6 @@ const fetchWithRefresh = async (url, settings) => {
       if (!refreshData.success) {
         Promise.reject(refreshData);
       }
-      localStorage.setItem("refreshToken", refreshData.refreshToken);
-      setCookie("accessToken", refreshData.refreshToken);
 
       settings.headers.Authorization = refreshData.accessToken;
 
