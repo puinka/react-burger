@@ -1,4 +1,4 @@
-import { request } from "./request";
+import axios from "axios";
 import { setCookie, getCookie } from "./cookie";
 
 const BASE_API_URL = "https://norma.nomoreparties.space/api";
@@ -13,6 +13,10 @@ const LOGOUT_URL = `${BASE_API_URL}/auth/logout`;
 const TOKEN_URL = `${BASE_API_URL}/auth/token`;
 const HEADERS = { "Content-Type": "application/json" };
 
+export const request = async (url, options) => {
+  return await axios(url, options);
+};
+
 export const getData = async () => {
   return request(INGREDIENTS_URL, {});
 };
@@ -24,7 +28,7 @@ export const postOrder = async (ingredientsIDs) => {
       "content-Type": "application/json",
       Authorization: "Bearer " + getCookie("accessToken"),
     },
-    body: JSON.stringify({
+    data: JSON.stringify({
       ingredients: ingredientsIDs,
     }),
   };
@@ -37,7 +41,7 @@ export const registerRequest = async (name, email, password) => {
   const settings = {
     method: "POST",
     headers: HEADERS,
-    body: JSON.stringify({ email, password, name }),
+    data: JSON.stringify({ email, password, name }),
   };
   return request(REGISTER_URL, settings);
 };
@@ -46,7 +50,7 @@ export const loginRequest = async (email, password) => {
   const settings = {
     method: "POST",
     headers: HEADERS,
-    body: JSON.stringify({ email, password }),
+    data: JSON.stringify({ email, password }),
   };
   return request(LOGIN_URL, settings);
 };
@@ -55,16 +59,16 @@ export const refreshTokenRequest = async () => {
   const settings = {
     method: "POST",
     headers: HEADERS,
-    body: JSON.stringify({ token: localStorage.getItem("refreshToken") }),
+    data: JSON.stringify({ token: localStorage.getItem("refreshToken") }),
   };
 
   request(TOKEN_URL, settings).then((refreshData) => {
-    if (!refreshData.success) {
+    if (!refreshData.data.success) {
       Promise.reject(refreshData);
     }
 
-    localStorage.setItem("refreshToken", refreshData.refreshToken);
-    setCookie("accessToken", refreshData.accessToken);
+    localStorage.setItem("refreshToken", refreshData.data.refreshToken);
+    setCookie("accessToken", refreshData.data.accessToken.split("Bearer ")[1]);
   });
 };
 
@@ -72,10 +76,11 @@ const fetchWithRefresh = async (url, settings) => {
   try {
     return await request(url, settings);
   } catch (err) {
-    if (err.message === "jwt expired") {
+    console.log(err.response.data.message);
+    if (err.response.data.message === "jwt expired") {
       const refreshData = await refreshTokenRequest();
 
-      if (!refreshData.success) {
+      if (!refreshData.data.success) {
         Promise.reject(refreshData);
       }
 

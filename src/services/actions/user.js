@@ -1,4 +1,3 @@
-import { useHistory } from "react-router-dom";
 import {
   registerRequest,
   loginRequest,
@@ -52,12 +51,12 @@ export const register =
     });
     registerRequest(name, email, password)
       .then((res) => {
-        const authToken = res.accessToken.split("Bearer ")[1];
+        const authToken = res.data.accessToken.split("Bearer ")[1];
         setCookie("accessToken", authToken);
-        localStorage.setItem("refreshToken", res.refreshToken);
+        localStorage.setItem("refreshToken", res.data.refreshToken);
         dispatch({
           type: REGISTER_SUCCESS,
-          user: res.user,
+          user: res.data.user,
         });
       })
       .catch((err) => {
@@ -76,12 +75,12 @@ export const login =
     });
     loginRequest(email, password)
       .then((res) => {
-        const authToken = res.accessToken.split("Bearer ")[1];
+        const authToken = res.data.accessToken.split("Bearer ")[1];
         setCookie("accessToken", authToken);
-        localStorage.setItem("refreshToken", res.refreshToken);
+        localStorage.setItem("refreshToken", res.data.refreshToken);
         dispatch({
           type: LOGIN_SUCCESS,
-          user: res.user,
+          user: res.data.user,
         });
       })
       .catch((err) => {
@@ -98,16 +97,10 @@ export const getUser = () => async (dispatch) => {
   });
   getUserRequest()
     .then((res) => {
-      if (res.success) {
-        dispatch({
-          type: USER_SUCCESS,
-          user: res.user,
-        });
-      } else {
-        dispatch({
-          type: USER_FAILED,
-        });
-      }
+      dispatch({
+        type: USER_SUCCESS,
+        user: res.data.user,
+      });
     })
     .catch((err) => {
       dispatch({
@@ -123,9 +116,9 @@ export const refreshToken = () => (dispatch) => {
   });
   refreshTokenRequest()
     .then((res) => {
-      const authToken = res.accessToken.split("Bearer ")[1];
+      const authToken = res.data.accessToken.split("Bearer ")[1];
       setCookie("accessToken", authToken);
-      localStorage.setItem("refreshToken", res.refreshToken);
+      localStorage.setItem("refreshToken", res.data.refreshToken);
       dispatch({
         type: REFRESH_TOKEN_SUCCESS,
       });
@@ -143,7 +136,7 @@ export const logout = () => (dispatch) => {
     type: LOGOUT_REQUEST,
   });
   logoutRequest()
-    .then((res) => {
+    .then(() => {
       setCookie("accessToken", "");
       localStorage.removeItem("refreshToken");
       dispatch({
@@ -166,7 +159,7 @@ export const updateUser = (name, email, password) => (dispatch) => {
     .then((res) => {
       dispatch({
         type: UPDATE_USER_SUCCESS,
-        user: res.user,
+        user: res.data.user,
       });
     })
     .catch((err) => {
@@ -193,7 +186,7 @@ export const sendResetPassEmail = (email, history) => (dispatch) => {
     .then((res) => {
       dispatch({
         type: FORGOT_PASSWORD_SUCCESS,
-        restoreEmail: res.success,
+        restoreEmail: res.data.success,
       });
       history.replace({ pathname: "/reset-password" });
     })
@@ -213,7 +206,7 @@ export const resetPass = (password, token) => (dispatch) => {
     .then((res) => {
       dispatch({
         type: RESET_PASSWORD_SUCCESS,
-        passRestore: res.success,
+        passRestore: res.data.success,
       });
     })
     .catch((err) => {

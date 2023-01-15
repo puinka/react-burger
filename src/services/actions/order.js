@@ -11,16 +11,10 @@ export const createOrder = (ingredientsIDs) => (dispatch) => {
   });
   postOrder(ingredientsIDs)
     .then((res) => {
-      if (res.success) {
-        dispatch({
-          type: CREATE_ORDER_SUCCESS,
-          number: res.order.number,
-        });
-      } else {
-        dispatch({
-          type: CREATE_ORDER_FAILED,
-        });
-      }
+      dispatch({
+        type: CREATE_ORDER_SUCCESS,
+        number: res.data.order.number,
+      });
     })
     .catch((err) => {
       dispatch({

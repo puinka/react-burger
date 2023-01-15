@@ -10,12 +10,10 @@ export const getIngredients = () => (dispatch) => {
   });
   getData()
     .then((res) => {
-      if (res.success) {
-        dispatch({
-          type: INGREDIENTS_SUCCESS,
-          ingredients: res.data,
-        });
-      }
+      dispatch({
+        type: INGREDIENTS_SUCCESS,
+        ingredients: res.data.data,
+      });
     })
     .catch((err) => {
       dispatch({
