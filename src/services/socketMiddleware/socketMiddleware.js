@@ -30,14 +30,14 @@ export const socketMiddleware = (wsActions) => {
           dispatch({ type: onMessage, payload: restData });
         };
 
-        socket.onclose = (event) => {
-          dispatch({ type: onClose, payload: event });
-        };
+        // socket.onclose = (event) => {
+        //   dispatch({ type: onClose, payload: event });
+        // };
       }
 
-      // if (type === onClose) {
-      //   socket.close(1000, "diconnected");
-      // }
+      if (type === onClose) {
+        socket.close(1000, "diconnected");
+      }
 
       next(action);
     };
