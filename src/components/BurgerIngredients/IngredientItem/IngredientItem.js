@@ -1,12 +1,11 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useDrag } from "react-dnd";
-import { ingredientProps } from "../../../utils/ingredientProps.js";
 import styles from "./ingredientitem.module.css";
 import {
   CurrencyIcon,
   Counter,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { setIngredientModal } from "../../../services/actions/currentIngredient.js";
+import { setIngredientModal } from "../../../services/actions/currentIngredient.ts";
 
 const IngredientItem = ({ item }) => {
   const dispatch = useDispatch();
@@ -43,10 +42,6 @@ const IngredientItem = ({ item }) => {
       {count !== 0 && <Counter count={count} size="default" />}
     </li>
   );
-};
-
-IngredientItem.propTypes = {
-  item: ingredientProps.isRequired,
 };
 
 export default IngredientItem;

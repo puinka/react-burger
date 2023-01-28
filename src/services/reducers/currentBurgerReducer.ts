@@ -1,16 +1,26 @@
+import { TIngredient } from "../../utils/types";
+import { TCurrentBurgerActions } from "../actions/currentBurger";
 import {
   ADD_BUN,
   ADD_MAIN,
   DELETE_MAIN,
   REORDER_MAINS,
-} from "../actions/currentBurger.js";
+} from "../constants/currentBurger";
 
-const initialState = {
+type TInitialState = {
+  bun: null | TIngredient;
+  mains: TIngredient[];
+};
+
+const initialState: TInitialState = {
   bun: null,
   mains: [],
 };
 
-export const constructorReducer = (state = initialState, action) => {
+export const constructorReducer = (
+  state = initialState,
+  action: TCurrentBurgerActions
+) => {
   switch (action.type) {
     case ADD_BUN:
       return {

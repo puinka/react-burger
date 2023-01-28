@@ -1,7 +1,6 @@
 import styles from "./ingredientsblock.module.css";
 import { forwardRef } from "react";
 import PropTypes from "prop-types";
-import { ingredientProps } from "../../../utils/ingredientProps.js";
 import IngredientItem from "../IngredientItem/IngredientItem";
 import { Link, useLocation } from "react-router-dom";
 
@@ -34,11 +33,5 @@ const IngredientsBlock = forwardRef(({ title, data, id }, ref) => {
     </>
   );
 });
-
-IngredientsBlock.propTypes = {
-  data: PropTypes.arrayOf(ingredientProps.isRequired).isRequired,
-  title: PropTypes.string.isRequired,
-  id: PropTypes.string.isRequired,
-};
 
 export default IngredientsBlock;
