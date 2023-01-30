@@ -8,23 +8,23 @@ import {
 } from "../constants/currentBurger";
 
 //TS
-export interface IAddBunAction {
+interface IAddBunAction {
   readonly type: typeof ADD_BUN;
   readonly item: TIngredient;
 }
 
-export interface IAddMainAction {
+interface IAddMainAction {
   readonly type: typeof ADD_MAIN;
   readonly item: TIngredient;
   currentID: string;
 }
 
-export interface IDeleteMainAction {
+interface IDeleteMainAction {
   readonly type: typeof DELETE_MAIN;
   readonly currentID: number;
 }
 
-export interface IReorderMainsAction {
+interface IReorderMainsAction {
   readonly type: typeof REORDER_MAINS;
   readonly from: number;
   readonly to: number;
