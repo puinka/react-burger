@@ -1,8 +1,8 @@
 import { combineReducers } from "redux";
-import { constructorReducer } from "./currentBurgerReducer.ts";
+import { constructorReducer } from "./currentBurgerReducer";
 import { orderReducer } from "./orderReducer.js";
-import { ingredientsReducer } from "./ingredientsReducer.js";
-import { currentIngredientReducer } from "./currentIngredientReducer.ts";
+import { ingredientsReducer } from "./ingredientsReducer";
+import { currentIngredientReducer } from "./currentIngredientReducer";
 import { userReducer } from "./userReducer.js";
 import { wsReducer } from "./wsReducer.js";
 

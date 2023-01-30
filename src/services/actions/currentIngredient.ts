@@ -5,12 +5,12 @@ import {
 import { TIngredient } from "../../utils/types";
 
 //TS
-export interface ISetIngredientModalAction {
+interface ISetIngredientModalAction {
   readonly type: typeof SET_INGREDIENT_MODAL;
   readonly item: TIngredient;
 }
 
-export interface IResetIngredientModalAction {
+interface IResetIngredientModalAction {
   readonly type: typeof RESET_INGREDIENT_MODAL;
   readonly item: null;
 }
