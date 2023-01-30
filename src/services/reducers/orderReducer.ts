@@ -1,27 +1,36 @@
+import { TOrderActions } from "../actions/order";
 import {
+  CREATE_ORDER_FAILED,
   CREATE_ORDER_REQUEST,
   CREATE_ORDER_SUCCESS,
-  CREATE_ORDER_FAILED,
   RESET_ORDER,
-} from "../actions/order.js";
+} from "../constants/order";
 
-const initialState = {
-  number: null,
-  isLoading: false,
-  error: "",
+type TInitialState = {
+  number: null | number;
+  isLoading: boolean;
+  error: null | string;
 };
 
-export const orderReducer = (state = initialState, action) => {
+const initialState: TInitialState = {
+  number: null,
+  isLoading: false,
+  error: null,
+};
+
+export const orderReducer = (state = initialState, action: TOrderActions) => {
   switch (action.type) {
     case CREATE_ORDER_REQUEST:
       return {
         ...state,
         isLoading: true,
+        error: null,
       };
     case CREATE_ORDER_SUCCESS:
       return {
         ...state,
         isLoading: false,
+        error: null,
         number: action.number,
       };
     case CREATE_ORDER_FAILED:
@@ -34,6 +43,7 @@ export const orderReducer = (state = initialState, action) => {
       return {
         ...state,
         number: null,
+        error: null,
       };
     default:
       return state;

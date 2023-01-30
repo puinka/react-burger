@@ -13,8 +13,9 @@ import {
   CurrencyIcon,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { createOrder, RESET_ORDER } from "../../services/actions/order";
+import { createOrder } from "../../services/actions/order";
 import { useHistory } from "react-router-dom";
+import { RESET_ORDER } from "../../services/constants/order";
 
 const BurgerConstructor = () => {
   const dispatch = useDispatch();

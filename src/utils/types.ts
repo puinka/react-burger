@@ -3,6 +3,7 @@ import { ThunkAction } from "redux-thunk";
 import { TCurrentBurgerActions } from "../services/actions/currentBurger";
 import { TCurrentIngredientActions } from "../services/actions/currentIngredient";
 import { TIngredientsActions } from "../services/actions/ingredients";
+import { TOrderActions } from "../services/actions/order";
 import { store } from "../services/store";
 
 export type TIngredient = {
@@ -26,7 +27,8 @@ export type RootState = ReturnType<typeof store.getState>;
 type TApplicationActions =
   | TCurrentBurgerActions
   | TCurrentIngredientActions
-  | TIngredientsActions;
+  | TIngredientsActions
+  | TOrderActions;
 
 export type AppThunk<TReturn = void> = ActionCreator<
   ThunkAction<TReturn, Action, RootState, TApplicationActions>
