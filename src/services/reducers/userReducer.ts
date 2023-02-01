@@ -1,3 +1,5 @@
+import { TUser } from "../../utils/types";
+import { TUserActions } from "../actions/user";
 import {
   REGISTER_REQUEST,
   REGISTER_SUCCESS,
@@ -24,9 +26,29 @@ import {
   RESET_PASSWORD_REQUEST,
   RESET_PASSWORD_SUCCESS,
   RESET_PASSWORD_FAILED,
-} from "../actions/user";
+} from "../constants/user";
 
-const initialState = {
+type TInitialState = {
+  data: null | TUser;
+  registerUserRequest: boolean;
+  registerUserError: null | string;
+  loginUserRequest: boolean;
+  loginUserError: null | string;
+  getUserRequest: boolean;
+  getUserError: null | string;
+  refreshTokenRequest: boolean;
+  refreshTokenError: null | string;
+  updateUserRequest: boolean;
+  updateUserError: null | string;
+  logoutRequest: boolean;
+  logoutError: null | string;
+  forgotPasswordRequest: boolean;
+  forgotPasswordError: null | string;
+  restoreEmail: boolean;
+  isAuthChecked: boolean;
+};
+
+const initialState: TInitialState = {
   data: null,
   registerUserRequest: false,
   registerUserError: null,
@@ -46,7 +68,7 @@ const initialState = {
   isAuthChecked: false,
 };
 
-export const userReducer = (state = initialState, action) => {
+export const userReducer = (state = initialState, action: TUserActions) => {
   switch (action.type) {
     case REGISTER_REQUEST:
       return {
@@ -184,7 +206,7 @@ export const userReducer = (state = initialState, action) => {
         ...state,
         forgotPasswordRequest: false,
         forgotPasswordError: null,
-        restoreEmail: action.restoreEmail,
+        restoreEmail: true,
       };
     case FORGOT_PASSWORD_FAILED:
       return {

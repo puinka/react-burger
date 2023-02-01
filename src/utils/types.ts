@@ -4,6 +4,8 @@ import { TCurrentBurgerActions } from "../services/actions/currentBurger";
 import { TCurrentIngredientActions } from "../services/actions/currentIngredient";
 import { TIngredientsActions } from "../services/actions/ingredients";
 import { TOrderActions } from "../services/actions/order";
+import { TUserActions } from "../services/actions/user";
+// TwsActions
 import { store } from "../services/store";
 
 export type TIngredient = {
@@ -22,16 +24,30 @@ export type TIngredient = {
   currentID?: number;
 };
 
+export type TUser = {
+  email: string;
+  name: string;
+};
+
 export type RootState = ReturnType<typeof store.getState>;
 
 type TApplicationActions =
   | TCurrentBurgerActions
   | TCurrentIngredientActions
   | TIngredientsActions
-  | TOrderActions;
+  | TOrderActions
+  | TUserActions;
 
-export type AppThunk<TReturn = void> = ActionCreator<
-  ThunkAction<TReturn, Action, RootState, TApplicationActions>
+// export type AppThunk<TReturn = void> = ActionCreator<
+//   ThunkAction<TReturn, Action, RootState, TApplicationActions>
+// >;
+
+export type AppThunk<ReturnType = void> = ThunkAction<
+  ReturnType,
+  RootState,
+  unknown,
+  TApplicationActions
 >;
 
-export type AppDispatch = Dispatch<TApplicationActions>;
+//export type AppDispatch = Dispatch<TApplicationActions>;
+export type AppDispatch = ThunkDispatch<RootState, never, TApplicationActions>;
