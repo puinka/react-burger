@@ -1,5 +1,5 @@
-import { Dispatch, Action, ActionCreator } from "redux";
-import { ThunkAction } from "redux-thunk";
+import { Location } from "history";
+import { ThunkAction, ThunkDispatch } from "redux-thunk";
 import { TCurrentBurgerActions } from "../services/actions/currentBurger";
 import { TCurrentIngredientActions } from "../services/actions/currentIngredient";
 import { TIngredientsActions } from "../services/actions/ingredients";
@@ -29,6 +29,12 @@ export type TUser = {
   name: string;
 };
 
+export type TBackground = { background: Location };
+
+export type TInputValues = {
+  [key: string]: string;
+};
+
 export type RootState = ReturnType<typeof store.getState>;
 
 type TApplicationActions =
@@ -51,3 +57,4 @@ export type AppThunk<ReturnType = void> = ThunkAction<
 
 //export type AppDispatch = Dispatch<TApplicationActions>;
 export type AppDispatch = ThunkDispatch<RootState, never, TApplicationActions>;
+//export type AppDispatch = typeof store.dispatch;

@@ -1,5 +1,5 @@
 import { ChangeEvent, useState } from "react";
-import { TInputValues } from "../utils/types";
+import { TInputValues } from "../types";
 
 export function useForm(inputValues: TInputValues) {
   const [values, setValues] = useState(inputValues);

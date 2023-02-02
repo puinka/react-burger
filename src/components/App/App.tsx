@@ -1,6 +1,7 @@
 import styles from "./app.module.css";
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { FC, useEffect } from "react";
+import { useSelector } from "../../utils/hooks/useSelector";
+import { useDispatch } from "../../utils/hooks/useDispatch";
 import { Route, Switch, useHistory, useLocation } from "react-router-dom";
 
 import { getIngredients } from "../../services/actions/ingredients";
@@ -21,17 +22,19 @@ import ForgotPasswordPage from "../../pages/ForgotPasswordPage";
 import ResetPasswordPage from "../../pages/ResetPasswordPage";
 import ProfilePage from "../../pages/ProfilePage";
 import FeedPage from "../../pages/FeedPage";
-
 import { OrderInfo } from "../Modal/OrderInfo/OrderInfo";
 import OrdersHistoryPage from "../../pages/OrdersHistoryPage";
 
-function App() {
+import { TBackground } from "../../utils/types";
+import { selectIsLoading } from "../../services/selectors/ingredients-selectors";
+
+const App: FC = () => {
   const dispatch = useDispatch();
   const history = useHistory();
-  const location = useLocation();
+  const location = useLocation<TBackground>();
   const background = location.state?.background;
 
-  const { isLoading } = useSelector((store) => store.ingredients);
+  const { isLoading } = useSelector(selectIsLoading);
 
   useEffect(() => {
     dispatch(getIngredients());
@@ -120,6 +123,6 @@ function App() {
       )}
     </>
   );
-}
+};
 
 export default App;
