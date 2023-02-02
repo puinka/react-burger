@@ -29,8 +29,6 @@ export type TUser = {
   name: string;
 };
 
-export type TBackground = { background: Location };
-
 export type TInputValues = {
   [key: string]: string;
 };

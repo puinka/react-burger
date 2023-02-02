@@ -25,8 +25,9 @@ import FeedPage from "../../pages/FeedPage";
 import { OrderInfo } from "../Modal/OrderInfo/OrderInfo";
 import OrdersHistoryPage from "../../pages/OrdersHistoryPage";
 
-import { TBackground } from "../../utils/types";
 import { selectIsLoading } from "../../services/selectors/ingredients-selectors";
+
+export type TBackground = { background: Location };
 
 const App: FC = () => {
   const dispatch = useDispatch();

@@ -1,12 +1,27 @@
 import styles from "./protectedroute.module.css";
-import { useSelector } from "react-redux";
+import { useSelector } from "../../utils/hooks/useSelector";
 import { Redirect, Route, useLocation } from "react-router-dom";
 import { BounceLoader } from "react-spinners";
+import { FC, ReactNode } from "react";
 
-function ProtectedRoute({ onlyUnAuth, children, ...props }) {
+type TProtectedRouteProps = {
+  onlyUnAuth?: boolean;
+  children?: ReactNode;
+  props?: {};
+  exact?: boolean;
+  path: string;
+};
+
+type TFrom = { from: { pathname: string } };
+
+const ProtectedRoute: FC<TProtectedRouteProps> = ({
+  onlyUnAuth,
+  children,
+  ...props
+}) => {
   const isUser = useSelector((store) => store.user.data);
   const isAuthChecked = useSelector((store) => store.user.isAuthChecked);
-  const location = useLocation();
+  const location = useLocation<TFrom>();
 
   if (!isAuthChecked) {
     <BounceLoader
@@ -28,6 +43,6 @@ function ProtectedRoute({ onlyUnAuth, children, ...props }) {
   }
 
   return <Route {...props}>{children}</Route>;
-}
+};
 
 export default ProtectedRoute;
