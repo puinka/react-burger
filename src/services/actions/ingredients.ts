@@ -1,4 +1,4 @@
-import { getData } from "../../utils/api.js";
+import { getData } from "../../utils/api";
 import { AppDispatch, AppThunk, TIngredient } from "../../utils/types";
 import {
   INGREDIENTS_FAILED,
