@@ -1,15 +1,27 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "../../../utils/hooks/useDispatch";
+import { useSelector } from "../../../utils/hooks/useSelector";
 import { useDrag } from "react-dnd";
 import styles from "./ingredientitem.module.css";
 import {
   CurrencyIcon,
   Counter,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { setIngredientModal } from "../../../services/actions/currentIngredient.ts";
+import { setIngredientModal } from "../../../services/actions/currentIngredient";
+import { FC } from "react";
+import { TIngredient } from "../../../utils/types";
+import {
+  selectBun,
+  selectMains,
+} from "../../../services/selectors/currentBurgerSelectors";
 
-const IngredientItem = ({ item }) => {
+type TIngredientsItemProps = {
+  item: TIngredient;
+};
+
+const IngredientItem: FC<TIngredientsItemProps> = ({ item }) => {
   const dispatch = useDispatch();
-  const { bun, mains } = useSelector((store) => store.currentBurger);
+  const bun = useSelector(selectBun);
+  const mains = useSelector(selectMains);
 
   const [{ isDrag }, dragRef] = useDrag({
     type: "ingredient",
@@ -23,7 +35,7 @@ const IngredientItem = ({ item }) => {
     bun && bun._id === item._id
       ? 2
       : mains.length > 0
-      ? mains.filter((el) => el._id === item._id).length
+      ? mains.filter((el: TIngredient) => el._id === item._id).length
       : 0;
 
   return (
