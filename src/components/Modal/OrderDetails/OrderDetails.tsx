@@ -1,8 +1,12 @@
 import styles from "./orderdetails.module.css";
-import PropTypes from "prop-types";
 import done from "../../../images/done.png";
+import { FC } from "react";
 
-const OrderDetails = ({ number }) => {
+type TOrderDetails = {
+  number: number;
+};
+
+const OrderDetails: FC<TOrderDetails> = ({ number }) => {
   return (
     <div className={`pb-15 ${styles.container}`}>
       <h4 className="text text_type_digits-large pt-15 pb-8">{number}</h4>
@@ -16,10 +20,6 @@ const OrderDetails = ({ number }) => {
       </p>
     </div>
   );
-};
-
-OrderDetails.propTypes = {
-  number: PropTypes.number,
 };
 
 export default OrderDetails;
