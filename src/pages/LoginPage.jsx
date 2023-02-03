@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, Redirect, useLocation } from "react-router-dom";
 import styles from "./form.module.css";
 import { login } from "../services/actions/user";
-import { useForm } from "../hooks/useForm";
+import { useForm } from "../utils/hooks/useForm";
 
 const LoginPage = () => {
   const dispatch = useDispatch();

@@ -11,8 +11,8 @@ import { wsUrl, wsUrlAll } from "../../../utils/constants";
 import { getCookie } from "../../../utils/cookie";
 import { wsInit } from "../../../services/actions/wsActionTypes";
 import { TIngredient } from "../../../utils/types";
-import { selectIngredients } from "../../../services/selectors/ingredients-selectors";
-import { selectOrders } from "../../../services/selectors/ws-selectors";
+import { selectIngredients } from "../../../services/selectors/ingredientsSelectors";
+import { selectOrders } from "../../../services/selectors/wsSelectors";
 
 type TOrderInfoProps = {
   isPage?: boolean;

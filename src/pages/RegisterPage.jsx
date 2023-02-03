@@ -9,7 +9,7 @@ import { Link } from "react-router-dom";
 import styles from "./form.module.css";
 
 import { register } from "../services/actions/user";
-import { useForm } from "../hooks/useForm";
+import { useForm } from "../utils/hooks/useForm";
 
 const RegisterPage = () => {
   const dispatch = useDispatch();

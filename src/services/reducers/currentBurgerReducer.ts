@@ -8,7 +8,7 @@ import {
 } from "../constants/currentBurger";
 
 type TInitialState = {
-  bun: null | TIngredient;
+  bun: TIngredient | null;
   mains: TIngredient[];
 };
 

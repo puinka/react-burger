@@ -1,5 +1,5 @@
 import { postOrder } from "../../utils/api";
-import { AppThunk } from "../../utils/types";
+import { AppDispatch, AppThunk } from "../../utils/types";
 import {
   CREATE_ORDER_FAILED,
   CREATE_ORDER_REQUEST,
@@ -33,7 +33,7 @@ export type TOrderActions =
   | IOrderResetAction;
 
 export const createOrder =
-  (ingredientsIDs: string[]) => (dispatch: AppThunk) => {
+  (ingredientsIDs: string[]) => (dispatch: AppDispatch) => {
     dispatch({
       type: CREATE_ORDER_REQUEST,
     });

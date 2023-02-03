@@ -25,7 +25,7 @@ import FeedPage from "../../pages/FeedPage";
 import { OrderInfo } from "../Modal/OrderInfo/OrderInfo";
 import OrdersHistoryPage from "../../pages/OrdersHistoryPage";
 
-import { selectIsLoading } from "../../services/selectors/ingredients-selectors";
+import { selectIsLoading } from "../../services/selectors/ingredientsSelectors";
 
 type TLocation = {
   from: string;

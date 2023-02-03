@@ -2,7 +2,7 @@ import styles from "./ingredientdetails.module.css";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { FC } from "react";
-import { selectIngredients } from "../../../services/selectors/ingredients-selectors";
+import { selectIngredients } from "../../../services/selectors/ingredientsSelectors";
 import { TIngredient } from "../../../utils/types";
 
 export const IngredientDetails: FC = () => {

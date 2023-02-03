@@ -1,4 +1,3 @@
-import { Location } from "history";
 import { ThunkAction, ThunkDispatch } from "redux-thunk";
 import { TCurrentBurgerActions } from "../services/actions/currentBurger";
 import { TCurrentIngredientActions } from "../services/actions/currentIngredient";
@@ -7,8 +6,6 @@ import { TOrderActions } from "../services/actions/order";
 import { TUserActions } from "../services/actions/user";
 import { TwsActions } from "../services/actions/wsActionTypes";
 import { rootReducer } from "../services/reducers";
-// TwsActions
-import { store } from "../services/store";
 
 export type TIngredient = {
   _id: string;
