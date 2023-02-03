@@ -3,22 +3,25 @@ import {
   PasswordInput,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useState, useCallback } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { FormEvent, useCallback } from "react";
+import { useDispatch } from "../utils/hooks/useDispatch";
+import { useSelector } from "../utils/hooks/useSelector";
 import { Link, Redirect, useLocation } from "react-router-dom";
 import styles from "./form.module.css";
 import { login } from "../services/actions/user";
 import { useForm } from "../utils/hooks/useForm";
+import { selectUser } from "../services/selectors/userSelectors";
+import { TLocation } from "../utils/types";
 
 const LoginPage = () => {
   const dispatch = useDispatch();
-  const location = useLocation();
-  const user = useSelector((store) => store.user.data);
+  const location = useLocation<TLocation>();
+  const user = useSelector(selectUser);
 
   const { values, handleChange } = useForm({ email: "", password: "" });
 
   const handleLogin = useCallback(
-    (e) => {
+    (e: FormEvent) => {
       e.preventDefault();
       dispatch(login(values));
     },

@@ -1,4 +1,4 @@
-import { useDispatch } from "react-redux";
+import { useDispatch } from "../utils/hooks/useDispatch";
 import {
   Input,
   EmailInput,
@@ -10,8 +10,9 @@ import styles from "./form.module.css";
 
 import { register } from "../services/actions/user";
 import { useForm } from "../utils/hooks/useForm";
+import { FC, FormEvent } from "react";
 
-const RegisterPage = () => {
+const RegisterPage: FC = () => {
   const dispatch = useDispatch();
   const { values, handleChange } = useForm({
     name: "",
@@ -19,8 +20,8 @@ const RegisterPage = () => {
     password: "",
   });
 
-  const handleRegister = (e) => {
-    e.preventDefault();
+  const handleRegister = (evt: FormEvent) => {
+    evt.preventDefault();
     dispatch(register(values));
   };
 

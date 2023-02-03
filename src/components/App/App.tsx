@@ -26,18 +26,7 @@ import { OrderInfo } from "../Modal/OrderInfo/OrderInfo";
 import OrdersHistoryPage from "../../pages/OrdersHistoryPage";
 
 import { selectIsLoading } from "../../services/selectors/ingredientsSelectors";
-
-type TLocation = {
-  from: string;
-  background: {
-    pathname: string;
-    search: string;
-    hash: string;
-    state: null;
-    key: string;
-  };
-  state?: object;
-};
+import { TLocation } from "../../utils/types";
 
 const App: FC = () => {
   const dispatch = useDispatch();

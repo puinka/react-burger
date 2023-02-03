@@ -26,10 +26,7 @@ export type TIngredient = {
 export type TUser = {
   email: string;
   name: string;
-};
-
-export type TInputValues = {
-  [key: string]: string;
+  restoreEmail?: boolean;
 };
 
 export type TOwner = {
@@ -48,6 +45,22 @@ export type TOrder = {
   owner: TOwner;
   price: number;
   updatedAt: string;
+};
+
+export type TLocation = {
+  from: string;
+  background: {
+    pathname: string;
+    search: string;
+    hash: string;
+    state: null;
+    key: string;
+  };
+  state?: object;
+};
+
+export type TInputValues = {
+  [key: string]: string;
 };
 
 export type RootState = ReturnType<typeof rootReducer>;

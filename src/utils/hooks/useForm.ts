@@ -1,7 +1,7 @@
 import { ChangeEvent, useState } from "react";
 import { TInputValues } from "../types";
 
-export function useForm(inputValues: TInputValues) {
+export const useForm = (inputValues: TInputValues) => {
   const [values, setValues] = useState(inputValues);
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -9,4 +9,4 @@ export function useForm(inputValues: TInputValues) {
     setValues({ ...values, [name]: value });
   };
   return { values, handleChange, setValues };
-}
+};

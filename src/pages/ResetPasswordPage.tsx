@@ -3,13 +3,14 @@ import {
   Input,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { ChangeEvent, FC, FormEvent, useEffect, useState } from "react";
+import { useDispatch } from "../utils/hooks/useDispatch";
+import { useSelector } from "../utils/hooks/useSelector";
 import { Link, useHistory } from "react-router-dom";
 import { resetPass } from "../services/actions/user";
 import styles from "./form.module.css";
 
-const ResetPasswordPage = () => {
+const ResetPasswordPage: FC = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const { restoreEmail } = useSelector((store) => store.user);
@@ -17,20 +18,20 @@ const ResetPasswordPage = () => {
   const [password, setPassword] = useState("");
   const [code, setCode] = useState("");
 
-  const onPasswordChange = (e) => {
-    e.preventDefault();
-    const value = e.target.value;
+  const onPasswordChange = (evt: ChangeEvent<HTMLInputElement>) => {
+    evt.preventDefault();
+    const value = evt.target.value;
     setPassword(value);
   };
 
-  const onCodeChange = (e) => {
-    e.preventDefault();
-    const value = e.target.value;
+  const onCodeChange = (evt: ChangeEvent<HTMLInputElement>) => {
+    evt.preventDefault();
+    const value = evt.target.value;
     setCode(value);
   };
 
-  const handleResetPass = (e) => {
-    e.preventDefault();
+  const handleResetPass = (evt: FormEvent) => {
+    evt.preventDefault();
     dispatch(resetPass(password, code));
   };
 

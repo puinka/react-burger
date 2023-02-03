@@ -1,18 +1,18 @@
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { FC, useEffect } from "react";
+import { useDispatch } from "../utils/hooks/useDispatch";
+import { useSelector } from "../utils/hooks/useSelector";
 import { BounceLoader } from "react-spinners";
 import Completed from "../components/Feed/Completed/Completed";
 import OrdersCard from "../components/Feed/OrdersCard/OrdersCard";
 import { wsConnectionClose, wsInit } from "../services/actions/wsActionTypes";
 import { wsUrlAll } from "../utils/constants";
 import styles from "./feedpage.module.css";
+import { selectWSdata } from "../services/selectors/wsSelectors";
 
-const FeedPage = () => {
+const FeedPage: FC = () => {
   const dispatch = useDispatch();
 
-  const { orders, total, totalToday, wsLoading } = useSelector(
-    (store) => store.ws
-  );
+  const { orders, total, totalToday, wsLoading } = useSelector(selectWSdata);
 
   const doneOrders = orders
     .filter((order) => order.status === "done")

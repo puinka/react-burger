@@ -2,25 +2,25 @@ import {
   EmailInput,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { ChangeEvent, FC, FormEvent, useState } from "react";
+import { useDispatch } from "../utils/hooks/useDispatch";
 import { Link, useHistory } from "react-router-dom";
 import { sendResetPassEmail } from "../services/actions/user";
 import styles from "./form.module.css";
 
-const ForgotPasswordPage = () => {
+const ForgotPasswordPage: FC = () => {
   const history = useHistory();
   const dispatch = useDispatch();
   const [email, setEmail] = useState("");
 
-  const onEmailChange = (e) => {
-    e.preventDefault();
-    const value = e.target.value;
+  const onEmailChange = (evt: ChangeEvent<HTMLInputElement>) => {
+    evt.preventDefault();
+    const value = evt.target.value;
     setEmail(value);
   };
 
-  const handleResetPass = (e) => {
-    e.preventDefault();
+  const handleResetPass = (evt: FormEvent<HTMLFormElement>) => {
+    evt.preventDefault();
     dispatch(sendResetPassEmail(email, history));
   };
 
