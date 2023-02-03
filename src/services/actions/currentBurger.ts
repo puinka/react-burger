@@ -21,7 +21,7 @@ interface IAddMainAction {
 
 interface IDeleteMainAction {
   readonly type: typeof DELETE_MAIN;
-  readonly currentID: number;
+  readonly currentID: string;
 }
 
 interface IReorderMainsAction {
@@ -46,7 +46,7 @@ export const addMain = (item: TIngredient): TCurrentBurgerActions => ({
   item: item,
   currentID: uuidv4(),
 });
-export const deleteMain = (id: number): TCurrentBurgerActions => ({
+export const deleteMain = (id: string): TCurrentBurgerActions => ({
   type: DELETE_MAIN,
   currentID: id,
 });

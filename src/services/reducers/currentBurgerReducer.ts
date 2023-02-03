@@ -17,10 +17,10 @@ const initialState: TInitialState = {
   mains: [],
 };
 
-export const constructorReducer = (
+export const currentBurgerReducer = (
   state = initialState,
   action: TCurrentBurgerActions
-) => {
+): TInitialState => {
   switch (action.type) {
     case ADD_BUN:
       return {

@@ -20,7 +20,7 @@ export type TIngredient = {
   image_mobile: string;
   image_large: string;
   __v: number;
-  currentID?: number;
+  currentID?: string;
 };
 
 export type TUser = {
