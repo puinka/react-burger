@@ -1,9 +1,10 @@
-import { useDispatch } from "react-redux";
+import { useDispatch } from "../../utils/hooks/useDispatch";
 import { NavLink } from "react-router-dom";
 import { logout } from "../../services/actions/user";
 import styles from "./profilenav.module.css";
+import { FC } from "react";
 
-const ProfileNav = () => {
+const ProfileNav: FC = () => {
   const dispatch = useDispatch();
 
   const handleLogout = () => {
@@ -34,7 +35,7 @@ const ProfileNav = () => {
           </NavLink>
         </li>
         <li>
-          <button to="/login" className={styles.link} onClick={handleLogout}>
+          <button className={styles.link} onClick={handleLogout}>
             <p className="text text_type_main-medium">Выход</p>
           </button>
         </li>
