@@ -1,7 +1,6 @@
-import { useRef, useCallback } from "react";
-import { useDispatch } from "react-redux";
-import { useDrag, useDrop } from "react-dnd";
-import PropTypes from "prop-types";
+import { useRef, FC } from "react";
+import { useDispatch } from "../../../utils/hooks/useDispatch";
+import { DropTargetMonitor, useDrag, useDrop } from "react-dnd";
 import {
   ConstructorElement,
   DragIcon,
@@ -11,11 +10,24 @@ import {
   deleteMain,
   reorderMains,
 } from "../../../services/actions/currentBurger";
+import { TIngredient } from "../../../utils/types";
 
-function BurgerConstructorItem({ item, index }) {
+type TBurgerConstructorItemProps = {
+  item: TIngredient;
+  index: number;
+};
+
+const BurgerConstructorItem: FC<TBurgerConstructorItemProps> = ({
+  item,
+  index,
+}) => {
   const { currentID, name, image, price } = item;
   const dispatch = useDispatch();
-  const ref = useRef(null);
+  const ref = useRef<HTMLLIElement>(null);
+
+  const handleDeleteMain = () => {
+    currentID && dispatch(deleteMain(currentID));
+  };
 
   const [{ isDragging }, drag] = useDrag({
     type: "reorder",
@@ -27,19 +39,20 @@ function BurgerConstructorItem({ item, index }) {
     }),
   });
 
-  const [{ isOver }, drop] = useDrop({
+  const [, drop] = useDrop({
     accept: "reorder",
-    hover(item, monitor) {
+    hover: (item: { index: number }, monitor: DropTargetMonitor) => {
+      if (!ref.current) return;
       const dragIndex = item.index;
       const hoverIndex = index;
-      if (dragIndex === hoverIndex) {
-        return;
-      }
-      const hoverBoundingRect = ref.current?.getBoundingClientRect();
+      if (dragIndex === hoverIndex) return;
+      const hoverBoundingRect = ref.current.getBoundingClientRect();
       const hoverMiddleY =
         (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
       const clientOffset = monitor.getClientOffset();
-      const hoverClientY = clientOffset.y - hoverBoundingRect.top;
+      const hoverClientY = clientOffset?.y
+        ? clientOffset?.y - hoverBoundingRect.top
+        : 0;
       if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
         return;
       }
@@ -66,15 +79,10 @@ function BurgerConstructorItem({ item, index }) {
         text={name}
         price={price}
         thumbnail={image}
-        handleClose={() => dispatch(deleteMain(currentID))}
+        handleClose={handleDeleteMain}
       />
     </li>
   );
-}
-
-BurgerConstructorItem.propTypes = {
-  handleReorder: PropTypes.func,
-  index: PropTypes.number.isRequired,
 };
 
 export default BurgerConstructorItem;

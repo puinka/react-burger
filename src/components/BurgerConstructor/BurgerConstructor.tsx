@@ -4,8 +4,9 @@ import styles from "./burgerconstructor.module.css";
 import { INGREDIENT_TYPES } from "../../utils/constants.js";
 import Modal from "../Modal/Modal";
 import OrderDetails from "../Modal/OrderDetails/OrderDetails";
-import { useMemo } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { FC, useMemo } from "react";
+import { useSelector } from "../../utils/hooks/useSelector";
+import { useDispatch } from "../../utils/hooks/useDispatch";
 import BurgerConstructorItem from "./BurgerConstructorItem/BurgerConstructorItem";
 
 import {
@@ -13,26 +14,37 @@ import {
   CurrencyIcon,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { createOrder } from "../../services/actions/order";
+import { createOrder, orderReset } from "../../services/actions/order";
 import { useHistory } from "react-router-dom";
-import { RESET_ORDER } from "../../services/constants/order";
+import {
+  selectBun,
+  selectMains,
+} from "../../services/selectors/currentBurgerSelectors";
+import { TIngredient } from "../../utils/types";
 
-const BurgerConstructor = () => {
+const BurgerConstructor: FC = () => {
   const dispatch = useDispatch();
   const history = useHistory();
-  const { bun, mains } = useSelector((store) => store.currentBurger);
+
+  const bun = useSelector(selectBun);
+  const mains = useSelector(selectMains);
   const { number, isLoading } = useSelector((store) => store.orderModal);
   const isUser = useSelector((store) => store.user.data);
 
   const totalPrice = useMemo(() => {
-    return (bun ? bun.price * 2 : 0) + mains.reduce((s, v) => s + v.price, 0);
+    return (
+      (bun ? bun.price * 2 : 0) +
+      mains.reduce((s: number, v: TIngredient) => s + v.price, 0)
+    );
   }, [bun, mains]);
 
   const ingrIDs = useMemo(() => {
-    return bun && [bun._id, ...mains.map((item) => item._id), bun._id];
+    return (
+      bun && [bun._id, ...mains.map((item: TIngredient) => item._id), bun._id]
+    );
   }, [bun, mains]);
 
-  const handleAddIngredient = (item) => {
+  const handleAddIngredient = (item: TIngredient) => {
     if (item.type === INGREDIENT_TYPES.BUN) {
       return dispatch(addBun(item));
     } else {
@@ -44,17 +56,17 @@ const BurgerConstructor = () => {
     if (!isUser) {
       history.push("/login");
     } else {
-      dispatch(createOrder(ingrIDs));
+      ingrIDs && dispatch(createOrder(ingrIDs));
     }
   };
 
   const handleCloseModal = () => {
-    dispatch({ type: RESET_ORDER });
+    dispatch(orderReset);
   };
 
   const [{ isHover }, dropTarget] = useDrop({
     accept: "ingredient",
-    drop(item) {
+    drop(item: TIngredient) {
       handleAddIngredient(item);
     },
     collect: (monitor) => ({
@@ -82,7 +94,7 @@ const BurgerConstructor = () => {
           </div>
         )}
         <ul className={`pr-2 ${styles.scrollContainer}`}>
-          {mains.map((item, index) => {
+          {mains.map((item: TIngredient, index: number) => {
             return (
               <BurgerConstructorItem
                 item={item}

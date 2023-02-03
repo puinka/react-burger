@@ -1,13 +1,14 @@
-import { useState, useEffect, useRef } from "react";
-import { useSelector } from "react-redux";
+import { useState, useEffect, useRef, FC, RefObject } from "react";
+import { useSelector } from "../../utils/hooks/useSelector";
 import { useInView } from "react-intersection-observer";
 import { INGREDIENT_TYPES } from "../../utils/constants.js";
 import styles from "./burgeringredients.module.css";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import IngredientsBlock from "./IngredientsBlock/IngredientsBlock";
+import { selectIngredients } from "../../services/selectors/ingredientsSelectors";
 
-const BurgerIngredients = () => {
-  const { ingredients } = useSelector((store) => store.ingredients);
+const BurgerIngredients: FC = () => {
+  const ingredients = useSelector(selectIngredients);
 
   const [current, setCurrent] = useState(INGREDIENT_TYPES.BUN);
 
@@ -19,16 +20,16 @@ const BurgerIngredients = () => {
     (item) => item.type === INGREDIENT_TYPES.MAIN
   );
 
-  const handleTabClick = (id, ref) => {
+  const handleTabClick = (id: string, ref: any) => {
     setCurrent(id);
     ref.current.scrollIntoView({ behavior: "smooth" });
   };
 
   //scroll
 
-  const bunAnchor = useRef();
-  const sauceAnchor = useRef();
-  const mainAnchor = useRef();
+  const bunAnchor = useRef(null);
+  const sauceAnchor = useRef(null);
+  const mainAnchor = useRef(null);
 
   const [bunRef, inViewBun] = useInView({
     threshold: 0,
