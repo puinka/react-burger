@@ -24,6 +24,7 @@ interface IOrderFailedAction {
 interface IOrderResetAction {
   readonly type: typeof RESET_ORDER;
   readonly number: null;
+  readonly error: null;
 }
 
 export type TOrderActions =
@@ -51,3 +52,9 @@ export const createOrder =
         });
       });
   };
+
+export const orderReset = (): TOrderActions => ({
+  type: RESET_ORDER,
+  number: null,
+  error: null,
+});
