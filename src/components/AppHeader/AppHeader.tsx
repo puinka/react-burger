@@ -5,10 +5,10 @@ import {
   ListIcon,
   ProfileIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useSelector } from "react-redux";
 import { Link, NavLink } from "react-router-dom";
+import { FC } from "react";
 
-const AppHeader = () => {
+const AppHeader: FC = () => {
   return (
     <header className={`pt-2 pb-2 ${styles.header}`}>
       <div className={styles.content}>
