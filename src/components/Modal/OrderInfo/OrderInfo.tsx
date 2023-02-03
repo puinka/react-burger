@@ -4,20 +4,28 @@ import {
   CurrencyIcon,
   FormattedDate,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
+import { useDispatch } from "../../../utils/hooks/useDispatch";
+import { useSelector } from "../../../utils/hooks/useSelector";
+import { CSSProperties, FC, HTMLAttributes, useEffect } from "react";
 import { wsUrl, wsUrlAll } from "../../../utils/constants";
 import { getCookie } from "../../../utils/cookie";
 import { wsInit } from "../../../services/actions/wsActionTypes";
+import { TIngredient } from "../../../utils/types";
+import { selectIngredients } from "../../../services/selectors/ingredients-selectors";
+import { selectOrders } from "../../../services/selectors/ws-selectors";
 
-const getCounter = (arr, item) => {
+type TOrderInfoProps = {
+  isPage?: boolean;
+} & HTMLAttributes<CSSProperties>;
+
+const getCounter = (arr: TIngredient[], item: TIngredient) => {
   let counter = 0;
   arr.forEach((element) => element._id === item._id && counter++);
   return counter > 1 ? counter : null;
 };
 
-export const OrderInfo = ({ isPage }) => {
-  const { id } = useParams();
+export const OrderInfo: FC<TOrderInfoProps> = ({ isPage }) => {
+  const { id } = useParams<{ id: string }>();
   const { path } = useRouteMatch();
   const dispatch = useDispatch();
 
@@ -29,14 +37,20 @@ export const OrderInfo = ({ isPage }) => {
     }
   }, [dispatch, isPage, path]);
 
-  const allIngredients = useSelector((store) => store.ingredients.ingredients);
-  const { orders } = useSelector((store) => store.ws);
+  const allIngredients = useSelector(selectIngredients);
+  const orders = useSelector(selectOrders);
   const currentOrder = orders.find((item) => item._id === id);
-  const orderIngredients = currentOrder?.ingredients.map((id) =>
-    allIngredients.find((item) => item._id === id)
-  );
 
-  const ingredientsSet = [...new Set(orderIngredients)];
+  const orderIngredients =
+    currentOrder &&
+    currentOrder.ingredients.reduce((prev: TIngredient[], curr) => {
+      const currentIngredient = allIngredients.find(
+        (item) => item._id === curr
+      );
+      return currentIngredient ? [...prev, currentIngredient] : prev;
+    }, []);
+
+  const ingredientsSet = [...new Set(orderIngredients)] as TIngredient[];
 
   const orderStatus = currentOrder
     ? currentOrder.status === "done"
@@ -46,28 +60,26 @@ export const OrderInfo = ({ isPage }) => {
       : "Создан"
     : "";
 
-  const total = orderIngredients?.reduce(
-    (acc, current) => acc + current.price,
-    0
-  );
+  const total =
+    orderIngredients &&
+    orderIngredients.reduce((acc, current) => acc + current.price, 0);
+
+  const pagePadding: CSSProperties = isPage ? { paddingTop: "120px" } : {};
+
+  const textColor: CSSProperties =
+    currentOrder?.status === "done" ? { color: "#00cccc" } : {};
 
   return (
     <>
       {currentOrder && (
-        <div
-          className={styles.container}
-          style={isPage ? { paddingTop: "120px" } : null}
-        >
+        <div className={styles.container} style={pagePadding}>
           <p className={`text text_type_digits-default mb-10 ${styles.number}`}>
             #{currentOrder.number}
           </p>
           <h2 className="text text_type_main-medium mb-3">
             {currentOrder.name}
           </h2>
-          <p
-            className="text text_type_main-default mb-15"
-            style={currentOrder.status === "done" ? { color: "#00cccc" } : null}
-          >
+          <p className="text text_type_main-default mb-15" style={textColor}>
             {orderStatus}
           </p>
           <p className="text text_type_main-medium mb-6">Состав:</p>
@@ -85,11 +97,11 @@ export const OrderInfo = ({ isPage }) => {
                 <div
                   className={`className="text text_type_digits-default ${styles.price}`}
                 >
-                  {getCounter(orderIngredients, item) && (
+                  {orderIngredients && getCounter(orderIngredients, item) && (
                     <p>{getCounter(orderIngredients, item)} x </p>
                   )}
                   <p>{item.price}</p>
-                  <CurrencyIcon />
+                  <CurrencyIcon type={"primary"} />
                 </div>
               </li>
             ))}
@@ -101,7 +113,7 @@ export const OrderInfo = ({ isPage }) => {
             />
             <div className={styles.total}>
               <p className="text text_type_digits-default">{total}</p>
-              <CurrencyIcon />
+              <CurrencyIcon type={"primary"} />
             </div>
           </div>
         </div>
