@@ -6,12 +6,12 @@ import { Route, Switch, useHistory, useLocation } from "react-router-dom";
 
 import { getIngredients } from "../../services/actions/ingredients";
 import { resetIngredientModal } from "../../services/actions/currentIngredient";
-import { checkAuth } from "../../services/actions/user.js";
+import { checkAuth } from "../../services/actions/user";
 
 import BounceLoader from "react-spinners/BounceLoader";
 import AppHeader from "../AppHeader/AppHeader";
 import Modal from "../Modal/Modal";
-import IngredientDetails from "../Modal/IngredientDetails/IngredientDetails";
+import { IngredientDetails } from "../Modal/IngredientDetails/IngredientDetails";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 
 import HomePage from "../../pages/HomePage";
@@ -27,12 +27,23 @@ import OrdersHistoryPage from "../../pages/OrdersHistoryPage";
 
 import { selectIsLoading } from "../../services/selectors/ingredients-selectors";
 
-export type TBackground = { background: Location };
+type TLocation = {
+  from: string;
+  background: {
+    pathname: string;
+    search: string;
+    hash: string;
+    state: null;
+    key: string;
+  };
+  state?: object;
+};
 
 const App: FC = () => {
   const dispatch = useDispatch();
   const history = useHistory();
-  const location = useLocation<TBackground>();
+
+  const location = useLocation<TLocation>();
   const background = location.state?.background;
 
   const { isLoading } = useSelector(selectIsLoading);
