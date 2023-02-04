@@ -1,6 +1,12 @@
+import { FC } from "react";
 import styles from "./completed.module.css";
 
-export const Completed = ({ title, value }) => {
+type TCompleted = {
+  title: string;
+  value: number;
+};
+
+const Completed: FC<TCompleted> = ({ title, value }) => {
   return (
     <div className={styles.container}>
       <h3 className="text text_type_main-medium">{title}</h3>
