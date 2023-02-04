@@ -15,8 +15,8 @@ import { selectUser } from "../services/selectors/userSelectors";
 const ProfilePage: FC = () => {
   const dispatch = useDispatch();
   const data = useSelector(selectUser);
-  const [name, setName] = useState(data?.name);
-  const [email, setEmail] = useState(data?.email);
+  const [name, setName] = useState(data!.name);
+  const [email, setEmail] = useState(data!.email);
   const [password, setPassword] = useState("");
 
   useEffect(() => {
@@ -47,8 +47,8 @@ const ProfilePage: FC = () => {
   };
 
   const handleCancelUpdate = () => {
-    setName(data?.name);
-    setEmail(data?.email);
+    setName(data!.name);
+    setEmail(data!.email);
   };
 
   return (

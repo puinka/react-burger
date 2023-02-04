@@ -36,7 +36,7 @@ import {
   USER_REQUEST,
   USER_SUCCESS,
 } from "../constants/user";
-import { AppDispatch, AppThunk, TUser } from "../../utils/types";
+import { AppDispatch, AppThunk, TInputValues, TUser } from "../../utils/types";
 
 interface IRegisterRequestAction {
   readonly type: typeof REGISTER_REQUEST;
@@ -144,7 +144,6 @@ interface IResetPassRequestAction {
 
 interface IResetPassSuccessAction {
   readonly type: typeof RESET_PASSWORD_SUCCESS;
-  restoreEmail: boolean;
 }
 
 interface IResetPassFailedAction {
@@ -179,21 +178,9 @@ export type TUserActions =
   | IResetPassSuccessAction
   | IResetPassFailedAction;
 
-//forms
-type TRegisterForm = {
-  name: string;
-  email: string;
-  password: string;
-};
-
-type TLoginForm = {
-  email: string;
-  password: string;
-};
-
 //actions
 export const register =
-  ({ name, email, password }: TRegisterForm) =>
+  ({ name, email, password }: TInputValues) =>
   (dispatch: AppDispatch) => {
     dispatch({
       type: REGISTER_REQUEST,
@@ -217,7 +204,7 @@ export const register =
   };
 
 export const login =
-  ({ email, password }: TLoginForm) =>
+  ({ email, password }: TInputValues) =>
   (dispatch: AppDispatch) => {
     dispatch({
       type: LOGIN_REQUEST,
@@ -265,9 +252,9 @@ export const refreshToken = () => (dispatch: AppDispatch) => {
   });
   refreshTokenRequest()
     .then((res) => {
-      const authToken = res.data.accessToken.split("Bearer ")[1];
-      setCookie("accessToken", authToken);
-      localStorage.setItem("refreshToken", res.data.refreshToken);
+      // const authToken = res.data.accessToken.split("Bearer ")[1];
+      // setCookie("accessToken", authToken);
+      // localStorage.setItem("refreshToken", res.data.refreshToken);
       dispatch({
         type: REFRESH_TOKEN_SUCCESS,
       });
@@ -356,7 +343,7 @@ export const resetPass =
       type: RESET_PASSWORD_REQUEST,
     });
     passwordResetConfirmRequest(password, token)
-      .then((res) => {
+      .then(() => {
         dispatch({
           type: RESET_PASSWORD_SUCCESS,
         });

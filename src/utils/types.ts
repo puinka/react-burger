@@ -63,6 +63,64 @@ export type TInputValues = {
   [key: string]: string;
 };
 
+//api
+export type TIngredientsResponse = {
+  data: { data: TIngredient[]; success: boolean };
+  status: number;
+};
+
+export type TOrderResponse = {
+  data: { order: TOrder; success: boolean };
+  status: number;
+};
+
+export type TRegisterResponse = {
+  data: {
+    user: TUser;
+    success: boolean;
+    accessToken: string;
+    refreshToken: string;
+  };
+  status: number;
+};
+
+export type TLoginResponse = {
+  data: {
+    user: TUser;
+    success: boolean;
+    accessToken: string;
+    refreshToken: string;
+  };
+  status: number;
+};
+
+export type TTokenRefreshResponse = {
+  data: {
+    user: TUser;
+    success: boolean;
+    accessToken: string;
+    refreshToken: string;
+  };
+  status: number;
+};
+
+export type TErrorResponse = {
+  response: { data: { message: string } };
+};
+
+export type TLogoutResponse = {
+  success: boolean;
+  message: string;
+};
+
+export type TUpdateUserResponse = TRegisterResponse;
+
+export type TPasswordResetEmail = TRegisterResponse;
+
+export type TPasswordResetConfirm = { success: boolean; message: string };
+
+//index
+
 export type RootState = ReturnType<typeof rootReducer>;
 
 type TApplicationActions =
