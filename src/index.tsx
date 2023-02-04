@@ -2,21 +2,11 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./components/App/App";
 import reportWebVitals from "./reportWebVitals";
-import { rootReducer } from "./services/reducers/index";
-import { createStore, compose, applyMiddleware } from "redux";
+
 import { Provider } from "react-redux";
-import thunk from "redux-thunk";
+
 import { BrowserRouter } from "react-router-dom";
-import { socketMiddleware } from "./services/socketMiddleware/socketMiddleware";
-import { wsActions } from "./services/actions/wsActionTypes";
-
-const composeEnhancers =
-  (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-const enhancer = composeEnhancers(
-  applyMiddleware(thunk, socketMiddleware(wsActions))
-);
-
-const store = createStore(rootReducer, enhancer);
+import { store } from "./services/store";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
