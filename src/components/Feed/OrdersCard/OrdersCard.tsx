@@ -3,21 +3,32 @@ import {
   CurrencyIcon,
   FormattedDate,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useSelector } from "react-redux";
+import { useSelector } from "../../../utils/hooks/useSelector";
 import { Link, useLocation, useRouteMatch } from "react-router-dom";
+import { TIngredient, TOrder } from "../../../utils/types";
+import { FC, useMemo } from "react";
+import { selectIngredients } from "../../../services/selectors/ingredientsSelectors";
+import { OrderIngredientImage } from "./OrderIngredientImage/OrderIngredientImage";
 
-export const OrdersCard = ({ order, isMine }) => {
+type TOrdersCard = {
+  order: TOrder;
+  isMine?: boolean;
+};
+
+export const OrdersCard: FC<TOrdersCard> = ({ order, isMine }) => {
   const { name, number, createdAt, ingredients, _id, status } = order;
-  const allIngredients = useSelector((store) => store.ingredients.ingredients);
+  const allIngredients = useSelector(selectIngredients);
 
   const orderIngredients = ingredients.map((id) =>
     allIngredients.find((item) => item._id === id)
   );
 
-  const totalPrice = orderIngredients.reduce(
-    (acc, item) => acc + item?.price,
-    0
-  );
+  const totalPrice = useMemo(() => {
+    return orderIngredients?.reduce((acc, item) => {
+      if (item?.price) acc += item?.price;
+      return acc;
+    }, 0);
+  }, [orderIngredients]);
 
   const location = useLocation();
   const { url } = useRouteMatch();
@@ -58,11 +69,7 @@ export const OrdersCard = ({ order, isMine }) => {
                   key={index}
                   style={{ zIndex: `${orderIngredients.length - index}` }}
                 >
-                  <img
-                    className={styles.ingredientimg}
-                    src={item.image_mobile}
-                    alt={item.name}
-                  ></img>
+                  <OrderIngredientImage item={item} />
                 </li>
               );
             })}
@@ -72,22 +79,16 @@ export const OrdersCard = ({ order, isMine }) => {
                 key={6}
                 style={{ zIndex: `${orderIngredients.length - 6}` }}
               >
-                <div className={styles.hiddencounter}>
-                  <p className="text text_type_main-default">{`+${
-                    orderIngredients.length - 5
-                  }`}</p>
-                </div>
-                <img
-                  className={styles.ingredientimg}
-                  src={orderIngredients[5].image_mobile}
-                  alt={orderIngredients[5].name}
-                ></img>
+                <OrderIngredientImage
+                  item={orderIngredients[5]}
+                  counter={orderIngredients.length - 5}
+                />
               </li>
             )}
           </ul>
           <div className={styles.price}>
             <p className="text text_type_digits-default">{totalPrice}</p>
-            <CurrencyIcon />
+            <CurrencyIcon type="primary" />
           </div>
         </div>
       </article>
